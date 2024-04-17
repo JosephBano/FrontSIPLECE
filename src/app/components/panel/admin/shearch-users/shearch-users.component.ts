@@ -136,7 +136,6 @@ export class ShearchUsersComponent {
       this.selects.get("filterPerfil")?.disable();
     }
     this.loadRolData(this.valueEncargadoFilter);
-    
     this.OnChangePerfilFilter();
   }
   OnChangePerfilFilter() {

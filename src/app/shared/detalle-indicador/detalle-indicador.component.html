@@ -81,7 +81,6 @@
                         <td [ngClass]="{'bordern': selectedComplementarios === i}" scope="row" colspan="2" class="wide-column">{{elemento.Detalle}}</td>
                         <td [ngClass]="{'bordern': selectedComplementarios === i}" class="text-center">
                           <div class="contenedor-botones">
-                            <app-modal-evidencias [elemento]="elemento.IdElemento"></app-modal-evidencias>
                               <span class="material-symbols-outlined icon-size" (click)="selectedComplementarios = (selectedComplementarios === i ? null : i)">{{ selectedComplementarios === i ? 'expand_less' : 'expand_more' }}</span>
                           </div>
                         </td>
@@ -89,7 +88,7 @@
                       <ng-container *ngIf="selectedComplementarios === i">
                         <tr>
                           <td colspan="4">
-                            <app-estado-evidencia></app-estado-evidencia>
+                            <app-estado-evidencia [idElemento]="elemento.IdElemento"></app-estado-evidencia>
                           </td>
                         </tr>
                       </ng-container>

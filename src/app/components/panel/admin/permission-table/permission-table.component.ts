@@ -83,10 +83,29 @@ export class PermissionTableComponent {
         }
       ))
       forkJoin([permission$, data$]).subscribe(([permissionData, [componentData]]) => {
-        const listBasicPermission = componentData.filter(c=>!permissionData.some(p=>c.Codigo===p.codigoPermiso))
-        this.getPermissionBasic(listBasicPermission,componentData)
-        this.assignablePermissions = componentData.filter(l=>listBasicPermission.some(p=>l.Codigo===p.Codigo));
+        // console.log("Component data",componentData);
+        // console.log("Permission data",permissionData);
+        // const listBasicPermission = componentData.filter(c=>permissionData.some(p=>c.Codigo===p.codigoPermiso))
+        // console.log("listBasicPermisions",listBasicPermission);
+        // this.getPermissionBasic(listBasicPermission,componentData)
+        // this.assignablePermissions = componentData.filter(l=>listBasicPermission.some(p=>l.Codigo===p.Codigo));
         
+        // let permisos: PermisosPeticion = {  
+        //   codigoModelo: this.permisoParams?.codigoModelo!,
+        //   codigoPerfil: this.permisoParams!.codigoPerfil,
+        //   codigoEstado: 'A'
+        // };
+        
+        // this.perfilService.getPermisosByCodigoPerfil(permisos.codigoModelo, permisos.codigoPerfil, permisos.codigoEstado).subscribe((data: PermisoRespuesta[]) => {
+        //   this.mePermissions = data;
+        //   this.mePermissions.forEach(mp=>{
+        //     this.selectedItems.push(componentData.find(ap=>ap.Codigo===mp.codigoPermiso)!)
+        //   })
+        // });
+        // this.getUserData()
+        const listBasicPermission = componentData.filter(c=>permissionData.some(p=>c.Codigo===p.codigoPermiso))
+        this.assignablePermissions = componentData.filter(l=>listBasicPermission.some(p=>l.Codigo===p.Codigo));   
+        this.getPermissionBasic(this.selectedItems,componentData)
         let permisos: PermisosPeticion = {  
           codigoModelo: this.permisoParams?.codigoModelo!,
           codigoPerfil: this.permisoParams!.codigoPerfil,
@@ -96,11 +115,15 @@ export class PermissionTableComponent {
         this.perfilService.getPermisosByCodigoPerfil(permisos.codigoModelo, permisos.codigoPerfil, permisos.codigoEstado).subscribe((data: PermisoRespuesta[]) => {
           this.mePermissions = data;
           this.mePermissions.forEach(mp=>{
-            this.selectedItems.push(componentData.find(ap=>ap.Codigo===mp.codigoPermiso)!)
+            const item = componentData.find(ap=>ap.Codigo===mp.codigoPermiso);
+            if (item) {
+              this.selectedItems.push(item);
+            }
           })
+          // Filtrar los elementos de assignablePermissions que ya están en selectedItems
+          this.assignablePermissions = this.assignablePermissions.filter(assignableItem => !this.selectedItems.some(selectedItem => selectedItem.Codigo === assignableItem.Codigo));
+          this.getUserData();
         });
-
-        this.getUserData()
       })    
     }else{
       this.updatePermission=false;
@@ -113,12 +136,11 @@ export class PermissionTableComponent {
         }
       ));  
       forkJoin([permission$, data$]).subscribe(([permissionData, [componentData]]) => {
+        // console.log("Component data",componentData);
+        // console.log("Permission data",permissionData);
         const listBasicPermission = componentData.filter(c=>permissionData.some(p=>c.Codigo===p.codigoPermiso))
         this.assignablePermissions=listBasicPermission;      
-        console.log(listBasicPermission);
-        
         this.getPermissionBasic(this.selectedItems,componentData)
-        
         this.getUserData()
       });
     }
