@@ -36,7 +36,7 @@
                         </div>
                       </div>
                     <ng-container *ngIf="rolviewradios == '1'">
-                        <form [formGroup]="radiobuton" (ngSubmit)="sendValidated(i)">
+                        <form [formGroup]="radiobuton" (ngSubmit)="sendValidated(i, archivo)">
                             <div class="d-flex">
                                 <div class="d-flex mb-2">
                                     <div class="contenedor-radio d-flex" *ngIf="!formDisabled[i]">
@@ -55,7 +55,7 @@
                                     </div>
                                 </div>
                                 <div class="contenedor-btn d-flex align-center" >
-                                    <button [ngClass]="formStatus[i]" [disabled]="formDisabled[i]" (click)="openModal(template);"  (ngSubmit)="sendValidated(i,archivo)" >Aplicar</button>
+                                  <button [ngClass]="formStatus[i]" [disabled]="formDisabled[i]" (click)="openModal(template)">Aplicar</button>
                                 </div>                                
                             </div>                           
                         </form>

@@ -81,7 +81,7 @@ export class EvidenciaFileContenedorComponent implements OnInit{
             this.idArchivoSeleccionado = archivo.IdArchivoEvidencia;
             console.log("idArchivoEvideadmin",this.idArchivoSeleccionado);
             this.getObservacionByIdArchivoEvidencia(this.idArchivoSeleccionado);
-            this.idArchivoSeleccionadoEmitido.emit(this.idArchivoSeleccionado);
+             this.idArchivoSeleccionadoEmitido.emit(this.idArchivoSeleccionado);
         });
       }
       });
@@ -90,9 +90,14 @@ export class EvidenciaFileContenedorComponent implements OnInit{
 
   sendValidated(i: number, archivo?: any): void {    
     console.log(this.radiobuton.value.estado);
+    console.log("entre");
+    
     if(this.radiobuton.value.estado !== '0'){
       if (archivo) {
+        
         this.idArchivoSeleccionado = archivo.IdArchivoEvidencia;
+        console.log("idArchivoSelect",this.idArchivoSeleccionado);
+        
       }
       this.formDisabled[i] = true;
       this.formStatus[i] = this.getClassStyle(this.radiobuton.value.estado);
