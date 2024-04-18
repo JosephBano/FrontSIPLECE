@@ -63,9 +63,12 @@ export class EvidenciaFileContenedorComponent implements OnInit{
       this.formDisabled = new Array(this.Archivos.length).fill(false);
       this.formStatus = new Array(this.Archivos.length).fill('btnWait');
       if (this.Archivos.length > 0) {
-        this.idArchivoSeleccionado = this.Archivos[0].IdArchivoEvidencia;
-        this.getObservacionByIdArchivoEvidencia(this.idArchivoSeleccionado);
-        this.idArchivoSeleccionadoEmitido.emit(this.idArchivoSeleccionado);
+        this.Archivos.forEach(archivo => {
+          this.idArchivoSeleccionado = archivo.IdArchivoEvidencia;
+          console.log("idArchivoEvideadmin",this.idArchivoSeleccionado);
+          this.getObservacionByIdArchivoEvidencia(this.idArchivoSeleccionado);
+          this.idArchivoSeleccionadoEmitido.emit(this.idArchivoSeleccionado);
+      });
       }
     });
     if(this.loginService.getTokenDecoded().perfil === "SUPADMIN" || this.loginService.getTokenDecoded().perfil === "SUPERVISOR" ){ //aqui configuracion para supervisor
@@ -74,20 +77,27 @@ export class EvidenciaFileContenedorComponent implements OnInit{
         this.formDisabled = new Array(this.Archivos.length).fill(false);
         this.formStatus = new Array(this.Archivos.length).fill('btnWait');
         if (this.Archivos.length > 0) {
-          this.idArchivoSeleccionado = this.Archivos[0].IdArchivoEvidencia;
-          this.getObservacionByIdArchivoEvidencia(this.idArchivoSeleccionado);
+          this.Archivos.forEach(archivo => {
+            this.idArchivoSeleccionado = archivo.IdArchivoEvidencia;
+            console.log("idArchivoEvideadmin",this.idArchivoSeleccionado);
+            this.getObservacionByIdArchivoEvidencia(this.idArchivoSeleccionado);
+            this.idArchivoSeleccionadoEmitido.emit(this.idArchivoSeleccionado);
+        });
       }
       });
     }
   }
 
-  sendValidated(i:number){    
+  sendValidated(i: number, archivo?: any): void {    
     console.log(this.radiobuton.value.estado);
-    if(this.radiobuton.value.estado!=='0'){
-      this.formDisabled[i]=true;
-      this.formStatus[i]=this.getClassStyle(this.radiobuton.value.estado);
-      this.updateStatus(i,this.radiobuton.value.estado);
-      this.radiobuton.value.estado='0';
+    if(this.radiobuton.value.estado !== '0'){
+      if (archivo) {
+        this.idArchivoSeleccionado = archivo.IdArchivoEvidencia;
+      }
+      this.formDisabled[i] = true;
+      this.formStatus[i] = this.getClassStyle(this.radiobuton.value.estado);
+      this.updateStatus(i, this.radiobuton.value.estado);
+      this.radiobuton.value.estado = '0';
     }
   }
 
@@ -147,7 +157,8 @@ export class EvidenciaFileContenedorComponent implements OnInit{
   getObservacionByIdArchivoEvidencia(id: any) {
     this.observacionDataService.getObservacionByIdArchivoEvidencia(id).subscribe(
       data => {
-        this.Observaciones = data;
+        this.Observaciones.push(...data);
+        console.log('Observaciones', this.Observaciones);
       }
     );
   }
@@ -156,6 +167,8 @@ export class EvidenciaFileContenedorComponent implements OnInit{
 
   enviarObservacion() {
     if (this.observacionDetalle) {
+      console.log("archivoEvide",this.idArchivoSeleccionado);
+      
       const nuevaObservacion: ObservacionArchivo = {
         IdArchivoEvidencia:this.idArchivoSeleccionado, 
         UsuarioEvalua: this.strname = this.login.getTokenDecoded().nombre, 

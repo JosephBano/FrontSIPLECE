@@ -10,9 +10,11 @@
                     <div class="row">
                         <div class="d-flex col-1"></div>
                         <div class="d-flex col-2">
-                          <p class="observacion" *ngIf="Observaciones && Observaciones.length > 0 && Observaciones[0].IdArchivoEvidencia === archivo.IdArchivoEvidencia">
-                            {{ Observaciones[0].Detalle }}
-                          </p>
+                          <ng-container *ngFor="let observacion of Observaciones">
+                            <p class="observacion" *ngIf="observacion.IdArchivoEvidencia === archivo.IdArchivoEvidencia">
+                              {{ observacion.Detalle }}
+                            </p>
+                          </ng-container>
                         </div>
                         <div class="d-flex col-1">
                           <div class="statusColor" *ngIf="archivo.Estado=='2' && archivo.PathUrl!==null" [ngStyle]="{'background-color': '#9FFFA4'}"></div>
@@ -53,7 +55,7 @@
                                     </div>
                                 </div>
                                 <div class="contenedor-btn d-flex align-center" >
-                                    <button [ngClass]="formStatus[i]" [disabled]="formDisabled[i]" (click)="openModal(template);"  (ngSubmit)="sendValidated(i)" >Aplicar</button>
+                                    <button [ngClass]="formStatus[i]" [disabled]="formDisabled[i]" (click)="openModal(template);"  (ngSubmit)="sendValidated(i,archivo)" >Aplicar</button>
                                 </div>                                
                             </div>                           
                         </form>
