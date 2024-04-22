@@ -9,6 +9,8 @@ export interface ArchivoEvidencia {
     Detalle?: string;
     PathUrl?: string;
     Activo?: string;
+    IdEvidencia?: string;
+    showContainer?: boolean;
 }
 export interface insertarArchivoEvidencia{
     codigoUsuario: string,

@@ -62,6 +62,18 @@
                     </ng-container>
                 </div>
             </li>
+            <div class="d-flex justify-content-end">
+              <i class="material-icons" (click)="toggleContainer(i)">arrow_drop_down</i>
+            </div>
+            <ng-container *ngIf="archivo.showContainer">
+              <ng-container *ngFor="let log of logArchivoEvidencia; let i = index" >
+                <div class="container unique-class" *ngIf="log.IdArchivoEvidencia === archivo.IdArchivoEvidencia && log.PathUrl">
+                  <p>Usuario Registra: {{ log.UsuarioRegistra }}</p>
+                  <a href="{{log.PathUrl}}"> {{archivo.Detalle}}</a>
+                  <p>Fecha Registro: {{ log.FechaRegistro }}</p>
+                </div>
+              </ng-container>
+            </ng-container>
         </ng-container>
     </ul>
 </ng-container>

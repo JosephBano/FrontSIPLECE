@@ -1,5 +1,5 @@
-const BASE_URL_SIPLECE = 'https://16.13.9.13:7094/api';
-const BASE_URL_SEGURIDAD = 'https://16.13.9.13:7177/api';
+const BASE_URL_SIPLECE = 'https://localhost:7094/api';
+const BASE_URL_SEGURIDAD = 'https://localhost:7177/api';
 const BASE_RUTA_PANEL = '/panel';
 const BASE_RUTA_TABLAS = `${BASE_RUTA_PANEL}/tablas`;
 
@@ -30,6 +30,7 @@ export const environment = {
     URL_BACKEND_PERIODO: `${BASE_URL_SIPLECE}/Periodo`,
     URL_BACKEND_PONDERACION: `${BASE_URL_SIPLECE}/Ponderacion`,
     URL_BACKEND_EVIDENCIA: `${BASE_URL_SIPLECE}/Evidencia`,
+    URL_BACKEND_LOGARCHIVOEVIDENCIA: `${BASE_URL_SIPLECE}/LogArchivoEvidencia`,
     URL_BACKEND_ARCHIVOEVIDENCIA: `${BASE_URL_SIPLECE}/ArchivoEvidencia`,
     URL_BACKEND_FUENTEINFORMACION: `${BASE_URL_SIPLECE}/FuentesInformacion`,
     URL_BACKEND_OBSERVACIONARCHIVO: `${BASE_URL_SIPLECE}/ObservacionesArchivos`,

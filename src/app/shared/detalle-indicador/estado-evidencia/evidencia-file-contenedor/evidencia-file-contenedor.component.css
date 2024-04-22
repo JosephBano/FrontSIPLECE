@@ -156,3 +156,15 @@ label + input {
     padding: 10px;
     border-radius: 5px;
   }
+  .unique-class {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #f0f0f0; /* Cambia esto al color que prefieras */
+    padding: 10px;
+    margin-bottom: 10px; /* Espacio entre cada contenedor */
+  }
+  
+  .unique-class p, .unique-class a {
+    margin: 0 10px; /* Espacio entre cada elemento dentro del contenedor */
+  }
