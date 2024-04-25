@@ -14,6 +14,7 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class AsignarUsuarioComponent implements OnInit{
   @Input() IdEvidencia: any;
+  @Input() IdEvidenciaSelected: any;
 
   Usuarios: Usuario[] = [];
   Archivos: ArchivoEvidencia[] = [];
@@ -70,9 +71,6 @@ export class AsignarUsuarioComponent implements OnInit{
     return this.dataService.formatName(str);
   }
   comprobarUsuario(usuario: Usuario): boolean {
-    for (let i = 0; i < this.Archivos.length; i++) {
-      if(this.Archivos[i].UsuarioRegistra == usuario.codigoAd) return true 
-    }
     return false;
   }
 
@@ -97,7 +95,7 @@ export class AsignarUsuarioComponent implements OnInit{
       codigoUsuario: this.usuario_aux.codigoAd,
       fechaRegistro: this.obtenerFechaEnFormato(),
       detalle: this.AddNewItem.value.detalle,
-      idEvidencia: this.IdEvidencia
+      idEvidencia: this.IdEvidenciaSelected
     }
     this.archivoService.insertarArchivoEvidencia(Archivo).subscribe(
       data => { 

@@ -1,3 +1,5 @@
+
+
 <div class="container">
     <div class="contenedor">
         <div class="contenedor-title">
@@ -13,7 +15,15 @@
                         </ng-container>  
                     </div>
                     <ng-container *ngIf="ActiveRols == '1'">
-                        <app-asignar-usuario [IdEvidencia]="evidencia.IdEvidencia"></app-asignar-usuario>
+                        <li class="list-group-item fw-bolder">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <p>
+                                    Personal encargado de subir la documentación
+                                </p>
+                                <span class="material-symbols-outlined agregar icon-hover" data-bs-target="#agregarEncargado" data-bs-toggle="modal" (click)="selectEvidenciaId(evidencia.IdEvidencia); statusFilter()">add</span>
+                            </div>
+                        </li>
+                        <app-asignar-usuario [IdEvidencia]="evidencia.IdEvidencia" [IdEvidenciaSelected]="idEvideSelected" ></app-asignar-usuario>
                     </ng-container>
                     <ng-container *ngIf="ActiveRols == '2'"> 
                         <app-evidencia-file-contenedor (idArchivoSeleccionadoEmitido)="idArchivoSeleccionado = $event" [IdEvidencia]="evidencia.IdEvidencia" [rolviewradios]="subRolActivo"></app-evidencia-file-contenedor>

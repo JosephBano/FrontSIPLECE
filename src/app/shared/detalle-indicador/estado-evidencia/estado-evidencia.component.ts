@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { Evidencia, EvidenciaUsuarioPeticion } from 'src/app/models/modelos-generales/evidencia.model';
@@ -16,10 +16,12 @@ import { environment } from 'src/environments/environment.development';
 })
 export class EstadoEvidenciaComponent implements OnInit {
   idArchivoSeleccionado?: number;
+  idEvideSelected?: any;
   @Input() idElemento: any;
-  
+  @Output() idEvidenciaSelected = new EventEmitter<any>();
   evidencias: Evidencia[] = [];
   permisoParams?: PermisoPeticion;
+  filterBoolean = false;  
 
   //ActiveRols= '1';
   ActiveRols= '2';
@@ -58,6 +60,13 @@ export class EstadoEvidenciaComponent implements OnInit {
     this.InitRoles();
   }
 
+  selectEvidenciaId(id: any) {
+    this.idEvidenciaSelected.emit(id);
+    this.idEvideSelected = id;
+  }
+  statusFilter() {
+    this.filterBoolean = !this.filterBoolean;
+  }
   InitRoles() {
     if(this.route.url.includes('asignar-usuarios'))this.ActiveRols = '1';
     if(this.route.url.includes('indicador-evidencia'))this.ActiveRols = '2';
