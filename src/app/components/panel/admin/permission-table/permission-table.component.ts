@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { forkJoin, switchMap } from 'rxjs';
+import { Observable, forkJoin, of, switchMap } from 'rxjs';
 import { CriteriosService } from 'src/app/services/modeloServicios/criterios.service';
 import { AddPermiso, PermisoPeticion, PermisoRespuesta, UpdatePermiso } from 'src/app/models/modelosSeguridad/perfil.model';
 import { LoginService } from 'src/app/services/login.service';
@@ -37,6 +37,7 @@ export class PermissionTableComponent {
   selectedItems: ListaPermisoRespuesta[] = [];
   permisosPeticion: PermisosPeticion[]= [];
   ListCodigoOpciones: string[] = [];  
+  padresData: { [key: string]: any } = {};
   // Remove the duplicate declaration of 'EliminarPermisos'
   // EliminarPermisos: DeletePermiso[] = [];
 
@@ -83,26 +84,6 @@ export class PermissionTableComponent {
         }
       ))
       forkJoin([permission$, data$]).subscribe(([permissionData, [componentData]]) => {
-        // console.log("Component data",componentData);
-        // console.log("Permission data",permissionData);
-        // const listBasicPermission = componentData.filter(c=>permissionData.some(p=>c.Codigo===p.codigoPermiso))
-        // console.log("listBasicPermisions",listBasicPermission);
-        // this.getPermissionBasic(listBasicPermission,componentData)
-        // this.assignablePermissions = componentData.filter(l=>listBasicPermission.some(p=>l.Codigo===p.Codigo));
-        
-        // let permisos: PermisosPeticion = {  
-        //   codigoModelo: this.permisoParams?.codigoModelo!,
-        //   codigoPerfil: this.permisoParams!.codigoPerfil,
-        //   codigoEstado: 'A'
-        // };
-        
-        // this.perfilService.getPermisosByCodigoPerfil(permisos.codigoModelo, permisos.codigoPerfil, permisos.codigoEstado).subscribe((data: PermisoRespuesta[]) => {
-        //   this.mePermissions = data;
-        //   this.mePermissions.forEach(mp=>{
-        //     this.selectedItems.push(componentData.find(ap=>ap.Codigo===mp.codigoPermiso)!)
-        //   })
-        // });
-        // this.getUserData()
         const listBasicPermission = componentData.filter(c=>permissionData.some(p=>c.Codigo===p.codigoPermiso))
         this.assignablePermissions = componentData.filter(l=>listBasicPermission.some(p=>l.Codigo===p.Codigo));   
         this.getPermissionBasic(this.selectedItems,componentData)
@@ -118,11 +99,17 @@ export class PermissionTableComponent {
             const item = componentData.find(ap=>ap.Codigo===mp.codigoPermiso);
             if (item) {
               this.selectedItems.push(item);
+              this.getPadres(item.Codigo).subscribe((data)=>{
+                if (item.Codigo) {
+                  this.padresData[item.Codigo] = data; // Almacena los datos en la clave correspondiente
+                }
+              })
             }
           })
           // Filtrar los elementos de assignablePermissions que ya están en selectedItems
           this.assignablePermissions = this.assignablePermissions.filter(assignableItem => !this.selectedItems.some(selectedItem => selectedItem.Codigo === assignableItem.Codigo));
           this.getUserData();
+          
         });
       })    
     }else{
@@ -180,6 +167,20 @@ export class PermissionTableComponent {
   getPadre(item: ListaPermisoRespuesta){
     if(item.Codigo?.includes('C-',0) && !item.Codigo?.includes('C-',1))
       this.menuList.push(this.createNuevoNodo(item))
+  }
+  getPadres(dato: any): Observable<any> {
+    switch(true){
+      case dato.includes('SC-',0) && !dato.includes('SC-',1):
+        return this.subcriterioService.getFather(dato); 
+      case dato.includes('I-',0) && !dato.includes('I-',1):
+        return this.indicadorService.getFather(dato); 
+      case dato.includes('EF-',0) && !dato.includes('EF-',1):
+        return this.elementoFundamentalService.getFather(dato); 
+      case dato.includes('E-',0) && !dato.includes('E-',1):   
+        return this.evidenciaService.getFather(dato);
+      default:
+        return of();  
+    }
   }
   getHijo(item: ListaPermisoRespuesta){
     switch(item.Codigo!==null){

@@ -17,6 +17,7 @@ export class AddUsuarioComponent implements OnInit{
   formUsuario!: FormGroup;
   nombre: string = '';
   apellido: string = '';
+  email: string = '';
   contrasenia: string = '';
   showPassword = false;
 
@@ -31,6 +32,7 @@ export class AddUsuarioComponent implements OnInit{
     this.formUsuario = this.fb.group({
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
+      email: ['', Validators.required],
       contrasenia: ['',Validators.required] 
     });
   }
@@ -61,11 +63,12 @@ export class AddUsuarioComponent implements OnInit{
     } else {
       const nombre = this.formUsuario.value['nombre'];
       const apellido = this.formUsuario.value['apellido'];
+      const email = this.formUsuario.value['email'];
       const contrasenia = this.formUsuario.value['contrasenia'];
   
       const usuario: Usuario = {
         codigoAd: `${nombre}.${apellido}`,
-        correo: `${nombre.toLowerCase()}.${apellido.toLocaleLowerCase()}@istpet.edu.ec`,
+        correo: email,
         nombre: nombre,
         apellido: apellido,
         rol: '',

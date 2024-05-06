@@ -93,10 +93,10 @@
                             </form> 
                             <div class="table-wraper">
                                 <ng-container *ngFor="let usuario of Usuarios | user:filter; let i = index">
-                                    <div class="contenedor-seleccionar" *ngFor="let usuario of Usuarios | user:filter">
+                                    <div class="contenedor-seleccionar">
                                         <p>{{usuario.nombre}} {{usuario.apellido}}</p>
                                         <span class="material-symbols-outlined agregar" [ngClass]="comprobarUsuario(usuario) ? 'close':'check'" (click)="addValuesfor(usuario)">{{comprobarUsuario(usuario) ? 'close':'check'}}</span>
-                                      </div>
+                                    </div>
                                 </ng-container>
                             </div>
                         </ng-container>
@@ -132,14 +132,14 @@
 <!--Fin funcion Editar-->
 
 <!--Delete Modal-->
-<!-- <button hidden #btnConfDel data-bs-target="#confDelUser" data-bs-toggle="modal"></button>
+<button hidden #btnConfDel data-bs-target="#confDelUser" data-bs-toggle="modal"></button>
 
 <div class="modal fade" id="confDelUser" aria-hidden="true" data-bs-backdrop="static" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="container">
-                    <p>Se eliminara al encargado <strong>{{strdelconf}}</strong> para esta evidencia</p>
+                    <p>Se eliminara al encargado <strong>{{straddconf}}</strong> para esta evidencia</p>
                     <div class="d-flex justify-content-center align-items-center">
                         <button class="btn btn-primary" data-bs-dismiss="modal">Agregar</button>
                         <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -148,5 +148,5 @@
             </div>
         </div>
     </div>
-</div> -->
+</div>
 <!--Delete Modal fin-->

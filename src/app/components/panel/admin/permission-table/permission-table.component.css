@@ -58,3 +58,11 @@
     color: #fff;
     opacity: 0.8;
   }
+  .padre-container {
+    background-color: #f0f0f0; /* Color de fondo gris claro */
+    border: 1px solid #ccc; /* Borde gris */
+    padding: 10px; /* Espacio interior */
+    margin-bottom: 10px; /* Espacio exterior en la parte inferior */
+    border-radius: 5px; /* Bordes redondeados */
+    font-weight: bold; /* Texto en negrita */
+  }

@@ -11,6 +11,9 @@
                     <div class="d-flex justify-content-betweeen">
                         <p>{{GetMaxCharacters(evidencia.Detalle)}}<app-informacion-modal [DetalleEvidencia]="evidencia.Detalle"></app-informacion-modal></p>
                         <ng-container *ngIf="ActiveRols == '2'">
+                            <span class="material-symbols-outlined icon-size" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                note_add
+                            </span>
                             <app-modal-evidencias [idArchivo]="idArchivoSeleccionado" [elemento]="idElemento"></app-modal-evidencias>
                         </ng-container>  
                     </div>

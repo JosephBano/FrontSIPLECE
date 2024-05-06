@@ -20,7 +20,16 @@
             <div *ngIf="formUsuario.controls['apellido']?.errors?.['required'] && formUsuario.controls['apellido']?.touched" class="alert alert-danger">
               Este campo es obligatorio.
             </div>
-          
+
+            <label>Email:</label>
+            <input type="email" formControlName="email" [(ngModel)]="email" pattern="^[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,4}$" required autocomplete="off">
+            <div *ngIf="formUsuario.controls['email']?.errors?.['pattern']" class="alert alert-danger">
+              Por favor, introduce un email válido.
+            </div>
+            <div *ngIf="formUsuario.controls['email']?.errors?.['required'] && formUsuario.controls['email']?.touched" class="alert alert-danger">
+              Este campo es obligatorio.
+            </div>
+
             <label>Contraseña:
             </label>
             <div class="input-group">

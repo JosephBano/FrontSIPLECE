@@ -106,7 +106,6 @@ export class EvidenciaFileContenedorComponent implements OnInit{
 
   sendValidated(i: number, archivo?: any): void {    
     console.log(this.radiobuton.value.estado);
-    console.log("entre");
     
     if(this.radiobuton.value.estado !== '0'){
       if (archivo) {

@@ -29,25 +29,18 @@ export class UsuarioService {
     return this.http.get<Usuario[]>(this.API_URL, {headers});
   }
 
-
-  getUsuariosActivos(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(this.API_URL);
-  }
-   
-  getUsuario(id: number): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.API_URL}/${id}`);
-  }
+  updateActiveStatus(id: any): Observable<any> {
+    const token = this.loginService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    return this.http.put(`${this.API_URL}/${id}`, {headers});
+}
 
   crearUsuario(usuario: Usuario): Observable<Usuario> {
     return this.http.post<Usuario>(this.API_URL, usuario); 
   }
 
-  actualizarUsuario(usuario: Usuario): Observable<any> {
-    return this.http.put<Usuario>(this.API_URL, usuario);
-  }
-  eliminarUsuario(id: number): Observable<any> {
-    return this.http.delete<Usuario>(`${this.API_URL}/${id}`);
-  }
 
   getRol(userRol: UsuarioRolPeticion): Observable<UsuarioRolRespuesta[]> {
     return this.http.get<UsuarioRolRespuesta[]>(`${this.API_URL}/rol?CodigoUsuario=${userRol.codigoUsuario}&CodigoSistema=${userRol.codigoSistema}&CodigoInstitucion=${userRol.codigoInstitucion}`)

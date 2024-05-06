@@ -16,6 +16,7 @@
           <td>{{usuario.nombre}}</td>
           <td>{{usuario.apellido}}</td>
           <td>{{usuario.correo}}</td>
+          <button (click)="updateUserStatus(usuario.idUsuario)">Eliminar</button>
         </tr>
       </tbody>
     </table>

@@ -59,6 +59,17 @@ export class UsuariosListComponent {
      );
   }
 
+  updateUserStatus(id: any) {
+    this.usuarioService.updateActiveStatus(id).subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.error('Error al actualizar el estado del usuario', error);
+      }
+    );
+  }
+  
 }
 
 

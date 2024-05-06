@@ -14,13 +14,12 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class AsignarUsuarioComponent implements OnInit{
   @Input() IdEvidencia: any;
-  @Input() IdEvidenciaSelected: any;
-  selectedEncargado?: ArchivoEvidencia;
+
   Usuarios: Usuario[] = [];
   Archivos: ArchivoEvidencia[] = [];
   filter!: string;
   detalle!: string;
-
+  @Input() IdEvidenciaSelected: any;
   filterBoolean: boolean = false;
 
   usuario_aux!: Usuario;
@@ -71,6 +70,10 @@ export class AsignarUsuarioComponent implements OnInit{
     return this.dataService.formatName(str);
   }
   comprobarUsuario(usuario: Usuario): boolean {
+    for (let i = 0; i < this.Archivos.length; i++) {
+      
+      if(this.Archivos[i].UsuarioRegistra == usuario.codigoAd && this.Archivos[i].IdEvidencia == this.IdEvidenciaSelected ) return true 
+    }
     return false;
   }
 
@@ -130,33 +133,23 @@ export class AsignarUsuarioComponent implements OnInit{
   }
 
   openModalDel(archivo: ArchivoEvidencia) {
-    if (archivo && archivo.IdArchivoEvidencia) {
-      // Hacer una copia profunda de 'archivo'
-      this.archivo_aux = JSON.parse(JSON.stringify(archivo));
-      console.log(this.archivo_aux);
-      this.strdelconf = archivo.UsuarioRegistra ?? '';
-      this.btnConfDel.nativeElement.click();
-  
-      // Llamar a borrarArchivo() aquí
-      this.borrarArchivo();
-    } else {
-      console.error('Archivo o IdArchivoEvidencia es undefined');
-    }
+    this.archivo_aux = archivo;
+    
+    this.strdelconf = archivo.UsuarioRegistra ?? '';
+    // this.btnConfDel.nativeElement.click();
+    this.borrarArchivo(archivo.IdArchivoEvidencia);
   }
-  
-  borrarArchivo() {
-    if (this.archivo_aux && this.archivo_aux.IdArchivoEvidencia) {
-      const id = this.archivo_aux.IdArchivoEvidencia;
-      this.archivoService.DeleteArchivo(id).subscribe(
-        data => { 
-          this.toastr.success('El encargado se ha eliminado con exito!');
-          this.loadData();
-        }, error => {
-          this.toastr.error('Ha ocurrido un error al borrar al Encargado');
-        }
-      )
-    } else {
-      console.error('archivo_aux o IdArchivoEvidencia es undefined');
-    }
+
+  borrarArchivo(idEvide: any) {
+    const id = this.archivo_aux.IdArchivoEvidencia ?? '';
+    
+    this.archivoService.DeleteArchivo(id).subscribe(
+      data => { 
+        this.toastr.success('El encargado se ha eliminado con exito!');
+        this.loadData();
+      }, error => {
+        this.toastr.error('Ha ocurrido un error al borrar al Encargado');
+      }
+    )
   }
 }
