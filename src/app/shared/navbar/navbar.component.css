@@ -5,3 +5,15 @@
 .color-icon {
     color: #000;
 }
+.notifications-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px; /* Ajusta según sea necesario */
+    background-color: white; /* Ajusta según sea necesario */
+    border: 1px solid #ccc; /* Ajusta según sea necesario */
+    border-radius: 4px; /* Ajusta según sea necesario */
+    padding: 10px; /* Ajusta según sea necesario */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Ajusta según sea necesario */
+    z-index: 1; /* Asegura que la caja se superponga a otros elementos */
+  }

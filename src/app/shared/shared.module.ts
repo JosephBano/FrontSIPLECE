@@ -26,6 +26,7 @@ import { TablaRestablecerModalComponent } from './tabla-restablecer-modal/tabla-
 import { BotonAtrasComponent } from './boton-atras/boton-atras.component';
 import { LoadingComponent } from './loading/loading.component';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
+import { NotificationsComponent } from './navbar/notifications/notifications.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { NotAuthorizedComponent } from './not-authorized/not-authorized.componen
     SelectorIndicadoresComponent,
     DetalleIndicadorComponent,
     NavbarComponent,
+    NotificationsComponent,
     SidebarComponent,
     IndicadorTableComponent,
     EstadoEvidenciaComponent,
@@ -46,6 +48,7 @@ import { NotAuthorizedComponent } from './not-authorized/not-authorized.componen
     BotonAtrasComponent,
     LoadingComponent,
     NotAuthorizedComponent,
+    NotificationsComponent,
   ],
   imports: [
     SharedRoutingModule,

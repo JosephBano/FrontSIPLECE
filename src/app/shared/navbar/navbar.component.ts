@@ -8,7 +8,7 @@ import { Sidebar } from 'src/app/services/sidebar.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit{
-  
+  showNotifications = false;
   strname: string = ''; 
   
   constructor(
@@ -23,6 +23,8 @@ export class NavbarComponent implements OnInit{
 
   ngOnInit(): void {
     this.strname = this.login.getTokenDecoded().nombre;
+    console.log("Token decoded",this.login.getTokenDecoded())
+    
   }
   
 }

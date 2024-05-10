@@ -6,6 +6,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { DataService } from 'src/app/services/data.service';
+import { NotificationService } from 'src/app/services/modeloServicios/notification.service';
 
 @Component({
   selector: 'app-asignar-usuario',
@@ -43,6 +44,7 @@ export class AsignarUsuarioComponent implements OnInit{
     private fb: FormBuilder,
     private toastr: ToastrService,
     private dataService: DataService,
+    private notificationService: NotificationService,
   ) {
     this.editarEncargado = this.fb.group({
       nombre: '',
@@ -104,6 +106,12 @@ export class AsignarUsuarioComponent implements OnInit{
       data => { 
         this.toastr.success('Evidencia creada con exito');
         this.loadData();
+        const notification = {
+          message: `Se te ha asignado una nueva evidencia: ${this.AddNewItem.value.detalle}`,
+          usuarioRegistra: this.usuario_aux.codigoAd 
+        };
+        console.log('Adding notification:', notification);
+        this.notificationService.addNotification(notification);
       }, error => {
         this.toastr.error('Ha ocurrido un error');
       }

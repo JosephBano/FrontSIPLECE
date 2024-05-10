@@ -16,5 +16,11 @@
         </li>
       </ul>
     </div>
+    <div>
+      <a class="nav-link active" aria-current="page" (click)="showNotifications = !showNotifications">
+        <span class="material-symbols-outlined">notifications</span>
+      </a>
+    </div>
   </div>
+  <app-notifications *ngIf="showNotifications" class="notifications-dropdown"></app-notifications>
 </nav>
