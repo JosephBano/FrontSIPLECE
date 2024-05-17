@@ -9,12 +9,14 @@
             <div class="contenedor-evidencia">
                 <ng-container *ngIf="evidencia">
                     <div class="d-flex justify-content-betweeen">
-                        <p>{{GetMaxCharacters(evidencia.Detalle)}}<app-informacion-modal [DetalleEvidencia]="evidencia.Detalle"></app-informacion-modal></p>
+                        <p>{{GetMaxCharacters(evidencia.Detalle)}}
+                            <span class="material-symbols-outlined informacion" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="selectEvidenciaDetalle(evidencia.Detalle)" >help</span>
+                            <app-informacion-modal [DetalleEvidencia]="detalleSelected" ></app-informacion-modal></p>
                         <ng-container *ngIf="ActiveRols == '2'">
-                            <span class="material-symbols-outlined icon-size" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            <span class="material-symbols-outlined icon-size" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="selectEvidenciaId(evidencia.IdEvidencia)">
                                 note_add
                             </span>
-                            <app-modal-evidencias [idArchivo]="idArchivoSeleccionado" [elemento]="idElemento"></app-modal-evidencias>
+                            <app-modal-evidencias [IdEvidenciaSelected]="idEvideSelected" [elemento]="idElemento"></app-modal-evidencias>
                         </ng-container>  
                     </div>
                     <ng-container *ngIf="ActiveRols == '1'">

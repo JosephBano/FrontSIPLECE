@@ -10,6 +10,7 @@ import { LoginService } from 'src/app/services/login.service';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { ObservacionDataService } from 'src/app/services/modeloServicios/observacion-data.service';
+import { archivoEvidencia } from 'src/app/models/modelos-generales/archivo-evidencia.model';
 
 @Component({
   selector: 'app-modal-evidencias',
@@ -17,7 +18,7 @@ import { ObservacionDataService } from 'src/app/services/modeloServicios/observa
   styleUrls: ['./modal-evidencias.component.css']
 })
 export class ModalEvidenciasComponent implements OnInit{
-  @Input() idArchivo?: number;
+  @Input() IdEvidenciaSelected?: any;
   files: File[] = [];
   formData: FormData = new FormData();
   @Input() elemento: any;
@@ -99,31 +100,45 @@ export class ModalEvidenciasComponent implements OnInit{
           return this.archivoEvService.AddFileSharedPoint(addFileBody)
         })
       ).subscribe(data => {
-        this.updateEvidenceFile(data.PathUrl, fileDetail)
+        this.addArchivoEvidencia(data.PathUrl, fileDetail)
       })
     }
 
-  updateEvidenceFile(pathUrl?: string, fileDetail?: string) {
-    if (this.idArchivo !== undefined) {
-      console.log('idArchivo: en updateevidence file', this.idArchivo);
-      const agregarPath: AgregarPathRequest = {
+
+    addArchivoEvidencia(pathUrl?: string, fileDetail?: string){
+      console.log("Ejecuto activo 0");
+      console.log("IdEvide",this.IdEvidenciaSelected);
+      console.log("UsuarioRegs",this.usuarioRegister);
+      this.archivoEvService.updateArchivoEvidencia(this.IdEvidenciaSelected, this.usuarioRegister).subscribe(() => {
+      });
+      const archivo : archivoEvidencia={
+        IdEvidencia: this.IdEvidenciaSelected,
+        Estado: '0',
+        FechaRegistro: this.obtenerFechaEnFormato(),
+        UsuarioRegistra: this.usuarioRegister,
+        Detalle: fileDetail,
         PathUrl: pathUrl,
-        CodigoUsuario: this.usuarioRegister,
-        IdArchivoEvidencia: this.idArchivo,
-        Detalle: fileDetail
+        Activo: '1',
       }
-      this.toastr.success("Archivo subido a SharedPoint")    
-      this.archivoEvService.SaveFile(agregarPath).subscribe();
-      this.observacionDataService.deleteObservacion(this.idArchivo).subscribe(
-        response => {
-          console.log('Observación eliminada:', response);
-        },
-        error => {
-          console.error('Error eliminando observación:', error);
-        }
-      );
-    }
+      console.log('Archivo:', archivo);
+      this.toastr.success("Archivo subido a SharedPoint")  
+      this.archivoEvService.insertarArchivoEvidencia(archivo).subscribe(() => {
+      });
+      
   }
+  obtenerFechaEnFormato() {
+    const fecha = new Date();
+    const anio = fecha.getFullYear();
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    const dia = fecha.getDate().toString().padStart(2, '0'); 
+    const hora = fecha.getHours().toString().padStart(2, '0');
+    const minutos = fecha.getMinutes().toString().padStart(2, '0');
+    const segundos = fecha.getSeconds().toString().padStart(2, '0');
+
+  
+    return `${anio}-${mes}-${dia}T${hora}:${minutos}:${segundos}`;
+  }
+
   openModal() {
     this.evidenciaService.getEvidencia().subscribe(
       (data) => {

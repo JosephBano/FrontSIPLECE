@@ -1,0 +1,17 @@
+.notification-container {
+    border: 2px solid #4b0082; /* Color morado oscuro */
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9; /* Color de fondo claro */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra alrededor del contenedor */
+  }
+  
+  .notification-container p {
+    margin: 0; /* Elimina el margen de los párrafos */
+    padding: 5px 0; /* Agrega un poco de relleno vertical a los párrafos */
+  }
+  
+  .notification-container p:first-child {
+    font-weight: bold; /* Hace que el primer párrafo (Detalle) sea negrita */
+  }

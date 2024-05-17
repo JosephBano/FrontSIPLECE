@@ -1,6 +1,6 @@
 export interface ObservacionArchivo {
     IdObservacionArchivo?: string;
-    IdArchivoEvidencia: string;
+    IdArchivoEvidencia: number;
     UsuarioEvalua: string;
     Detalle: string;
     Estado?: string;

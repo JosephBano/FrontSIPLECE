@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ArchivoEvidencia, insertarArchivoEvidencia } from 'src/app/models/modelos-generales/archivo-evidencia.model';
+import { ArchivoEvidencia, archivoEvidencia } from 'src/app/models/modelos-generales/archivo-evidencia.model';
 import { Usuario } from 'src/app/models/usuario.model';
 import { ArchivoEvidenciaService } from 'src/app/services/modeloServicios/archivo-evidencia.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -92,31 +92,31 @@ export class AsignarUsuarioComponent implements OnInit{
     return `${anio}-${mes}-${dia}T${hora}:${minutos}:${segundos}`;
   }
 
-  agregarNuevaArchivo() {
-    if(this.AddNewItem.value.detalle===''){
-      this.AddNewItem.value.detalle='Archivo Evidencia';
-    }
-    const Archivo: insertarArchivoEvidencia= {
-      codigoUsuario: this.usuario_aux.codigoAd,
-      fechaRegistro: this.obtenerFechaEnFormato(),
-      detalle: this.AddNewItem.value.detalle,
-      idEvidencia: this.IdEvidenciaSelected
-    }
-    this.archivoService.insertarArchivoEvidencia(Archivo).subscribe(
-      data => { 
-        this.toastr.success('Evidencia creada con exito');
-        this.loadData();
-        const notification = {
-          message: `Se te ha asignado una nueva evidencia: ${this.AddNewItem.value.detalle}`,
-          usuarioRegistra: this.usuario_aux.codigoAd 
-        };
-        console.log('Adding notification:', notification);
-        this.notificationService.addNotification(notification);
-      }, error => {
-        this.toastr.error('Ha ocurrido un error');
-      }
-    )
-  }
+  // agregarNuevaArchivo() {
+  //   if(this.AddNewItem.value.detalle===''){
+  //     this.AddNewItem.value.detalle='Archivo Evidencia';
+  //   }
+  //   const Archivo: insertarArchivoEvidencia= {
+  //     codigoUsuario: this.usuario_aux.codigoAd,
+  //     fechaRegistro: this.obtenerFechaEnFormato(),
+  //     detalle: this.AddNewItem.value.detalle,
+  //     idEvidencia: this.IdEvidenciaSelected
+  //   }
+  //   this.archivoService.insertarArchivoEvidencia(Archivo).subscribe(
+  //     data => { 
+  //       this.toastr.success('Evidencia creada con exito');
+  //       this.loadData();
+  //       const notification = {
+  //         message: `Se te ha asignado una nueva evidencia: ${this.AddNewItem.value.detalle}`,
+  //         usuarioRegistra: this.usuario_aux.codigoAd 
+  //       };
+  //       console.log('Adding notification:', notification);
+  //       this.notificationService.addNotification(notification);
+  //     }, error => {
+  //       this.toastr.error('Ha ocurrido un error');
+  //     }
+  //   )
+  // }
 
   addValuesfor(usuario: Usuario) {
     if(this.comprobarUsuario(usuario)) {
@@ -145,19 +145,19 @@ export class AsignarUsuarioComponent implements OnInit{
     
     this.strdelconf = archivo.UsuarioRegistra ?? '';
     // this.btnConfDel.nativeElement.click();
-    this.borrarArchivo(archivo.IdArchivoEvidencia);
+    // this.borrarArchivo(archivo.IdArchivoEvidencia);
   }
 
-  borrarArchivo(idEvide: any) {
-    const id = this.archivo_aux.IdArchivoEvidencia ?? '';
+  // borrarArchivo(idEvide: any) {
+  //   const id = this.archivo_aux.IdArchivoEvidencia ?? '';
     
-    this.archivoService.DeleteArchivo(id).subscribe(
-      data => { 
-        this.toastr.success('El encargado se ha eliminado con exito!');
-        this.loadData();
-      }, error => {
-        this.toastr.error('Ha ocurrido un error al borrar al Encargado');
-      }
-    )
-  }
+  //   this.archivoService.DeleteArchivo(id).subscribe(
+  //     data => { 
+  //       this.toastr.success('El encargado se ha eliminado con exito!');
+  //       this.loadData();
+  //     }, error => {
+  //       this.toastr.error('Ha ocurrido un error al borrar al Encargado');
+  //     }
+  //   )
+  // }
 }

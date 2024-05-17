@@ -168,3 +168,9 @@ label + input {
   .unique-class p, .unique-class a {
     margin: 0 10px; /* Espacio entre cada elemento dentro del contenedor */
   }
+  .container-flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px; 
+  }

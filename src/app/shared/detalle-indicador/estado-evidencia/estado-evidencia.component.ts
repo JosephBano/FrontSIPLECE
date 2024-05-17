@@ -15,10 +15,12 @@ import { environment } from 'src/environments/environment.development';
   styleUrls: ['./estado-evidencia.component.css']
 })
 export class EstadoEvidenciaComponent implements OnInit {
-  idArchivoSeleccionado?: number;
+  idArchivoSeleccionado?: any;
   idEvideSelected?: any;
+  detalleSelected?: any;
   @Input() idElemento: any;
   @Output() idEvidenciaSelected = new EventEmitter<any>();
+  @Output() DetalleSelected = new EventEmitter<any>();
   evidencias: Evidencia[] = [];
   permisoParams?: PermisoPeticion;
   filterBoolean = false;  
@@ -63,6 +65,10 @@ export class EstadoEvidenciaComponent implements OnInit {
   selectEvidenciaId(id: any) {
     this.idEvidenciaSelected.emit(id);
     this.idEvideSelected = id;
+  }
+  selectEvidenciaDetalle(detalle: any) {
+    this.DetalleSelected.emit(detalle);
+    this.detalleSelected = detalle;
   }
   statusFilter() {
     this.filterBoolean = !this.filterBoolean;

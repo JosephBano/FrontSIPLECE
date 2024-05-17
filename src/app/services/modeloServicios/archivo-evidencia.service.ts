@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
 import { Observable } from 'rxjs';
-import { ArchivoEvidencia, insertarArchivoEvidencia } from 'src/app/models/modelos-generales/archivo-evidencia.model';
+import { ArchivoEvidencia, archivoEvidencia } from 'src/app/models/modelos-generales/archivo-evidencia.model';
 import { AgregarArchivoRequest, AgregarArchivoResponse, AgregarPathRequest, ObtenerTokenRequest, ObtenerTokenResponse } from 'src/app/models/modelos-generales/sharedPointToken';
 
 @Injectable({
@@ -29,7 +29,10 @@ export class ArchivoEvidenciaService {
   GetByEvidenciaUser(id: string, user: string): Observable<ArchivoEvidencia[]> {
     return this.http.get<ArchivoEvidencia[]>(`${this.API_URL}/GetByEvidenciaUser?IdEvidencia=${id}&CodeUser=${user}`);
   }
-
+  
+  getArchivoInactivo(idEvidencia: number, codeUser: string): Observable<any> {
+    return this.http.get<any>(`${this.API_URL}/GetArchivoInactivo?IdEvidencia=${idEvidencia}&CodeUser=${codeUser}`);
+  }
   GetTokenSharedPoint(obtenerToken: ObtenerTokenRequest): Observable<ObtenerTokenResponse>{
     return this.http.post<ObtenerTokenResponse>(`${this.API_URL}/Token`,obtenerToken);
   }
@@ -38,18 +41,19 @@ export class ArchivoEvidenciaService {
     return this.http.post<AgregarArchivoResponse>(`${this.API_URL}/AddFile`,agregarArchivo)
   }
 
-  PostArchivo(archivo: ArchivoEvidencia): Observable<ArchivoEvidencia> {
-    return this.http.post<ArchivoEvidencia>(`${this.API_URL}/InsertarArchivoEvidencia`, archivo, this.httpOptions);
-  }
-  insertarArchivoEvidencia(archivo: insertarArchivoEvidencia): Observable<insertarArchivoEvidencia> {
-    return this.http.post<insertarArchivoEvidencia>(`${this.API_URL}/InsertarArchivoEvidencia`, archivo, this.httpOptions);
+  insertarArchivoEvidencia(archivo: archivoEvidencia): Observable<archivoEvidencia> {
+    return this.http.post<archivoEvidencia>(`${this.API_URL}/InsertarArchivoEvidencia`, archivo, this.httpOptions);
   }
 
   UpdateArchivo(archivo: ArchivoEvidencia): Observable<ArchivoEvidencia> {
     return this.http.put<ArchivoEvidencia>(this.API_URL, archivo, this.httpOptions);
   }
 
-  DeleteArchivo(id: string): Observable<any> {
+  updateArchivoEvidencia(idEvidencia: any, codigoUsuario: any): Observable<any> {
+    return this.http.put(`${this.API_URL}/UpdateArchivoEvidencia/${idEvidencia}/${codigoUsuario}`, {});
+}
+
+  DeleteArchivo(id: number): Observable<any> {
     return this.http.delete(this.API_URL + `/${id}`, this.httpOptions);
   }
   PostFile(formData: FormData): Observable<string> {

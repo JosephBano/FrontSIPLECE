@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
-import { NotificationService } from 'src/app/services/modeloServicios/notification.service';
+import { NotificacionesService } from 'src/app/services/modeloServicios/notificaciones.service';
+
 
 @Component({
   selector: 'app-notifications',
@@ -9,19 +10,19 @@ import { NotificationService } from 'src/app/services/modeloServicios/notificati
   styleUrls: ['./notifications.component.css']
 })
 export class NotificationsComponent implements OnInit{
-  notifications$?: Observable<any>;
   userRegistra? : string;
+  notificaciones: any[] = [];
 
-  constructor(private notificationService: NotificationService,
+  constructor(private notificacionesService: NotificacionesService,
     private login: LoginService
   ) { }
 
   ngOnInit(): void {
     const usuarioRegistra = this.login.getTokenDecoded().usuarioRegistra;
-  
-    this.notifications$ = this.notificationService.getNotificationsForUser();
-    this.notifications$.subscribe(notifications => {
-      console.log(notifications); 
+    this.notificacionesService.getNotificacionByUsuario(this.login.getTokenDecoded().usuarioRegistra)
+    .subscribe(data => {
+      console.log("data notificaciones",data);
+      this.notificaciones = data;
     });
   }
 }

@@ -32,6 +32,7 @@ export const environment = {
     URL_BACKEND_EVIDENCIA: `${BASE_URL_SIPLECE}/Evidencia`,
     URL_BACKEND_LOGARCHIVOEVIDENCIA: `${BASE_URL_SIPLECE}/LogArchivoEvidencia`,
     URL_BACKEND_ARCHIVOEVIDENCIA: `${BASE_URL_SIPLECE}/ArchivoEvidencia`,
+    URL_BACKEND_NOTIFICACIONES: `${BASE_URL_SIPLECE}/Notificaciones`,
     URL_BACKEND_FUENTEINFORMACION: `${BASE_URL_SIPLECE}/FuentesInformacion`,
     URL_BACKEND_OBSERVACIONARCHIVO: `${BASE_URL_SIPLECE}/ObservacionesArchivos`,
     url_backend_observacioninformacion: `${BASE_URL_SIPLECE}/ObservacionesInformacion`,
