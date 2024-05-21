@@ -19,8 +19,11 @@
     <div>
       <a class="nav-link active" aria-current="page" (click)="showNotifications = !showNotifications">
         <span class="material-symbols-outlined">notifications</span>
+        <span class="badge badge-notification" *ngIf="numNotificaciones !== 0">{{numNotificaciones}}</span>
       </a>
     </div>
   </div>
-  <app-notifications *ngIf="showNotifications" class="notifications-dropdown"></app-notifications>
+  <div>
+    <app-notifications *ngIf="showNotifications" class="notifications-dropdown"></app-notifications>
+  </div>
 </nav>

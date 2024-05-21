@@ -36,8 +36,6 @@ export class EvidenciaFileContenedorComponent implements OnInit{
   @Input() rolviewradios: any;
   idArchivoSeleccionado: any;
   showContainer = false;
-  logArchivoEvidencia: any[] = [];
-
 
   constructor(
     private archivoService: ArchivoEvidenciaService,
@@ -65,12 +63,9 @@ export class EvidenciaFileContenedorComponent implements OnInit{
   }
 
   data(): void {
-    console.log("IdEvidencia",this.IdEvidencia);
-    console.log("usuarioRegistra",this.loginService.getTokenDecoded().usuarioRegistra);
     this.archivoService.GetByEvidenciaUser(this.IdEvidencia,this.loginService.getTokenDecoded().usuarioRegistra).subscribe(data => {
       this.Archivos = data.map(archivo => ({ ...archivo, showContainer: false }));
       this.Archivos = data;
-      console.log("Archivos",this.Archivos);
       this.formDisabled = new Array(this.Archivos.length).fill(false);
       this.formStatus = new Array(this.Archivos.length).fill('btnWait');
       if (this.Archivos.length > 0) {
@@ -79,6 +74,9 @@ export class EvidenciaFileContenedorComponent implements OnInit{
           this.getObservacionByIdArchivoEvidencia(this.idArchivoSeleccionado);
            this.idArchivoSeleccionadoEmitido.emit(this.idArchivoSeleccionado);
            this.idArchivoSeleccionado = archivo.IdArchivoEvidencia;
+           this.notificacionesService.deleteNotificacion(archivo.IdEvidencia,archivo.UsuarioRegistra).subscribe(data=>{
+           });
+           this.notificacionesService.notifyDataChanged();
            // ...
       });
       }
@@ -87,7 +85,6 @@ export class EvidenciaFileContenedorComponent implements OnInit{
       this.archivoService.GetByEvidencia(this.IdEvidencia).subscribe(data=>{
         this.Archivos = data.map(archivo => ({ ...archivo, showContainer: false }));
         this.Archivos = data;
-      console.log("Archivos",this.Archivos);
         this.formDisabled = new Array(this.Archivos.length).fill(false);
         this.formStatus = new Array(this.Archivos.length).fill('btnWait');
         if (this.Archivos.length > 0) {
@@ -96,16 +93,17 @@ export class EvidenciaFileContenedorComponent implements OnInit{
             this.getObservacionByIdArchivoEvidencia(this.idArchivoSeleccionado);
              this.idArchivoSeleccionadoEmitido.emit(this.idArchivoSeleccionado);
              this.idArchivoSeleccionado = archivo.IdArchivoEvidencia;
+             this.notificacionesService.deleteNotificacion(archivo.IdEvidencia,'SUPERVISOR').subscribe(data=>{
+            });
+            this.notificacionesService.notifyDataChanged();
              // ...
-        });
+        });   
       }
       });
     }
   }
 
   sendValidated(i: number, archivo?: any): void {    
-    console.log("radio butin selected",this.radiobuton.value.estado);
-    console.log("idArchivoSelect",this.idArchivoSeleccionado);
     if(this.radiobuton.value.estado !== '0'){
       if (archivo) {
         
@@ -130,8 +128,6 @@ export class EvidenciaFileContenedorComponent implements OnInit{
     return 'btnApprove'
   }
   async updateStatus(index:number,value: string): Promise<void>{
-    console.log("IdEvidencia",this.IdEvidencia);
-    
     const fileUpdate: ArchivoEvidencia = {
       IdArchivoEvidencia: Number(this.Archivos[index].IdArchivoEvidencia), 
       IdPeriodo: Number(this.Archivos[index].IdPeriodo), 
@@ -139,13 +135,12 @@ export class EvidenciaFileContenedorComponent implements OnInit{
       FechaRegistro: this.Archivos[index].FechaRegistro,
       FechaValidacion: this.obtenerFechaEnFormato(),
       UsuarioRegistra: this.Archivos[index].UsuarioRegistra,
-      RolValida: this.Archivos[index].RolValida,
+      RolValida: this.strname = this.login.getTokenDecoded().nombre,
       Detalle: this.Archivos[index].Detalle,
       PathUrl: this.Archivos[index].PathUrl,
       Activo: '1',
       IdEvidencia : this.IdEvidencia
     }
-    console.log("fileUpdate",fileUpdate);
     
     if(fileUpdate.Detalle===null){
       fileUpdate.Detalle=""
@@ -153,14 +148,14 @@ export class EvidenciaFileContenedorComponent implements OnInit{
     if(fileUpdate.PathUrl===null){
       fileUpdate.PathUrl=""
     }
-    console.log(fileUpdate);
     
     try{
       this.archivoService.UpdateArchivo(fileUpdate).subscribe(data=>{
         const notificacion: Notificacion = {
           IdArchivoEvidencia: fileUpdate.IdArchivoEvidencia,
           UsuarioRegistra: fileUpdate.UsuarioRegistra,
-          Detalle: '!Tu evidencia ha sido evaluada por un supervisor¡'
+          Detalle: '!Tu evidencia ha sido evaluada por un supervisor¡',
+          IdEvidencia: this.IdEvidencia,
         };
         this.notificacionesService.addNotificacion(notificacion).subscribe(response => {
         }, error => {
@@ -206,7 +201,6 @@ deleteObservacion(index:number){
 }
   enviarObservacion() {
     if (this.observacionDetalle) {
-      console.log("archivoEvide",this.idArchivoSeleccionado);
       
       const nuevaObservacion: ObservacionArchivo = {
         IdArchivoEvidencia:this.idArchivoSeleccionado, 
@@ -217,11 +211,9 @@ deleteObservacion(index:number){
       };
 
       this.observacionDataService.postObservacion(nuevaObservacion).subscribe(response => {
-        console.log('Observación enviada exitosamente', response);
         this.mostrarMensaje('Observacion agregada con exito', 'mensaje-exito');
       },
       (error) => {
-        console.error('Error al enviar la observación', error);
         this.mostrarMensaje('¡Hubo un error al subir la observacion!', 'mensaje-error');
       });
 
@@ -255,7 +247,6 @@ deleteObservacion(index:number){
 
   toggleContainer(i: number, usuarioRegistra: string, idEvidencia: any): void {
     this.archivoService.getArchivoInactivo(idEvidencia, usuarioRegistra).subscribe(data => {
-      console.log("data",data);
       this.ArchivosInactivos = data;
       this.Archivos[i].showContainer = !this.Archivos[i].showContainer;
     });

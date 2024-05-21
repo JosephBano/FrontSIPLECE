@@ -6,14 +6,25 @@
     color: #000;
 }
 .notifications-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 300px; /* Aumenta el ancho del div */
+  background-color: white; /* Ajusta según sea necesario */
+  border: 1px solid #ccc; /* Ajusta según sea necesario */
+  border-radius: 4px; /* Ajusta según sea necesario */
+  padding: 20px; /* Aumenta el relleno del div */
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Ajusta según sea necesario */
+  z-index: 1; /* Asegura que la caja se superponga a otros elementos */
+  font-weight: normal; /* Hace que las letras sean normales */
+}
+  .badge-notification {
     position: absolute;
-    top: 100%;
+    top: 0;
     right: 0;
-    width: 200px; /* Ajusta según sea necesario */
-    background-color: white; /* Ajusta según sea necesario */
-    border: 1px solid #ccc; /* Ajusta según sea necesario */
-    border-radius: 4px; /* Ajusta según sea necesario */
-    padding: 10px; /* Ajusta según sea necesario */
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Ajusta según sea necesario */
-    z-index: 1; /* Asegura que la caja se superponga a otros elementos */
+    padding: 5px 10px;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+    font-size: 0.75em;
   }

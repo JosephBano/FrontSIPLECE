@@ -63,4 +63,7 @@ export class ArchivoEvidenciaService {
   SaveFile(agregarpath: AgregarPathRequest): Observable<string> {
     return this.http.post<string>(`${this.API_URL}/SaveFile`, agregarpath)
   }
+  FindOne(idArchivoEvidencia: number): Observable<any> {
+    return this.http.get<any>(`${this.API_URL}/FindOne/${idArchivoEvidencia}`);
+  }
 }

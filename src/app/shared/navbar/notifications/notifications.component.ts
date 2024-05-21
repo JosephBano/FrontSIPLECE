@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
+import { ArchivoEvidenciaService } from 'src/app/services/modeloServicios/archivo-evidencia.service';
 import { NotificacionesService } from 'src/app/services/modeloServicios/notificaciones.service';
 
 
@@ -14,15 +15,27 @@ export class NotificationsComponent implements OnInit{
   notificaciones: any[] = [];
 
   constructor(private notificacionesService: NotificacionesService,
-    private login: LoginService
+    private login: LoginService,
+    private archivoService: ArchivoEvidenciaService
   ) { }
 
   ngOnInit(): void {
     const usuarioRegistra = this.login.getTokenDecoded().usuarioRegistra;
-    this.notificacionesService.getNotificacionByUsuario(this.login.getTokenDecoded().usuarioRegistra)
-    .subscribe(data => {
-      console.log("data notificaciones",data);
-      this.notificaciones = data;
-    });
+    const perfil = this.login.getTokenDecoded().perfil;
+  
+    if (perfil === 'SUPERVISOR' || perfil === 'SUPADMIN') {
+      this.notificacionesService.getNotificacionByUsuario('SUPERVISOR')
+      .subscribe(data => {
+        this.notificaciones = data;
+      });
+    } else {
+      this.notificacionesService.getNotificacionByUsuario(this.login.getTokenDecoded().usuarioRegistra)
+      .subscribe(data => {
+        this.notificaciones = data;
+      // this.archivoService.FindOne(idArchivoEvidencia).subscribe(response => {
+      //   console.log(response);
+      //  });
+      });
+    }
   }
 }

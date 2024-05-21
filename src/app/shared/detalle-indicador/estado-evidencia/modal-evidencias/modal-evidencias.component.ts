@@ -11,6 +11,8 @@ import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { ObservacionDataService } from 'src/app/services/modeloServicios/observacion-data.service';
 import { archivoEvidencia } from 'src/app/models/modelos-generales/archivo-evidencia.model';
+import { Notificacion } from 'src/app/models/modelos-generales/notificacion';
+import { NotificacionesService } from 'src/app/services/modeloServicios/notificaciones.service';
 
 @Component({
   selector: 'app-modal-evidencias',
@@ -32,7 +34,9 @@ export class ModalEvidenciasComponent implements OnInit{
     private toastr: ToastrService,
     private location: Location,
     private router: Router,
-    private observacionDataService: ObservacionDataService
+    private observacionDataService: ObservacionDataService,
+    private notificacionesService: NotificacionesService,
+    private archivoService: ArchivoEvidenciaService
   ) { }
 
   ngOnInit(): void {
@@ -124,7 +128,21 @@ export class ModalEvidenciasComponent implements OnInit{
       this.toastr.success("Archivo subido a SharedPoint")  
       this.archivoEvService.insertarArchivoEvidencia(archivo).subscribe(() => {
       });
-      
+      this.archivoService.GetByEvidenciaUser(this.IdEvidenciaSelected,this.loginService.getTokenDecoded().usuarioRegistra).subscribe(data => {
+        console.log("Data",data);
+        console.log("idArchivoEvide",data[0].IdArchivoEvidencia);
+        const IdArchivoEvidencia = data[0].IdArchivoEvidencia;
+        const notificacion: Notificacion = {
+          IdArchivoEvidencia: IdArchivoEvidencia,
+          UsuarioRegistra: 'SUPERVISOR',
+          Detalle: 'Tienes una evidencia que no ha sido evaluada',
+          IdEvidencia: this.IdEvidenciaSelected,
+        };
+        this.notificacionesService.addNotificacion(notificacion).subscribe(response => {
+        }, error => {
+          console.error('Error creating notification', error);
+        });
+      });
   }
   obtenerFechaEnFormato() {
     const fecha = new Date();

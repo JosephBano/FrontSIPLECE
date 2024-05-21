@@ -1,17 +1,23 @@
 .notification-container {
-    border: 2px solid #4b0082; /* Color morado oscuro */
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    background-color: #f9f9f9; /* Color de fondo claro */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra alrededor del contenedor */
-  }
-  
-  .notification-container p {
-    margin: 0; /* Elimina el margen de los párrafos */
-    padding: 5px 0; /* Agrega un poco de relleno vertical a los párrafos */
-  }
-  
-  .notification-container p:first-child {
-    font-weight: bold; /* Hace que el primer párrafo (Detalle) sea negrita */
-  }
+  border: 2px solid #4b0082; /* Color morado oscuro */
+  padding: 20px; /* Aumenta el relleno para hacer el contenedor más grande */
+  margin-bottom: 20px; /* Aumenta el margen inferior para dar más espacio entre las notificaciones */
+  border-radius: 10px; /* Aumenta el radio del borde para hacer las esquinas más redondeadas */
+  background-color: #f9f9f9; /* Color de fondo claro */
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2); /* Aumenta la sombra para dar más profundidad */
+  font-weight: normal; /* Hace que las letras sean normales */
+  transition: all 0.3s ease; /* Agrega una transición para suavizar los cambios de estado */
+}
+
+.notification-container:hover {
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.3); /* Aumenta la sombra cuando se pasa el ratón por encima para dar un efecto de "elevación" */
+}
+
+.notification-container p {
+  margin: 0; /* Elimina el margen de los párrafos */
+  line-height: 1.5; /* Aumenta el espacio entre las líneas de texto para mejorar la legibilidad */
+}
+
+.notification-container p:first-child {
+  font-weight: normal; /* Hace que el primer párrafo (Detalle) sea negrita */
+}

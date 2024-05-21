@@ -75,16 +75,20 @@
                   </div>
                   <div class="col-2">
                     <div *ngIf="item.Estado=='2'"><a>Aprovado</a></div>
+                    <div *ngIf="item.Estado=='0'"><a>No evaluado</a></div>
                     <div *ngIf="item.Estado=='1'"><a>Erroneo</a></div>
                   </div>
                   <div class="col-2">
                     <p>{{ item.UsuarioRegistra }}</p>
                   </div>
-                  <div class="col-4">
+                  <div class="col-2">
                     <a href="{{item.PathUrl}}"> {{item.Detalle}}</a>
                   </div>
                   <div class="col-3">
                     <p>Fecha Registro: {{ item.FechaRegistro }}</p>
+                  </div>
+                  <div class="col-2">
+                    {{item.RolValida}}
                   </div>
                 </div>
               </div>

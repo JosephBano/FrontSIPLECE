@@ -137,7 +137,6 @@ export class DetalleIndicadorComponent implements OnInit {
     const permission$ = this.perfilService.getPermisos(this.permisoParams!).pipe(data => data)
     const indicator$ = this.indicadorService.getIndicadorById(id).pipe(data => data);
     forkJoin([permission$,indicator$]).subscribe(([permissionsData,indicatorsData]) => {
-      console.log(indicatorsData);
       
       if (indicatorsData && indicatorsData.length > 0) {  
         if(this.permisoParams?.codigoPerfil.toLowerCase().includes('admin'))

@@ -110,7 +110,6 @@ export class SelectorIndicadoresComponent {
       );
      
       forkJoin([permission$, data$]).subscribe(([permissionsData, [criteriosData, subCriteriosData]]) => {
-        console.log("permisosData",permissionsData);
         this.subCriterios = [];
         this.criterios = [];
         this.allSubCriterios = [];
@@ -118,7 +117,6 @@ export class SelectorIndicadoresComponent {
     
         permissionsData.forEach((permiso)=>{
             this.getPadres(permiso.codigoPermiso).subscribe((data)=>{
-                console.log("Data",data);
                 if(permiso.codigoPermiso.startsWith('C-')){
                     //manejo datos permiso Criterio
                     this.criterios = criteriosData.filter(c => permissionsData.some(permiso => permiso.codigoPermiso === c.CodigoCriterio));
