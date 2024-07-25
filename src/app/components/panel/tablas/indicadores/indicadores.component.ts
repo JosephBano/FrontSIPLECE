@@ -180,7 +180,7 @@ export class IndicadoresComponent implements OnInit{
       Orden: this.agregar.value.orden,
       Detalle: this.agregar.value.detalle,
       Estandar: this.agregar.value.estandar,
-      Valoracion: '1'
+      Valoracion: ''
     }
 
     this.agregar?.reset();

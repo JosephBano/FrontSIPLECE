@@ -1,8 +1,157 @@
-<div class="container mt-3">
-    <div class="contenedor-flotante">
-        <p>vista reportes</p>
-        <p>En mantenimiento</p>
+<div class="contenedor-flotante">
+  <div class="row justify-content-center">
+    <div class="col-md-9">
 
-        
-    </div>
+      <div class="d-flex justify-content-center">
+        <div class="contenedor-titulo">
+          <h3 class="text-center">Reportes</h3>
+        </div>
+      </div>
+      <div class="indicadores-container">
+        <div class="indicadores-section">
+          <h3><strong>INDICADORES CUANTITATIVOS</strong></h3>
+          <div class="indicadores-list">
+            <div *ngFor="let indicador of indicadores; let i = index" class="indicador-item">
+              <p>{{ indicador.Detalle }}
+                <i class="fas fa-chevron-down" (click)="toggle(i)" (click)="getIndicador(i)"></i>
+              </p>
+              <div class="collapse" [ngClass]="{'show': toggledIndex === i}">
+                <div class="card card-body">
+                  <div *ngFor="let variable of Variables; let j = index">
+                    <p *ngIf="j === 0"><strong>Periodo De evaluacion :</strong> {{variable._periodoEvaluacion}}</p>
+                    <p>{{variable.NombreVariable}} - {{variable.Detalle}}
+                      <input *ngIf="j !== 0" [(ngModel)]="variable.Valor" (change)="updateVariables(variable.Valor, variable.idVariable)" type="text"/>
+                    </p>
+                  </div>
+                  <!-- Utiliza *ngIf para asegurarte de que Variables[0] esté definido antes de intentar acceder a Valor -->
+                  <div *ngIf="Variables[0]">
+                    <p>Resultado de evaluacion de indicador: {{ Variables[0].Valor || '' }}</p>
+                  </div>
+                  <button (click)="evaluarYObtenerFormula(i, indicador.IdIndicador ? +indicador.IdIndicador : 0)">Evaluar indicador</button>
+                </div>
+              </div>
+              </div>
+              <button (click)="generarReporteIndicadoresCuantitativos()">Generar reportes indicadores cuantitativos</button>
+              <div *ngIf="mostrarTotalIndicadores" class="tablaCuantitativos">
+                <table border="1" style="width: 50%; text-align: center; margin-top: 20px;">
+               
+                  <tr>
+                    <th rowspan="2">Total indicadores</th>
+                    <th colspan="2">Estandar</th>
+                  </tr>
+                  <tr>
+                    <th>No.</th>
+                    <th>%</th>
+                  </tr>
+                  <tr>
+                    <td>{{ totalIndicadores }}</td>
+                    <td>{{ estandarNo }}</td>
+                    <td>{{ estandarPorcentaje }}%</td>
+                  </tr>
+                </table>
+              </div>
+          </div>
+        </div>
+        <div class="indicadores-section">
+          <h3><strong>INDICADORES CUALITATIVOS</strong></h3>
+          <div class="indicadores-list">
+            <div *ngFor="let indicador of indicadoresCualitativo; let i = index" class="indicador-item">
+              <p>{{ indicador.Detalle }}
+                <i class="fas fa-chevron-down" (click)="toggleCualitativo(i)"></i>
+              </p>
+              <div class="collapse" [ngClass]="{'show': toggledIndexCualitativo === i}">
+                <div class="card card-body">
+                  <form (ngSubmit)="submitValoracion(indicador.IdIndicador, indicador.Valoracion)">
+                    <p><strong>La evaluación de este indicador es: </strong>
+                      <span *ngIf="indicador.Valoracion== null">Indicador no evaluado</span>
+                      <span *ngIf="indicador.Valoracion == '1'">Satisfactorio</span>
+                      <span *ngIf="indicador.Valoracion == '2'">Casi satisfactorio</span>
+                      <span *ngIf="indicador.Valoracion == '3'">Poco satisfactorio</span>
+                      <span *ngIf="indicador.Valoracion == '4'">Deficiente</span>
+                    </p>
+                    <label>
+                      <input type="radio" name="valoracion{{i}}" [(ngModel)]="indicador.Valoracion" value="1">
+                      Satisfactorio
+                    </label>
+                    <label>
+                      <input type="radio" name="valoracion{{i}}" [(ngModel)]="indicador.Valoracion" value="2">
+                      Casi Satisfactorio
+                    </label>
+                    <label>
+                      <input type="radio" name="valoracion{{i}}" [(ngModel)]="indicador.Valoracion" value="3">
+                      Poco Satisfactorio
+                    </label>
+                    <label>
+                      <input type="radio" name="valoracion{{i}}" [(ngModel)]="indicador.Valoracion" value="4">
+                      Deficiente
+                    </label>
+                    <button type="submit" (click)="evaluarIndicador(indicador.IdIndicador ? +indicador.IdIndicador : 0)">Evaluar Indicador</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <button (click)="tablaCualitativos()">Generar reportes indicadores cualitativos</button>
+            <table border="1" *ngIf="reportCualitativos">
+              <tr>
+                <th rowspan="2">Total Indicadores</th>
+                <th colspan="2">Satisfactorio</th>
+                <th colspan="2">Cuasi Satisfactorio</th>
+                <th colspan="2">Poco satisfactorio</th>
+                <th colspan="2">Deficiente (0)</th>
+              </tr>
+              <tr>
+                <th>No.</th>
+                <th>%</th>
+                <th>No.</th>
+                <th>%</th>
+                <th>No.</th>
+                <th>%</th>
+                <th>No.</th>
+                <th>%</th>
+              </tr>
+              <tr>
+                <td>{{totalIndicadoresCual}} </td>
+                <td>{{satisfactorio}}</td>
+                <td>{{porcentajeSatisfactorio}}%</td>
+                <td>{{CasiSatisfactorio}}</td>
+                <td>{{porcentajeCasiSatisfactorio}}%</td>
+                <td>{{PocoSatisfactorio}}</td>
+                <td>{{porcentajePocoSatisfactorio}}%</td>
+                <td>{{Deficeinte}}</td>
+                <td>{{porcentajeDeficiente}}%</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <button (click)="mostrarReporteGeneral() ">Reporte general</button>
+        <div *ngIf="mostrarTablaCriterios">
+          <table border="1">
+            <tr>
+                <th rowspan="2">Criterios</th>
+                <th colspan="2">Validados</th>
+                <th colspan="2">Pendientes</th>
+                <th rowspan="2">Total Indicadores</th>
+            </tr>
+            <tr>
+                <th>No.</th>
+                <th>%</th>
+                <th>No.</th>
+                <th>%</th>
+            </tr>
+            <tr *ngFor="let criterio of criteriosConIndicadores">
+                <td>{{ criterio.Detalle }}</td>
+                <td>{{ criterio.indicadoresValidados }}</td>
+                <td>{{ criterio.porcentajeValidados }}%</td>
+                <td>{{ criterio.pendientes }}</td>
+                <td>{{ criterio.porcentajePendientes }}%</td>
+                <td>{{ criterio.numIndicadores }}</td>
+            </tr>
+        </table>
+        </div>
+        <div class="boton-centrado">
+          <button (click)="generarPDF()">Generar Reporte pdf</button>
+        </div>
+      </div>
+  </div>
+</div>
 </div>

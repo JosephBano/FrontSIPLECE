@@ -8,7 +8,6 @@
             <li class="list-group-item">
                 <div class="contenedor-opciones container">
                     <div class="row">
-                        <div class="d-flex col-1"></div>
                         <div class="d-flex col-2">
                           <ng-container *ngFor="let observacion of Observaciones">
                             <p class="observacion" *ngIf="observacion.IdArchivoEvidencia === archivo.IdArchivoEvidencia">
@@ -22,17 +21,21 @@
                           <div class="statusColor" *ngIf="archivo.Estado=='0' || archivo.PathUrl===null" [ngStyle]="{'background-color': '#FFDD91'}"></div>
                         </div>
                         <div class="d-flex col-2">
+                          <div *ngIf="archivo.Estado=='2'"><a>Aprovado</a></div>
+                          <div *ngIf="archivo.Estado=='0'"><a>No evaluado</a></div>
+                          <div *ngIf="archivo.Estado=='1'"><a>Erroneo</a></div>
+                        </div>
+                        <div class="d-flex col-2">
                           {{archivo.Detalle}}
                         </div>
                         <div class="d-flex col-2">
                           {{archivo.UsuarioRegistra}}
                         </div>
-                        <div class="d-flex col-4" *ngIf="archivo.PathUrl!==null">
+                        <div class="d-flex col-2" *ngIf="archivo.PathUrl!==null">
                           <span class="material-symbols-outlined">navigate_next</span>
-                          <a href={{archivo.PathUrl}} class="evidencia">
+                          <a href="{{archivo.PathUrl}}" target="_blank" class="evidencia">
                             {{archivo.Detalle}}
                           </a>
-                          <span class="material-symbols-outlined x">close</span>
                         </div>
                       </div>
                     <ng-container *ngIf="rolviewradios == '1' && archivo.Estado != '2' && archivo.Estado != '1'">
@@ -67,7 +70,7 @@
             </div>  
             <ng-container *ngIf="archivo.showContainer">
               <div *ngFor="let item of ArchivosInactivos">
-                <div class="d-flex">
+                <div class="d-flex registro-evidencias">
                   <div class="col-1">
                     <div class="statusColor" *ngIf="item.Estado=='2' && item.PathUrl!==null" [ngStyle]="{'background-color': '#9FFFA4'}"></div>
                     <div class="statusColor" *ngIf="item.Estado=='1' && item.PathUrl!==null" [ngStyle]="{'background-color': '#FFA785'}"></div>
@@ -82,7 +85,9 @@
                     <p>{{ item.UsuarioRegistra }}</p>
                   </div>
                   <div class="col-2">
-                    <a href="{{item.PathUrl}}"> {{item.Detalle}}</a>
+                    <a href="{{item.PathUrl}}" target="_blank" class="evidencia">
+                      {{item.Detalle}}
+                    </a>
                   </div>
                   <div class="col-2">
                     <p>Fecha Registro: {{ item.FechaRegistro }}</p>

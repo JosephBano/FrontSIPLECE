@@ -28,7 +28,13 @@ export class UsuarioService {
     })
     return this.http.get<Usuario[]>(this.API_URL, {headers});
   }
-
+  getUsuariosInactivos(): Observable<Usuario[]> {
+    const token = this.loginService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    return this.http.get<Usuario[]>(`${this.API_URL}/eliminados`, {headers});
+  }
   updateActiveStatus(id: any): Observable<any> {
     const token = this.loginService.getToken();
     const headers = new HttpHeaders({

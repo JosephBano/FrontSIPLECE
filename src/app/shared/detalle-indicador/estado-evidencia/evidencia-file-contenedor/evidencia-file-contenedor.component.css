@@ -174,3 +174,9 @@ label + input {
     align-items: center;
     gap: 10px; 
   }
+  .registro-evidencias {
+    background-color: #f0f0f0; /* Cambia esto al color que prefieras */
+    border-radius: 5px;
+    margin: 10px 0;
+    padding: 10px;
+  }

@@ -63,25 +63,7 @@ export class EvidenciaFileContenedorComponent implements OnInit{
   }
 
   data(): void {
-    this.archivoService.GetByEvidenciaUser(this.IdEvidencia,this.loginService.getTokenDecoded().usuarioRegistra).subscribe(data => {
-      this.Archivos = data.map(archivo => ({ ...archivo, showContainer: false }));
-      this.Archivos = data;
-      this.formDisabled = new Array(this.Archivos.length).fill(false);
-      this.formStatus = new Array(this.Archivos.length).fill('btnWait');
-      if (this.Archivos.length > 0) {
-        this.Archivos.forEach((archivo, index) => {
-          this.idArchivoSeleccionado = archivo.IdArchivoEvidencia;
-          this.getObservacionByIdArchivoEvidencia(this.idArchivoSeleccionado);
-           this.idArchivoSeleccionadoEmitido.emit(this.idArchivoSeleccionado);
-           this.idArchivoSeleccionado = archivo.IdArchivoEvidencia;
-           this.notificacionesService.deleteNotificacion(archivo.IdEvidencia,archivo.UsuarioRegistra).subscribe(data=>{
-           });
-           this.notificacionesService.notifyDataChanged();
-           // ...
-      });
-      }
-    });
-    if(this.loginService.getTokenDecoded().perfil === "SUPADMIN" || this.loginService.getTokenDecoded().perfil === "SUPERVISOR" ){ //aqui configuracion para supervisor
+    if(this.loginService.getTokenDecoded().perfil.startsWith("SUPADMIN") || this.loginService.getTokenDecoded().perfil.startsWith("SUPERVISOR")) { //aqui configuracion para supervisor
       this.archivoService.GetByEvidencia(this.IdEvidencia).subscribe(data=>{
         this.Archivos = data.map(archivo => ({ ...archivo, showContainer: false }));
         this.Archivos = data;
@@ -91,14 +73,33 @@ export class EvidenciaFileContenedorComponent implements OnInit{
           this.Archivos.forEach((archivo, index) => {
             this.idArchivoSeleccionado = archivo.IdArchivoEvidencia;
             this.getObservacionByIdArchivoEvidencia(this.idArchivoSeleccionado);
-             this.idArchivoSeleccionadoEmitido.emit(this.idArchivoSeleccionado);
-             this.idArchivoSeleccionado = archivo.IdArchivoEvidencia;
-             this.notificacionesService.deleteNotificacion(archivo.IdEvidencia,'SUPERVISOR').subscribe(data=>{
+            this.idArchivoSeleccionadoEmitido.emit(this.idArchivoSeleccionado);
+            this.idArchivoSeleccionado = archivo.IdArchivoEvidencia;
+            this.notificacionesService.deleteNotificacion(archivo.IdEvidencia,'SUPERVISOR').subscribe(data=>{
             });
             this.notificacionesService.notifyDataChanged();
-             // ...
-        });   
-      }
+            // ...
+          });   
+        }
+      });
+    } else {
+      this.archivoService.GetByEvidenciaUser(this.IdEvidencia,this.loginService.getTokenDecoded().usuarioRegistra).subscribe(data => {
+        this.Archivos = data.map(archivo => ({ ...archivo, showContainer: false }));
+        this.Archivos = data;
+        this.formDisabled = new Array(this.Archivos.length).fill(false);
+        this.formStatus = new Array(this.Archivos.length).fill('btnWait');
+        if (this.Archivos.length > 0) {
+          this.Archivos.forEach((archivo, index) => {
+            this.idArchivoSeleccionado = archivo.IdArchivoEvidencia;
+            this.getObservacionByIdArchivoEvidencia(this.idArchivoSeleccionado);
+            this.idArchivoSeleccionadoEmitido.emit(this.idArchivoSeleccionado);
+            this.idArchivoSeleccionado = archivo.IdArchivoEvidencia;
+            this.notificacionesService.deleteNotificacion(archivo.IdEvidencia,archivo.UsuarioRegistra).subscribe(data=>{
+            });
+            this.notificacionesService.notifyDataChanged();
+            // ...
+          });
+        }
       });
     }
   }

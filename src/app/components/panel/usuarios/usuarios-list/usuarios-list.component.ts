@@ -16,10 +16,12 @@ export class UsuariosListComponent {
   titulo: string="Lista Usarios"
   formulario!: FormGroup;
   usuario?: Usuario;
+  usuariosInactivos: Usuario[] = [];
   usuarios: Usuario[] = [];
     nombre: string = '';
     apellido: string = '';
     contrasenia: string = '';
+  mostrarUsuariosInactivos: boolean = false;
 
 
 
@@ -45,6 +47,7 @@ export class UsuariosListComponent {
       this.usuarioService.getUsuarios().subscribe(
         usuario =>this.usuarios=usuario
       );
+      this.getUsuariosInactivos();
   }
   
   getUsuarios() {
@@ -55,6 +58,22 @@ export class UsuariosListComponent {
         },
         (error) => {
           console.error('Error al mostar usuarios', error);
+        }
+     );
+  }
+  toggleUsuariosInactivos(): void {
+    this.mostrarUsuariosInactivos = !this.mostrarUsuariosInactivos;
+  }
+  getUsuariosInactivos() {
+    this.usuarioService.getUsuariosInactivos()
+      .subscribe(
+        (data: Usuario[]) => {
+          this.usuariosInactivos = data;
+          console.log(this.usuariosInactivos);
+          
+        },
+        (error) => {
+          console.error('Error al mostar usuarios inactivos', error);
         }
      );
   }

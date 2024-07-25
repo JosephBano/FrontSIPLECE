@@ -14,7 +14,7 @@
             <p class="h5 fw-medium">Tipo de indicador: <span class="card-text fw-light">{{strTipoIndicador}}</span></p>
 
             <!--Periodo-->
-            <p class="h5 fw-medium">Periodo: <span class="card-text fw-light">02/2022 - 08/2022</span></p>
+            <p class="h5 fw-medium">Periodo: <span class="card-text fw-light">02/2024 - 08/2024</span></p>
 
             <!--Estandar-->
             <!--Es Informacion quemada en el codigo-->
@@ -25,13 +25,13 @@
             </p> -->
 
             <!--Elementos Fundamentales-->
-            <p class="h5">Elementos Fundamentales:</p>
+            <p class="h5" *ngIf="indicador?.IdTipoEvaluacion == '2'">Elementos Fundamentales:</p>
 
             <!--Elementos Fundamentales Esenciales-->
-            <p class="h6">Esenciales</p>
+            <p class="h6" *ngIf="indicador?.IdTipoEvaluacion == '2'">Esenciales</p>
 
             <table class="table">
-                <thead class="table-secondary">
+                <thead class="table-secondary" *ngIf="indicador?.IdTipoEvaluacion == '2'">
                   <tr>
                     <th scope="col" class="wide-column-orden text-center">Orden</th>
                     <th scope="col"  colspan="2" class="wide-column-descripcion">Descripción</th>
@@ -42,7 +42,8 @@
                   <ng-container *ngFor="let elemento of elementos; let i = index">
                     <ng-container *ngIf="elemento.IdPonderacion == '1'">
                       <tr [ngClass]="{'bordern': selectedEsenciales === i}">
-                        <th [ngClass]="{'bordern': selectedEsenciales === i}" scope="row" class="text-center">{{elemento.Orden}}</th>
+                        <th [ngClass]="{'bordern': selectedEsenciales === i}" scope="row" class="text-center" *ngIf="indicador?.IdTipoEvaluacion == '2'">{{elemento.Orden}}</th>
+                        <th [ngClass]="{'bordern': selectedEsenciales === i}" scope="row" class="text-center" *ngIf="indicador?.IdTipoEvaluacion == '1'">Evidencias {{strTituloIndicador}}</th>
                         <td [ngClass]="{'bordern': selectedEsenciales === i}" scope="row" colspan="2" class="wide-column">{{elemento.Detalle}}</td>
                         <td [ngClass]="{'bordern': selectedEsenciales === i}" class="text-center">
                           <div class="contenedor-botones">
@@ -63,10 +64,10 @@
             </table>
             
             <!--Elementos Fundamentales Complementarios-->
-            <p class="h6 mt-4">Complementarios</p>
+            <p class="h6 mt-4" *ngIf="indicador?.IdTipoEvaluacion == '2'">Complementarios</p>
 
             <table class="table">
-                <thead class="table-secondary">
+                <thead class="table-secondary" *ngIf="indicador?.IdTipoEvaluacion == '2'">
                   <tr>
                     <th scope="col" class="wide-column-orden text-center">Orden</th>
                     <th scope="col"  colspan="2" class="wide-column-descripcion">Descripción</th>
@@ -77,9 +78,10 @@
                   <ng-container *ngFor="let elemento of elementos; let i = index">
                     <ng-container *ngIf="elemento.IdPonderacion == '2'">
                       <tr [ngClass]="{'bordern': selectedComplementarios === i}">
-                        <th [ngClass]="{'bordern': selectedComplementarios === i}" scope="row" class="text-center">{{elemento.Orden}}</th>
-                        <td [ngClass]="{'bordern': selectedComplementarios === i}" scope="row" colspan="2" class="wide-column">{{elemento.Detalle}}</td>
-                        <td [ngClass]="{'bordern': selectedComplementarios === i}" class="text-center">
+                        <th [ngClass]="{'bordern': selectedEsenciales === i}" scope="row" class="text-center" *ngIf="indicador?.IdTipoEvaluacion == '2'">{{elemento.Orden}}</th>
+                        <th [ngClass]="{'bordern': selectedEsenciales === i}" scope="row" class="text-center" *ngIf="indicador?.IdTipoEvaluacion == '1'">Evidencias {{strTituloIndicador}}</th>
+                        <td [ngClass]="{'bordern': selectedEsenciales === i}" scope="row" colspan="2" class="wide-column">{{elemento.Detalle}}</td>
+                        <td [ngClass]="{'bordern': selectedEsenciales === i}" class="text-center">
                           <div class="contenedor-botones">
                               <span class="material-symbols-outlined icon-size" (click)="selectedComplementarios = (selectedComplementarios === i ? null : i)">{{ selectedComplementarios === i ? 'expand_less' : 'expand_more' }}</span>
                           </div>

@@ -110,9 +110,6 @@ export class ModalEvidenciasComponent implements OnInit{
 
 
     addArchivoEvidencia(pathUrl?: string, fileDetail?: string){
-      console.log("Ejecuto activo 0");
-      console.log("IdEvide",this.IdEvidenciaSelected);
-      console.log("UsuarioRegs",this.usuarioRegister);
       this.archivoEvService.updateArchivoEvidencia(this.IdEvidenciaSelected, this.usuarioRegister).subscribe(() => {
       });
       const archivo : archivoEvidencia={
@@ -124,13 +121,10 @@ export class ModalEvidenciasComponent implements OnInit{
         PathUrl: pathUrl,
         Activo: '1',
       }
-      console.log('Archivo:', archivo);
       this.toastr.success("Archivo subido a SharedPoint")  
       this.archivoEvService.insertarArchivoEvidencia(archivo).subscribe(() => {
       });
       this.archivoService.GetByEvidenciaUser(this.IdEvidenciaSelected,this.loginService.getTokenDecoded().usuarioRegistra).subscribe(data => {
-        console.log("Data",data);
-        console.log("idArchivoEvide",data[0].IdArchivoEvidencia);
         const IdArchivoEvidencia = data[0].IdArchivoEvidencia;
         const notificacion: Notificacion = {
           IdArchivoEvidencia: IdArchivoEvidencia,

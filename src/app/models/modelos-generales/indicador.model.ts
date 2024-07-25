@@ -8,6 +8,7 @@ export interface Indicador {
     Activo?: string;
     Valoracion?: string;
     Estandar?: string;
+    Validado?: boolean;
 }
 
 export interface ListChild {

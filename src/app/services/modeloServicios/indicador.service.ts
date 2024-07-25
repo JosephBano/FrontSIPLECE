@@ -48,8 +48,17 @@ export class IndicadorService {
   updateIndicador(indicador: Indicador): Observable<Indicador> {
     return this.http.put<Indicador>(this.API_URL, indicador, this.httpOptions);
   }
-  
+  updateValoracion(IdIndicador: any, nuevaValoracion: any): Observable<any> {
+    const url = `${this.API_URL}/UpdateValoracion/${IdIndicador}/${nuevaValoracion}`;
+    return this.http.put(url, { nuevaValoracion }, this.httpOptions);
+  }
   deleteIndicador(id: string): Observable<any> {
     return this.http.delete(this.API_URL + `/${id}`, this.httpOptions);
+  }
+  updateValidado(idIndicador: number, validado: boolean) {
+    return this.http.put(`${this.API_URL}/UpdateValidado/${idIndicador}/${validado}`, {});
+  }
+  getByDetalle(detalle: string): Observable<Indicador[]> {
+    return this.http.get<Indicador[]>(`${this.API_URL}/GetByDetalle/${detalle}`);
   }
 }

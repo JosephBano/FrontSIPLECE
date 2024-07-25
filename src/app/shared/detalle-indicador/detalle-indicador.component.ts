@@ -153,7 +153,7 @@ export class DetalleIndicadorComponent implements OnInit {
 
   cargaDeDatos(): void {
     this.strTituloIndicador = this.indicador.Detalle || '';
-    this.strTipoIndicador = this.indicador.IdTipoEvaluacion === "1" ? 'Cuantitativo' : 'Cualitativo';
+    this.strTipoIndicador = this.indicador.IdTipoEvaluacion == "1" ? 'Cuantitativo' : 'Cualitativo';
     this.strEstandar = this.indicador.Estandar ? this.indicador.Estandar.toString() : '';
-  }
+}
 }

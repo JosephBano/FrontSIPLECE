@@ -1,5 +1,4 @@
 <div class="contenedor-flotante">
-    <h1>{{titulo}}</h1>
     <button class="btn btn-info" type="button" [routerLink]="['/panel/usuarios/addUsuario']" routerLinkActive="router-link-active" >Nuevo usuario</button>
     <table class="table">
       <thead class="table-dark">
@@ -8,15 +7,36 @@
           <th scope="col">Nombre</th>
           <th scope="col">Apellido</th>
           <th scope="col">Correo</th>
+          <th scope="col">
+            <div class="wrap-check-64">
+              <label class="switch" for="checkbox">
+                <input type="checkbox" id="checkbox" (click)="toggleUsuariosInactivos()" />
+                <div class="slider round"></div>
+              </label>
+            </div>
+          </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody *ngIf="mostrarUsuariosInactivos == false">
         <tr *ngFor="let usuario of usuarios">
           <th scope="row">{{usuario.idUsuario}}</th>
           <td>{{usuario.nombre}}</td>
           <td>{{usuario.apellido}}</td>
           <td>{{usuario.correo}}</td>
-          <button (click)="updateUserStatus(usuario.idUsuario)">Eliminar</button>
+          <td>
+            <button (click)="updateUserStatus(usuario.idUsuario)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="mostrarUsuariosInactivos">
+        <tr *ngFor="let usuarioIn of usuariosInactivos" >
+          <th scope="row">{{usuarioIn.idUsuario}}</th>
+          <td>{{usuarioIn.nombre}}</td>
+          <td>{{usuarioIn.apellido}}</td>
+          <td>{{usuarioIn.correo}}</td>
+          <td>
+            <button (click)="updateUserStatus(usuarioIn.idUsuario)">Restaurar</button>
+          </td>
         </tr>
       </tbody>
     </table>
