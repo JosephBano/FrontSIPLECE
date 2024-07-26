@@ -1,5 +1,5 @@
-const BASE_URL_SIPLECE = 'https://localhost:7094/api';
-const BASE_URL_SEGURIDAD = 'https://localhost:7177/api';
+const BASE_URL_SIPLECE = 'https://16.13.9.13:7094/api';
+const BASE_URL_SEGURIDAD = 'https://16.13.9.13:7177/api';
 const BASE_RUTA_PANEL = '/panel';
 const BASE_RUTA_TABLAS = `${BASE_RUTA_PANEL}/tablas`;
 
