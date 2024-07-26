@@ -8,7 +8,7 @@ export interface Indicador {
     Activo?: string;
     Valoracion?: string;
     Estandar?: string;
-    Validado?: boolean;
+    Validado?: number;
 }
 
 export interface ListChild {

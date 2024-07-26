@@ -89,11 +89,11 @@ export class ReportsComponent implements OnInit {
         // Paso 1: Asegurarse de que totalIndicadoresCual no sea 0
         if (this.totalIndicadoresCual > 0) {
           // Paso 2: Calcular el porcentaje de cada categoría
-          this.porcentajeSatisfactorio = (this.satisfactorio / this.totalIndicadoresCual) * 100;
-          this.porcentajeCasiSatisfactorio = (this.CasiSatisfactorio / this.totalIndicadoresCual) * 100;
-          this.porcentajePocoSatisfactorio = (this.PocoSatisfactorio / this.totalIndicadoresCual) * 100;
-          this.porcentajeDeficiente = (this.Deficeinte / this.totalIndicadoresCual) * 100;
-          } 
+          this.porcentajeSatisfactorio = parseFloat(((this.satisfactorio / this.totalIndicadoresCual) * 100).toFixed(2));
+          this.porcentajeCasiSatisfactorio = parseFloat(((this.CasiSatisfactorio / this.totalIndicadoresCual) * 100).toFixed(2));
+          this.porcentajePocoSatisfactorio = parseFloat(((this.PocoSatisfactorio / this.totalIndicadoresCual) * 100).toFixed(2));
+          this.porcentajeDeficiente = parseFloat(((this.Deficeinte / this.totalIndicadoresCual) * 100).toFixed(2));
+        }
       });
     });
   }
@@ -135,49 +135,49 @@ toggleCualitativo(index: number): void {
 }
 getIndicador(index: number) {
   switch(index) {
-    case 0:
+    case 6:
       this.getIndicadorPuestosTrabajo();
       break;
-    case 1:
+    case 7:
       this.getIndicadorAnchoBanda();
       break;
-      case 2:
+      case 8:
       this.getPostgrado();
       break;
-      case 3:
+      case 9:
       this.getExpProf();
       break;
-      case 4: 
+      case 10: 
       this.getEjerProf();
       break;
-      case 5:
+      case 11:
       this.getTitularidad();
       break;
-      case 6:
+      case 12:
       this.getCarga();
       break;
-      case 7:
+      case 13:
       this.getRemuneracion();
       break;
-      case 8:
+      case 14:
       this.getRemuneracionXhora();
       break;
-      case 9:
+      case 1:
       this.getProgramas();
       break;
-      case 10:
+      case 2:
       this.getAfinidad();
       break;
-      case 11:
+      case 3:
       this.getAsignaturas();
       break;
-      case 12:
+      case 4:
       this.getPublicaciones();
       break;
-      case 13:
+      case 5:
       this.getAulas();
       break;
-      case 14:
+      case 0:
       this.getPubliYeventos();
       break
     default:
@@ -187,49 +187,49 @@ getIndicador(index: number) {
 }
 getFormula(index: number) {
   switch(index) {
-    case 0:
+    case 6:
       this.calculatePuestosTrabajo(index);
       break;
-    case 1:
+    case 7:
       this.calculateAnchoBanda(index);
       break;
-      case 2:
+      case 8:
         this.calculatePostgrado(index);
         break;
-      case 3:
+      case 9:
         this.calculateExpProf(index);
         break;
-      case 4:
+      case 10:
         this.calculateEjerProf(index);
         break;
-      case 5:
+      case 11:
         this.calculateTitularidad(index);
         break;
-      case 6:
+      case 12:
         this.calculateCarga(index);
         break;
-      case 7:
+      case 13:
         this.calculateRemuneracion(index);
         break;
-      case 8:
+      case 14:
         this.calculateRemuneracionXhora(index);
         break;
-      case 9:
+      case 1:
         this.calculateProgramas(index);
         break;
-      case 10:
+      case 2:
         this.calculateAfinidad(index);
         break;
-      case 11:
+      case 3:
         this.calculateAsignaturas(index);
         break;
-      case 12:
+      case 4:
         this.calculatePublicaciones(index);
         break;
-      case 13:
+      case 5:
         this.calculateAulas(index);
         break;
-      case 14:
+      case 0:
         this.calculatePubliYeventos(index);
         break;
     default:
@@ -243,12 +243,14 @@ updateVariables(valor: number, idVariable: number) {
   });
 }
 getIndicadorPuestosTrabajo() {
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(2).subscribe(data => {
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(24).subscribe(data => {
     this.Variables = data;
+    console.log("variables",this.Variables);
+    
   });
 }
 calculatePuestosTrabajo(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(2).subscribe(data => {
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(24).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 2, 3 y 4
     let var2 = this.Variables.find(v => v.idVariable === 2);
@@ -265,12 +267,12 @@ calculatePuestosTrabajo(index: number){
   });
 };
 getIndicadorAnchoBanda(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(3).subscribe(data => {
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(27).subscribe(data => {
     this.Variables = data;
   });
 };
 calculateAnchoBanda(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(3).subscribe(data => {
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(27).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 6, 7, 8, 9, 10 y 11
     let var6 = this.Variables.find(v => v.idVariable === 6);
@@ -291,12 +293,12 @@ calculateAnchoBanda(index: number){
   });
 };
 getPostgrado(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(5).subscribe(data => { //idIndicador
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(33).subscribe(data => { //idIndicador
     this.Variables = data;
   });
 };
 calculatePostgrado(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(5).subscribe(data => {
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(33).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 12,13,14
     let var12 = this.Variables.find(v => v.idVariable === 12);
@@ -315,12 +317,12 @@ calculatePostgrado(index: number){
   });
 };
 getExpProf(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(6).subscribe(data => { //idIndicador
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(35).subscribe(data => { //idIndicador
     this.Variables = data;
   });
 };
 calculateExpProf(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(6).subscribe(data => {
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(35).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 15,16,17
     let var15 = this.Variables.find(v => v.idVariable === 15);
@@ -339,12 +341,12 @@ calculateExpProf(index: number){
   });
 };
 getEjerProf(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(7).subscribe(data => { //idIndicador
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(36).subscribe(data => { //idIndicador
     this.Variables = data;
   });
 };
 calculateEjerProf(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(7).subscribe(data => {
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(36).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 15,16,17
     let var18 = this.Variables.find(v => v.idVariable === 18);
@@ -364,12 +366,12 @@ calculateEjerProf(index: number){
   });
 };
 getTitularidad(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(8).subscribe(data => { //idIndicador
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(37).subscribe(data => { //idIndicador
     this.Variables = data;
   });
 };
 calculateTitularidad(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(8).subscribe(data => {
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(37).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 22,23,24 y 25
     let var22 = this.Variables.find(v => v.idVariable === 22);
@@ -389,12 +391,12 @@ calculateTitularidad(index: number){
   });
 };
 getCarga(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(9).subscribe(data => { //idIndicador
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(38).subscribe(data => { //idIndicador
     this.Variables = data;
   });
 };
 calculateCarga(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(9).subscribe(data => {
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(38).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 26,27,28,29
     let var26 = this.Variables.find(v => v.idVariable === 26);
@@ -414,12 +416,12 @@ calculateCarga(index: number){
   });
 };
 getRemuneracion(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(10).subscribe(data => { //idIndicador
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(41).subscribe(data => { //idIndicador
     this.Variables = data;
   });
 };
 calculateRemuneracion(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(10).subscribe(data => {
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(41).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 30,31,32,33
     let var30 = this.Variables.find(v => v.idVariable === 30);
@@ -439,12 +441,12 @@ calculateRemuneracion(index: number){
   });
 };
 getRemuneracionXhora(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(11).subscribe(data => { //idIndicador
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(42).subscribe(data => { //idIndicador
     this.Variables = data;
   });
 };
 calculateRemuneracionXhora(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(11).subscribe(data => {
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(42).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 34,35,36
     let var34 = this.Variables.find(v => v.idVariable === 34);
@@ -508,12 +510,12 @@ calculateAfinidad(index: number){
   });
 };
 getAsignaturas(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(14).subscribe(data => { //idIndicador
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(15).subscribe(data => { //idIndicador
     this.Variables = data;
   });
 };
 calculateAsignaturas(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(14).subscribe(data => {
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(15).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 37,38,39
     let var43 = this.Variables.find(v => v.idVariable === 43);
@@ -531,12 +533,12 @@ calculateAsignaturas(index: number){
   });
 };
 getPublicaciones(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(15).subscribe(data => { //idIndicador
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(16).subscribe(data => { //idIndicador
     this.Variables = data;
   });
 };
 calculatePublicaciones(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(15).subscribe(data => {
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(16).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 46,47,48,49,50,51,52
     let var46 = this.Variables.find(v => v.idVariable === 46);
@@ -558,12 +560,12 @@ calculatePublicaciones(index: number){
   });
 };
 getAulas(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(16).subscribe(data => { //idIndicador
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(17).subscribe(data => { //idIndicador
     this.Variables = data;
   });
 };
 calculateAulas(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(16).subscribe(data => {
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(17).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 53,54,55
     let var53 = this.Variables.find(v => v.idVariable === 53);
@@ -582,12 +584,12 @@ calculateAulas(index: number){
   });
 };
 getPubliYeventos(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(17).subscribe(data => { //idIndicador
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(3).subscribe(data => { //idIndicador
     this.Variables = data;
   });
 };
 calculatePubliYeventos(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(17).subscribe(data => {
+  this.reporteIndicadorService.getIndicadorPuestosTrabajo(3).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 53,54,55
     let var56 = this.Variables.find(v => v.idVariable === 56);
@@ -652,7 +654,7 @@ reporteGeneral(){
         const detallesPromesas = detallesFiltrados.map(detalle => 
           this.indicadorService.getByDetalle(detalle.Indicador).toPromise().then(indicadores => {
             indicadores?.forEach(indicador => {
-              if (indicador.Validado === true) {
+              if (indicador.Validado === 1) {
                 contadorValidados++;
               }
             });

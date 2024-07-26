@@ -1,7 +1,6 @@
 <div class="contenedor-flotante">
   <div class="row justify-content-center">
     <div class="col-md-9">
-
       <div class="d-flex justify-content-center">
         <div class="contenedor-titulo">
           <h3 class="text-center">Reportes</h3>
@@ -46,7 +45,7 @@
                   <tr>
                     <td>{{ totalIndicadores }}</td>
                     <td>{{ estandarNo }}</td>
-                    <td>{{ estandarPorcentaje }}%</td>
+                    <td>{{ estandarPorcentaje | number:'1.2-2' }}%</td>
                   </tr>
                 </table>
               </div>
@@ -112,18 +111,18 @@
               <tr>
                 <td>{{totalIndicadoresCual}} </td>
                 <td>{{satisfactorio}}</td>
-                <td>{{porcentajeSatisfactorio}}%</td>
+                <td>{{porcentajeSatisfactorio | number:'1.2-2' }}%</td>
                 <td>{{CasiSatisfactorio}}</td>
-                <td>{{porcentajeCasiSatisfactorio}}%</td>
+                <td>{{porcentajeCasiSatisfactorio | number:'1.2-2' }}%</td>
                 <td>{{PocoSatisfactorio}}</td>
-                <td>{{porcentajePocoSatisfactorio}}%</td>
+                <td>{{porcentajePocoSatisfactorio | number:'1.2-2' }}%</td>
                 <td>{{Deficeinte}}</td>
-                <td>{{porcentajeDeficiente}}%</td>
+                <td>{{porcentajeDeficiente | number:'1.2-2' }}%</td>
               </tr>
             </table>
           </div>
         </div>
-        <button (click)="mostrarReporteGeneral() ">Reporte general</button>
+        <button (click)="mostrarReporteGeneral()">Reporte general</button>
         <div *ngIf="mostrarTablaCriterios">
           <table border="1">
             <tr>
@@ -141,12 +140,12 @@
             <tr *ngFor="let criterio of criteriosConIndicadores">
                 <td>{{ criterio.Detalle }}</td>
                 <td>{{ criterio.indicadoresValidados }}</td>
-                <td>{{ criterio.porcentajeValidados }}%</td>
+                <td>{{ criterio.porcentajeValidados | number:'1.2-2' }}%</td>
                 <td>{{ criterio.pendientes }}</td>
-                <td>{{ criterio.porcentajePendientes }}%</td>
+                <td>{{ criterio.porcentajePendientes | number:'1.2-2' }}%</td>
                 <td>{{ criterio.numIndicadores }}</td>
             </tr>
-        </table>
+          </table>
         </div>
         <div class="boton-centrado">
           <button (click)="generarPDF()">Generar Reporte pdf</button>
