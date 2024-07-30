@@ -435,7 +435,7 @@ calculateRemuneracion(index: number){
       return;
     }
     // Calcula el resultado de la fórmula
-    this.results[index] = ((1/12)*var30.Valor) /(var31.Valor+(1/2*var33.Valor));
+    this.results[index] = ((1/12)*var31.Valor) /(var32.Valor+(1/2*var33.Valor));
     // Actualiza la primera variable con el resultado de la fórmula
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
   });
