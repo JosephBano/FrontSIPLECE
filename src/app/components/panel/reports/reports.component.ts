@@ -423,7 +423,7 @@ getRemuneracion(){
 calculateRemuneracion(index: number){
   this.reporteIndicadorService.getIndicadorPuestosTrabajo(41).subscribe(data => {
     this.Variables = data;
-    // Encuentra las variables con los IDs 30,31,32,33
+    // Encuentra las variables con los IDs 30,31,32,33 --
     let var30 = this.Variables.find(v => v.idVariable === 30);
     let var31 = this.Variables.find(v => v.idVariable === 31);
     let var32 = this.Variables.find(v => v.idVariable === 32);
