@@ -52,4 +52,7 @@ export class SubCriteriosService {
   deleteSubCriterio(id: string): Observable<any> {
     return this.http.delete(this.API_URL + `/${id}`, this.httpOptions);
   }
+  getByCriterioDetalle(detalle: string): Observable<SubCriterio[]> {
+    return this.http.get<any[]>(this.API_URL + `/GetByCriterioDetalle/${detalle}`);
+  }
 }

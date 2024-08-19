@@ -21,6 +21,7 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { AddUsuarioComponent } from './usuarios/add-usuario/add-usuario.component';
 import { MenuUsuarioComponent } from './usuarios/menu-usuario/menu-usuario.component';
 import { UsuariosListComponent } from './usuarios/usuarios-list/usuarios-list.component';
+import { ReportByCriterioComponent } from './reports/report-by-criterio/report-by-criterio.component';
 
 
 
@@ -53,6 +54,11 @@ const routes: Routes = [
     { path: 'revision-evidencia/:id', component: DetalleIndicadorComponent},                                        
   ]},
   { path: 'reportes', component: ReportsComponent, canActivate:[supervisorGuard]},
+  { 
+    path: 'reporteCriterio', 
+    component: ReportByCriterioComponent, 
+    canActivate: [supervisorGuard]
+  },
 ];
 
 @NgModule({

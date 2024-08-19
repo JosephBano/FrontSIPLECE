@@ -1,5 +1,5 @@
-const BASE_URL_SIPLECE = 'https://16.13.9.13:7094/api';
-const BASE_URL_SEGURIDAD = 'https://16.13.9.13:7177/api';
+const BASE_URL_SIPLECE = 'https://localhost:7094/api';
+const BASE_URL_SEGURIDAD = 'https://localhost:7177/api';
 const BASE_RUTA_PANEL = '/panel';
 const BASE_RUTA_TABLAS = `${BASE_RUTA_PANEL}/tablas`;
 
@@ -23,7 +23,7 @@ export const environment = {
     URL_BACKEND_CRITERIO: `${BASE_URL_SIPLECE}/Criterio`,
     URL_BACKEND_SUBCRITERIO: `${BASE_URL_SIPLECE}/Subcriterio`,
     URL_BACKEND_INDICADOR: `${BASE_URL_SIPLECE}/Indicador`,
-    URL_BACKEND_INDICADOR_REPORT: `https://16.13.9.13:7094`,
+    URL_BACKEND_INDICADOR_REPORT: `https://localhost:7094`,
     URL_BACKEND_REPORT: `${BASE_URL_SIPLECE}/Reporte`,
     URL_BACKEND_VALORACION: `${BASE_URL_SIPLECE}/Valoracion`,
     URL_BACKEND_INDICADORVALORACION: `${BASE_URL_SIPLECE}/IndicadorValoracion`,

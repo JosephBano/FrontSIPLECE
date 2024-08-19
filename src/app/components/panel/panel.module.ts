@@ -36,6 +36,8 @@ import { ContainerComponent } from './usuarios/menu-usuario/container/container.
 import { UsuariosListComponent } from './usuarios/usuarios-list/usuarios-list.component';
 import { PermissionTableComponent } from './admin/permission-table/permission-table.component';
 import { MaterialModule } from '../../material.module';
+import { ReportByCriterioComponent } from './reports/report-by-criterio/report-by-criterio.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -72,6 +74,7 @@ import { MaterialModule } from '../../material.module';
     ContainerComponent,
     UsuariosListComponent,
     PermissionTableComponent,
+    ReportByCriterioComponent,
   ],
   imports: [
     CommonModule,
@@ -79,8 +82,8 @@ import { MaterialModule } from '../../material.module';
     FormsModule, 
     ReactiveFormsModule,
     PanelRoutingModule,
+    MaterialModule,
     
-    MaterialModule
   ],
   providers: [
     CriterioComponent,
@@ -89,6 +92,6 @@ import { MaterialModule } from '../../material.module';
     ElementoFundamentalComponent,
     EvidenciaComponent,
   ],
-  exports: []
+  exports: [RouterModule]
 })
 export class PanelModule { }

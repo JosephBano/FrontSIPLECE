@@ -21,10 +21,12 @@ export class IndicadorService {
     return this.http.get<Indicador[]>(this.API_URL);
   }  
 
-  getBySubCriterio(id: string): Observable<Indicador[]> {
-    return this.http.get<Indicador[]>(this.API_URL + `/GetByCriterio/${id}`)
+  getBySubCriterio(id: number): Observable<Indicador[]> {
+    return this.http.get<Indicador[]>(`${this.API_URL}/GetBySubCriterio/${id}`);
   }
-
+  getArchivosEvidencias(idIndicador: number): Observable<any> {
+    return this.http.get(`${this.API_URL}/GetArchivosEvidencias/${idIndicador}`);
+  }
   getByModelo(id: string): Observable<Indicador[]> {
     return this.http.get<Indicador[]>(this.API_URL + `/GetByModelo/${id}`)
   }

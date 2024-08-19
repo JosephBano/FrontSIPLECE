@@ -1,0 +1,116 @@
+h1 {
+    font-size: 2rem;
+    color: white;
+    text-align: center;
+    margin-bottom: 1rem;
+    background-color: #1F295B;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #1F295B;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+    color: #1F295B;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  /* Estilo base para todos los botones */
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    margin: 5px;
+    color: white;
+  }
+  
+  /* Botón primario */
+  button.primary-btn {
+    background-color: #007bff;
+  }
+  
+  button.primary-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+  
+  /* Botón secundario */
+  button.secondary-btn {
+    background-color: #6c757d;
+  }
+  
+  button.secondary-btn:hover {
+    background-color: #5a6268;
+    transform: scale(1.05);
+  }
+  
+  /* Botón de peligro */
+  button.danger-btn {
+    background-color: #dc3545;
+  }
+  
+  button.danger-btn:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+  }
+  
+  .subcriterio-item {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    transition: background 0.3s ease;
+  }
+  
+  .subcriterio-item:hover {
+    background: #e9e9e9;
+  }
+  
+  p {
+    text-align: center;
+    color: #666;
+  }
+
+  .indicador-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .indicador-item:hover {
+    background-color: #f1f1f1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .indicador-item p {
+    margin: 5px 0;
+  }
+  
+  .indicador-item .estado {
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .indicador-item .estado.evaluado {
+    color: #28a745; /* Green for evaluated */
+  }
+  
+  .indicador-item .estado.no-evaluado {
+    color: #dc3545; /* Red for not evaluated */
+  }
+  
+  .no-indicadores {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    margin-top: 20px;
+  }

@@ -106,10 +106,7 @@
           },
           "defaultConfiguration": "development",
           "options": {
-          "port": 80,
-              "ssl": true,
-              "sslCert": "C:\\SIPLECE\\Certificados_SIPLECE\\SIPLECE-cert.pem",
-              "sslKey": "C:\\SIPLECE\\Certificados_SIPLECE\\SIPLECE-key.pem"
+     
 
             }
         },
