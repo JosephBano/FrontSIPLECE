@@ -22,11 +22,11 @@ import { environment } from 'src/environments/environment.development';
     getCualitativos(): Observable<any> {
       return this.http.get(`${this.API_URL}/GetCualitativos`, this.httpOptions);
     };
-    getIndicadorPuestosTrabajo(idIndicador: number): Observable<any> {
-      return this.http.get(`${this.API_URL2}/PuestosTrabajo/${idIndicador}`, this.httpOptions);
+    getVarIndicador(idIndicador: number): Observable<any> {
+      return this.http.get(`${this.API_URL2}/GetVarIndicador/${idIndicador}`, this.httpOptions);
     }
-    updatePuestos(Valor: number, IdVariable: number): Observable<any> {
-      return this.http.put(`${this.API_URL2}/UpdatePuestos/${Valor}/${IdVariable}`, null, this.httpOptions);
+    updateVarIndicador(Valor: number, IdVariable: number): Observable<any> {
+      return this.http.put(`${this.API_URL2}/UpdateVarIndicador/${Valor}/${IdVariable}`, null, this.httpOptions);
     }
     getIndicadoresEvaluados(): Observable<any> {
       return this.http.get(`${this.API_URL2}/IndicadoresEvaluados`, this.httpOptions);
