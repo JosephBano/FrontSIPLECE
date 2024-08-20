@@ -1,5 +1,5 @@
 export interface Indicador {
-    IdIndicador?: string;
+    IdIndicador?: number;
     CodigoIndicador: string;
     IdSubCriterio: string;
     IdTipoEvaluacion: string;
@@ -9,6 +9,7 @@ export interface Indicador {
     Valoracion?: string;
     Estandar?: string;
     Validado?: number;
+    PeriodoEvaluacion?: string;
 }
 
 export interface ListChild {
