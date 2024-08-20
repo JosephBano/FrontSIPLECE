@@ -44,7 +44,6 @@ export class ReportsComponent implements OnInit {
     private reporteIndicadorService: ReporteIndicadorService,
     private indicadorService: IndicadorService,
     private criterioService: CriteriosService,
-    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
@@ -127,130 +126,45 @@ export class ReportsComponent implements OnInit {
 generarReporteIndicadoresCuantitativos() {
   this.mostrarTotalIndicadores = true;
 }
-toggle(index: number) {
+toggleCuantitativo(index: number) {
   this.toggledIndex = this.toggledIndex === index ? null : index;
 }
 toggleCualitativo(index: number): void {
   this.toggledIndexCualitativo = this.toggledIndexCualitativo === index ? -1 : index; 
 }
+
 getIndicador(index: number) {
-  switch(index) {
-    case 6:
-      this.getIndicadorPuestosTrabajo();
-      break;
-    case 7:
-      this.getIndicadorAnchoBanda();
-      break;
-      case 8:
-      this.getPostgrado();
-      break;
-      case 9:
-      this.getExpProf();
-      break;
-      case 10: 
-      this.getEjerProf();
-      break;
-      case 11:
-      this.getTitularidad();
-      break;
-      case 12:
-      this.getCarga();
-      break;
-      case 13:
-      this.getRemuneracion();
-      break;
-      case 14:
-      this.getRemuneracionXhora();
-      break;
-      case 1:
-      this.getProgramas();
-      break;
-      case 2:
-      this.getAfinidad();
-      break;
-      case 3:
-      this.getAsignaturas();
-      break;
-      case 4:
-      this.getPublicaciones();
-      break;
-      case 5:
-      this.getAulas();
-      break;
-      case 0:
-      this.getPubliYeventos();
-      break
-    default:
-      console.log('Invalid index');
-      break;
-  }
+  this.reporteIndicadorService.getVarIndicador(index).subscribe(data => {
+    this.Variables = data;
+  });
 }
-getFormula(index: number) {
-  switch(index) {
-    case 6:
-      this.calculatePuestosTrabajo(index);
-      break;
-    case 7:
-      this.calculateAnchoBanda(index);
-      break;
-      case 8:
-        this.calculatePostgrado(index);
-        break;
-      case 9:
-        this.calculateExpProf(index);
-        break;
-      case 10:
-        this.calculateEjerProf(index);
-        break;
-      case 11:
-        this.calculateTitularidad(index);
-        break;
-      case 12:
-        this.calculateCarga(index);
-        break;
-      case 13:
-        this.calculateRemuneracion(index);
-        break;
-      case 14:
-        this.calculateRemuneracionXhora(index);
-        break;
-      case 1:
-        this.calculateProgramas(index);
-        break;
-      case 2:
-        this.calculateAfinidad(index);
-        break;
-      case 3:
-        this.calculateAsignaturas(index);
-        break;
-      case 4:
-        this.calculatePublicaciones(index);
-        break;
-      case 5:
-        this.calculateAulas(index);
-        break;
-      case 0:
-        this.calculatePubliYeventos(index);
-        break;
-    default:
-      console.log('Invalid index');
-      break;
-    }
-  ;}
+
+getFormula(indicador: Indicador) {
+  if(indicador.CodigoIndicador === 'I-indic1') this.calculatePuestosTrabajo(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic2') this.calculateAnchoBanda(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic4') this.calculatePostgrado(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic5') this.calculateExpProf(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic6') this.calculateEjerProf(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic7') this.calculateTitularidad(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic8') this.calculateCarga(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic9') this.calculateRemuneracion(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic10') this.calculateRemuneracionXhora(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic11') this.calculateProgramas(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic12') this.calculateAfinidad(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic13') this.calculateAsignaturas(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic14') this.calculatePublicaciones(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic15') this.calculateAulas(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic16') this.calculatePubliYeventos(indicador.IdIndicador!);
+
+}
 updateVariables(valor: number, idVariable: number) {
-  this.reporteIndicadorService.updatePuestos(valor, idVariable).subscribe(response => {
+  this.reporteIndicadorService.updateVarIndicador(valor, idVariable).subscribe(response => {
     console.log(response);
   });
 }
-getIndicadorPuestosTrabajo() {
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(24).subscribe(data => {
-    this.Variables = data;
-    console.log("variables",this.Variables);
-    
-  });
-}
+
 calculatePuestosTrabajo(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(24).subscribe(data => {
+  this.reporteIndicadorService.getVarIndicador(index).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 2, 3 y 4
     let var2 = this.Variables.find(v => v.idVariable === 2);
@@ -266,13 +180,9 @@ calculatePuestosTrabajo(index: number){
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
   });
 };
-getIndicadorAnchoBanda(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(27).subscribe(data => {
-    this.Variables = data;
-  });
-};
+
 calculateAnchoBanda(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(27).subscribe(data => {
+  this.reporteIndicadorService.getVarIndicador(index).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 6, 7, 8, 9, 10 y 11
     let var6 = this.Variables.find(v => v.idVariable === 6);
@@ -292,13 +202,9 @@ calculateAnchoBanda(index: number){
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
   });
 };
-getPostgrado(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(33).subscribe(data => { //idIndicador
-    this.Variables = data;
-  });
-};
+
 calculatePostgrado(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(33).subscribe(data => {
+  this.reporteIndicadorService.getVarIndicador(index).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 12,13,14
     let var12 = this.Variables.find(v => v.idVariable === 12);
@@ -316,13 +222,8 @@ calculatePostgrado(index: number){
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
   });
 };
-getExpProf(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(35).subscribe(data => { //idIndicador
-    this.Variables = data;
-  });
-};
 calculateExpProf(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(35).subscribe(data => {
+  this.reporteIndicadorService.getVarIndicador(index).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 15,16,17
     let var15 = this.Variables.find(v => v.idVariable === 15);
@@ -340,13 +241,9 @@ calculateExpProf(index: number){
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
   });
 };
-getEjerProf(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(36).subscribe(data => { //idIndicador
-    this.Variables = data;
-  });
-};
+
 calculateEjerProf(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(36).subscribe(data => {
+  this.reporteIndicadorService.getVarIndicador(index).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 15,16,17
     let var18 = this.Variables.find(v => v.idVariable === 18);
@@ -365,13 +262,9 @@ calculateEjerProf(index: number){
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
   });
 };
-getTitularidad(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(37).subscribe(data => { //idIndicador
-    this.Variables = data;
-  });
-};
+
 calculateTitularidad(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(37).subscribe(data => {
+  this.reporteIndicadorService.getVarIndicador(index).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 22,23,24 y 25
     let var22 = this.Variables.find(v => v.idVariable === 22);
@@ -390,13 +283,9 @@ calculateTitularidad(index: number){
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
   });
 };
-getCarga(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(38).subscribe(data => { //idIndicador
-    this.Variables = data;
-  });
-};
+
 calculateCarga(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(38).subscribe(data => {
+  this.reporteIndicadorService.getVarIndicador(index).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 26,27,28,29
     let var26 = this.Variables.find(v => v.idVariable === 26);
@@ -415,13 +304,9 @@ calculateCarga(index: number){
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
   });
 };
-getRemuneracion(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(41).subscribe(data => { //idIndicador
-    this.Variables = data;
-  });
-};
+
 calculateRemuneracion(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(41).subscribe(data => {
+  this.reporteIndicadorService.getVarIndicador(index).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 30,31,32,33 --
     let var30 = this.Variables.find(v => v.idVariable === 30);
@@ -440,13 +325,9 @@ calculateRemuneracion(index: number){
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
   });
 };
-getRemuneracionXhora(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(42).subscribe(data => { //idIndicador
-    this.Variables = data;
-  });
-};
+
 calculateRemuneracionXhora(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(42).subscribe(data => {
+  this.reporteIndicadorService.getVarIndicador(index).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 34,35,36
     let var34 = this.Variables.find(v => v.idVariable === 34);
@@ -463,13 +344,9 @@ calculateRemuneracionXhora(index: number){
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
   });
 };
-getProgramas(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(12).subscribe(data => { //idIndicador
-    this.Variables = data;
-  });
-};
+
 calculateProgramas(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(12).subscribe(data => {
+  this.reporteIndicadorService.getVarIndicador(index).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 37,38,39
     let var37 = this.Variables.find(v => v.idVariable === 37);
@@ -486,13 +363,9 @@ calculateProgramas(index: number){
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
   });
 };
-getAfinidad(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(13).subscribe(data => { //idIndicador
-    this.Variables = data;
-  });
-};
+
 calculateAfinidad(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(13).subscribe(data => {
+  this.reporteIndicadorService.getVarIndicador(index).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 37,38,39
     let var40 = this.Variables.find(v => v.idVariable === 40);
@@ -509,13 +382,9 @@ calculateAfinidad(index: number){
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
   });
 };
-getAsignaturas(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(15).subscribe(data => { //idIndicador
-    this.Variables = data;
-  });
-};
+
 calculateAsignaturas(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(15).subscribe(data => {
+  this.reporteIndicadorService.getVarIndicador(index).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 37,38,39
     let var43 = this.Variables.find(v => v.idVariable === 43);
@@ -532,13 +401,9 @@ calculateAsignaturas(index: number){
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
   });
 };
-getPublicaciones(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(16).subscribe(data => { //idIndicador
-    this.Variables = data;
-  });
-};
+
 calculatePublicaciones(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(16).subscribe(data => {
+  this.reporteIndicadorService.getVarIndicador(index).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 46,47,48,49,50,51,52
     let var46 = this.Variables.find(v => v.idVariable === 46);
@@ -559,13 +424,9 @@ calculatePublicaciones(index: number){
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
   });
 };
-getAulas(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(17).subscribe(data => { //idIndicador
-    this.Variables = data;
-  });
-};
+
 calculateAulas(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(17).subscribe(data => {
+  this.reporteIndicadorService.getVarIndicador(index).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 53,54,55
     let var53 = this.Variables.find(v => v.idVariable === 53);
@@ -583,13 +444,9 @@ calculateAulas(index: number){
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
   });
 };
-getPubliYeventos(){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(3).subscribe(data => { //idIndicador
-    this.Variables = data;
-  });
-};
+
 calculatePubliYeventos(index: number){
-  this.reporteIndicadorService.getIndicadorPuestosTrabajo(3).subscribe(data => {
+  this.reporteIndicadorService.getVarIndicador(index).subscribe(data => {
     this.Variables = data;
     // Encuentra las variables con los IDs 53,54,55
     let var56 = this.Variables.find(v => v.idVariable === 56);
@@ -701,10 +558,11 @@ evaluarIndicador(idIndicador: number) {
   });
 }
 
-// En tu componente reports.component.ts
-
-evaluarYObtenerFormula(index: number, idIndicador: number) {
-  this.getFormula(index); //función definida
-  this.evaluarIndicador(idIndicador); //función definida
+evaluarYObtenerFormula(index: number, i:number) {
+  this.getFormula(this.indicadores.find(e=>e.IdIndicador==index)!); 
+  this.evaluarIndicador(index);
+  this.getIndicador(index);
+  //this.toggleCuantitativo(-1);
 }
+
 }
