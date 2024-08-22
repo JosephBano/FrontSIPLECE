@@ -50,7 +50,6 @@ export class ReportsComponent implements OnInit {
     this.bar.actualizarActiveLiOrder1('report')
     this.indicadoresCuantitativos();
     this.indicadoresCualitativos();
-    this.reporteGeneral();
   }
   tablaCualitativos(){
     this.reportCualitativos = true;
@@ -497,12 +496,12 @@ generarPDF() {
     a.click();
   });
 }
-reporteGeneral(){
+reporteGeneral(){  
   this.criterioService.getCriterios().subscribe(criterios => {
     this.criterios = criterios;
     this.reporteIndicadorService.getCriteriosDetalles().subscribe(criteriosDetalles => {
       this.criteriosDetalles = criteriosDetalles;
-
+      
       const criteriosConIndicadoresPromesas = this.criterios.map(criterio => {
         const detallesFiltrados = this.criteriosDetalles.filter(detalle => detalle.IdCriterio === criterio.IdCriterio);
         const indicadoresUnicos = new Set(detallesFiltrados.map(detalle => detalle.IdIndicador));
@@ -511,7 +510,7 @@ reporteGeneral(){
         const detallesPromesas = detallesFiltrados.map(detalle => 
           this.indicadorService.getByDetalle(detalle.Indicador).toPromise().then(indicadores => {
             indicadores?.forEach(indicador => {
-              if (indicador.Validado === 1) {
+              if (indicador.Validado == 1) {
                 contadorValidados++;
               }
             });
