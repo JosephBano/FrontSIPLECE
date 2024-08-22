@@ -14,19 +14,30 @@
 
 <h2 *ngIf="subCriterioSeleccionado">INDICADORES DE <strong>{{ subCriterioSeleccionado.Detalle }}</strong> </h2>
 <div *ngIf="indicadores.length > 0">
-    <div *ngFor="let indicador of indicadores" class="indicador-item">
-      <p>{{ indicador.Detalle }}</p>
-      <p class="estado" [ngClass]="{'evaluado': indicador.Validado === 1, 'no-evaluado': indicador.Validado !== 1}">
-        Estado: {{ indicador.Validado === 1 ? 'Indicador evaluado' : 'Indicador no evaluado' }}
-      </p>
-      <div *ngIf="archivosEvidencias">
-        <p *ngFor="let archivo of archivosEvidencias">
-          {{ archivo.TotalArchivos }} 
-        </p>
+  <div *ngFor="let indicador of indicadores" class="indicador-item">
+    <p> <strong>{{ indicador.Detalle }}</strong></p>
+    <p class="estado" [ngClass]="{'evaluado': indicador.Validado, 'no-evaluado': !indicador.Validado}">
+      Estado: {{ indicador.Validado ? 'Indicador evaluado' : 'Indicador no evaluado' }}
+    </p>
+    
+
+    <!-- Solo muestra los archivos de evidencias si el indicador es el seleccionado -->
+    <div *ngIf="isIndicadorSeleccionado(indicador.IdIndicador)">
+      <div class="chart-container">
+        <canvas id="chart"></canvas>
       </div>
-      <button (click)="getArchivosEvidencias(indicador.IdIndicador, indicador)">Mostrar datos de archivos</button>
+    </div>
+
+    <div class="button-container">
+      <button class="show-data-btn" (click)="getArchivosEvidencias(indicador.IdIndicador)">Mostrar grafica del indicador</button>
+      <button class="Download-pdf" (click)="generatePdf(indicador.Detalle, indicador.Validado ? 'Indicador evaluado' : 'Indicador no evaluado')">
+        Descargar PDF
+    </button>
     </div>
   </div>
+</div>
+
 <div *ngIf="indicadores.length === 0" class="no-indicadores">
   <p>No se encontraron indicadores.</p>
 </div>
+

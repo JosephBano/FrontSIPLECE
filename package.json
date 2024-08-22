@@ -28,6 +28,7 @@
     "appsettings-json-reader": "^2.0.2",
     "bootstrap": "^5.3.0",
     "bootstrap-icons": "^1.10.5",
+    "chart.js": "^4.4.3",
     "ngx-bootstrap": "^11.0.2",
     "ngx-cookie-service": "^16.0.1",
     "ngx-toastr": "^16.2.0",

@@ -114,3 +114,45 @@ h1 {
     font-style: italic;
     margin-top: 20px;
   }
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Ajusta según sea necesario */
+  }
+  
+  button.show-data-btn, button.Download-pdf {
+    background-color: #0056b3; /* Naranja */
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    margin: 5px;
+  }
+  
+  button.show-data-btn:hover, button.Download-pdf:hover {
+    background-color: #004494; /* Naranja más oscuro */
+    transform: scale(1.05);
+  }
+
+.chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 600px;  /* Ancho fijo */
+  height: 400px; /* Alto fijo */
+  margin: 0 auto; /* Centra horizontalmente */
+}
+
+.indicador-item {
+  margin-bottom: 20px; /* Espacio entre indicadores */
+}
+
+/* Asegúrate de que el canvas ocupe todo el espacio del contenedor */
+#chart {
+  width: 100%;
+  height: 100%;
+}

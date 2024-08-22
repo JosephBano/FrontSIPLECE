@@ -19,7 +19,7 @@
                             <app-modal-evidencias [IdEvidenciaSelected]="idEvideSelected" [elemento]="idElemento"></app-modal-evidencias>
                         </ng-container>  
                     </div>
-                    <ng-container *ngIf="ActiveRols == '1'">
+                    <!-- <ng-container *ngIf="ActiveRols == '1'">
                         <li class="list-group-item fw-bolder">
                             <div class="d-flex justify-content-between align-items-center">
                                 <p>
@@ -29,7 +29,7 @@
                             </div>
                         </li>
                         <app-asignar-usuario [IdEvidencia]="evidencia.IdEvidencia" [IdEvidenciaSelected]="idEvideSelected" ></app-asignar-usuario>
-                    </ng-container>
+                    </ng-container> -->
                     <ng-container *ngIf="ActiveRols == '2'"> 
                         <app-evidencia-file-contenedor (idArchivoSeleccionadoEmitido)="idArchivoSeleccionado = $event" [IdEvidencia]="evidencia.IdEvidencia" [rolviewradios]="subRolActivo"></app-evidencia-file-contenedor>
                     </ng-container>
