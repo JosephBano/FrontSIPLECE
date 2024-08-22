@@ -10,23 +10,23 @@
         <div class="indicadores-section">
           <h3><strong>INDICADORES CUANTITATIVOS</strong></h3>
           <div class="indicadores-list">
-            <div *ngFor="let indicador of indicadores; let i = index" class="indicador-item">
+            <div *ngFor="let indicador of indicadores; let i = index;" class="indicador-item">
               <p>{{ indicador.Detalle }}
-                <i class="fas fa-chevron-down" (click)="toggle(i)" (click)="getIndicador(i)"></i>
+                <i class="fas fa-chevron-down" (click)="toggleCuantitativo(i); getIndicador(indicador.IdIndicador!)"></i>
               </p>
               <div class="collapse" [ngClass]="{'show': toggledIndex === i}">
                 <div class="card card-body">
                   <div *ngFor="let variable of Variables; let j = index">
-                    <p *ngIf="j === 0"><strong>Periodo De evaluacion :</strong> {{variable._periodoEvaluacion}}</p>
+                    <p *ngIf="j === 0"><strong>Periodo De evaluacion :</strong> {{indicador.PeriodoEvaluacion}}</p>
                     <p>{{variable.NombreVariable}} - {{variable.Detalle}}
                       <input *ngIf="j !== 0" [(ngModel)]="variable.Valor" (change)="updateVariables(variable.Valor, variable.idVariable)" type="text"/>
                     </p>
                   </div>
                   <!-- Utiliza *ngIf para asegurarte de que Variables[0] esté definido antes de intentar acceder a Valor -->
                   <div *ngIf="Variables[0]">
-                    <p>Resultado de evaluacion de indicador: {{ Variables[0].Valor || '' }}</p>
+                    <p>Resultado de evaluacion de indicador: {{ Variables[0].Valor }}</p>
                   </div>
-                  <button (click)="evaluarYObtenerFormula(i, indicador.IdIndicador ? +indicador.IdIndicador : 0)">Evaluar indicador</button>
+                  <button (click)="evaluarYObtenerFormula(indicador.IdIndicador!, i);">Evaluar indicador</button>
                 </div>
               </div>
               </div>

@@ -68,7 +68,7 @@
                                     <!-- Botón Eliminar -->
                                     <app-tabla-eliminar-modal [handlerEliminar]="'indicador'" [objetoEliminar]="indicador"></app-tabla-eliminar-modal>
                                         <!--Buscar con filtro-->
-                                        <span class="material-symbols-outlined icon-size" (click)="navegarFiltro(indicador.IdIndicador)">turn_right</span>
+                                        <span class="material-symbols-outlined icon-size" (click)="navegarFiltro(indicador.IdIndicador?.toString())">turn_right</span>
                                     </ng-container>
 
                                     <!-- Botón Restaurar -->
