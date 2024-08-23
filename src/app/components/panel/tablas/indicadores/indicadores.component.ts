@@ -54,6 +54,7 @@ export class IndicadoresComponent implements OnInit{
       estandar: ['', [Validators.required, Validators.minLength(5)]],
       orden: ['', [Validators.required, Validators.pattern(/^[-?]?[1-9]+$/)]],
       tipoagregar: ['', Validators.required],
+      periodoEvaluacion: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(300)]]
     })
     this.editar = this.fb.group({
       id: ['', Validators.required],
@@ -180,7 +181,8 @@ export class IndicadoresComponent implements OnInit{
       Orden: this.agregar.value.orden,
       Detalle: this.agregar.value.detalle,
       Estandar: this.agregar.value.estandar,
-      Valoracion: ''
+      Valoracion: '',
+      PeriodoEvaluacion: this.agregar.value.periodoEvaluacion
     }
 
     this.agregar?.reset();
