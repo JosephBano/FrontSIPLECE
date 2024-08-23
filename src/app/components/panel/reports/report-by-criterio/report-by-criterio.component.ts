@@ -21,6 +21,7 @@ export class ReportByCriterioComponent implements OnInit {
   subCriterioSeleccionado: any = null;
   archivosEvidencias: any[] = [];
   indicadorSeleccionado: number | null = null;
+  graficaMostrada: boolean = false;
   @ViewChild('chart') chartElement!: ElementRef;
   public chart!: Chart;
 
@@ -106,6 +107,7 @@ export class ReportByCriterioComponent implements OnInit {
               }
             }
           });
+          this.graficaMostrada = true;
         }
   });
   }

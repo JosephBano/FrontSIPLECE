@@ -30,7 +30,7 @@
 
     <div class="button-container">
       <button class="show-data-btn" (click)="getArchivosEvidencias(indicador.IdIndicador)">Mostrar grafica del indicador</button>
-      <button class="Download-pdf" (click)="generatePdf(indicador.Detalle, indicador.Validado ? 'Indicador evaluado' : 'Indicador no evaluado')">
+      <button class="Download-pdf" (click)="generatePdf(indicador.Detalle, indicador.Validado ? 'Indicador evaluado' : 'Indicador no evaluado')" *ngIf="graficaMostrada && isIndicadorSeleccionado(indicador.IdIndicador)"  >
         Descargar PDF
     </button>
     </div>

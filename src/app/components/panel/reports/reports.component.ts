@@ -57,8 +57,8 @@ export class ReportsComponent implements OnInit {
   indicadoresCualitativos() {
     this.totalIndicadoresCual = 0;
     this.reporteIndicadorService.getCualitativos().subscribe(data => {
-      this.indicadoresCualitativo = data;
-      this.totalIndicadoresCual = data ? data.length : 0; 
+      this.indicadoresCualitativo = data ? data.filter((indicador: { Activo: number; }) => indicador.Activo === 1) : [];
+      this.totalIndicadoresCual = this.indicadoresCualitativo ? this.indicadoresCualitativo.length : 0; 
       this.reporteIndicadorService.getValoracionCualitativos().subscribe(data => {
         // Resetear valores
         this.satisfactorio = 0;
@@ -110,8 +110,8 @@ export class ReportsComponent implements OnInit {
     this.estandarNo = 0;
 
     this.reporteIndicadorService.getByTipoEvaluacion(1).subscribe(data => {
-      this.indicadores = data;
-      this.totalIndicadores = data ? data.length : 0; 
+      this.indicadores = data ? data.filter((indicador: { Activo: number; }) => indicador.Activo === 1) : [];
+      this.totalIndicadores = this.indicadores ? this.indicadores.length : 0; 
       this.reporteIndicadorService.getIndicadoresEvaluados().subscribe(data => {
         if (data && data.length > 0) {
           this.estandarNo = data[0].IndicadoresEvaluados ? data[0].IndicadoresEvaluados : 0;
@@ -561,7 +561,7 @@ evaluarYObtenerFormula(index: number, i:number) {
   this.getFormula(this.indicadores.find(e=>e.IdIndicador==index)!); 
   this.evaluarIndicador(index);
   this.getIndicador(index);
-  //this.toggleCuantitativo(-1);
+  this.toggleCuantitativo(-1);
 }
 
 }

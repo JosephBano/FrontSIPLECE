@@ -1,9 +1,4 @@
-.contenedor-flotante {
-  border-radius: 20px;
-  background: #fff;
-  padding: 1rem 1rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+
 
 .contenedor-titulo h3 {
   color: #fff;
@@ -18,6 +13,16 @@
   border-radius: 5px;
   margin-bottom: 20px;
   padding: 10px;
+  h1 {
+    font-size: 2rem;
+    color: white;
+    text-align: center;
+    margin-bottom: 1rem;
+    background-color: #1F295B;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #1F295B;
+  }
 }
 
 .btn-custom button {
@@ -136,7 +141,7 @@ input[type="radio"] {
 button.generar-reporte-btn {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #6976ac;
+  background-color: #1F295B;
   color: white;
   border: none;
   border-radius: 5px;
@@ -146,7 +151,7 @@ button.generar-reporte-btn {
 }
 
 button.generar-reporte-btn:hover {
-  background-color: #304ddd;
+  background-color: #313d79;
   transform: scale(1.05);
 }
 
@@ -154,7 +159,7 @@ button.generar-reporte-btn:hover {
 button.generar-reporte-cualitativos-btn {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #6976ac;
+  background-color: #1F295B;
   color: white;
   border: none;
   border-radius: 5px;
@@ -164,7 +169,7 @@ button.generar-reporte-cualitativos-btn {
 }
 
 button.generar-reporte-cualitativos-btn:hover {
-  background-color: #304ddd;
+  background-color: #313d79;
   transform: scale(1.05);
 }
 
@@ -172,7 +177,7 @@ button.generar-reporte-cualitativos-btn:hover {
 button.reporte-general-btn {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #6976ac;
+  background-color: #1F295B;
   color: white;
   border: none;
   border-radius: 5px;
@@ -182,7 +187,7 @@ button.reporte-general-btn {
 }
 
 button.reporte-general-btn:hover {
-  background-color: #304ddd;
+  background-color: #313d79;
   transform: scale(1.05);
 }
 
@@ -190,7 +195,7 @@ button.reporte-general-btn:hover {
 button.generar-pdf-btn {
   padding: 12px 24px;
   font-size: 18px;
-  background-color: #ff5733;
+  background-color: #99503f;
   color: white;
   border: none;
   border-radius: 8px;
@@ -201,7 +206,79 @@ button.generar-pdf-btn {
 }
 
 button.generar-pdf-btn:hover {
-  background-color: #e04e2a;
+  background-color: #683326;
   transform: scale(1.1);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+.card {
+  border: 2px solid #161d42; /* Borde verde para destacar la tarjeta */
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+  padding: 20px;
+  background-color: #f9f9f9; /* Fondo gris claro */
+  margin: 20px 0;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.card p {
+  margin: 12px 0;
+  font-size: 18px;
+  color: #1F295B;
+}
+
+.card p strong {
+  color: #1F295B; /* Color verde oscuro para los títulos */
+  font-weight: bold;
+}
+
+.title-bolder{
+  color: #1F295B; /* Color verde oscuro para los títulos */
+  font-weight: bold;
+}
+
+.card input[type="text"] {
+  border: 2px solid #1F295B; /* Borde verde oscuro */
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 16px;
+  margin-left: 10px;
+  width: 50px; /* Para ocupar el ancho disponible */
+  box-sizing: border-box;
+}
+
+.card input[type="text"]:focus {
+  outline: none;
+  border-color: #1F295B; /* Cambia el color del borde cuando el campo está enfocado */
+  box-shadow: 0 0 5px rgba(56, 142, 60, 0.5);
+}
+
+.card button {
+  background-color: #161d42;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 24px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.card button:hover {
+  background-color: #388e3c;
+}
+
+.card button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(56, 142, 60, 0.7);
+}
+
+.card .result {
+  font-size: 18px;
+  color: #d32f2f; /* Color rojo oscuro para destacar el resultado */
+  margin-top: 20px;
 }
