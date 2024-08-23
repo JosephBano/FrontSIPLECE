@@ -54,7 +54,7 @@ export class IndicadoresComponent implements OnInit{
       estandar: ['', [Validators.required, Validators.minLength(5)]],
       orden: ['', [Validators.required, Validators.pattern(/^[-?]?[1-9]+$/)]],
       tipoagregar: ['', Validators.required],
-      periodoEvaluacion: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(300)]]
+      periodoEvaluacion: ['', [Validators.maxLength(300)]]
     })
     this.editar = this.fb.group({
       id: ['', Validators.required],
@@ -64,6 +64,7 @@ export class IndicadoresComponent implements OnInit{
       detalle: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(300)]],
       estandar: ['', [Validators.required, Validators.minLength(5)]],
       orden: ['', [Validators.required, Validators.pattern(/^[-?]?[1-9]+$/)]],
+      periodoEvaluacion: ['', [Validators.maxLength(300)]]
     })
 
     this.tablafilter = this.fb.group({
@@ -169,6 +170,7 @@ export class IndicadoresComponent implements OnInit{
     this.editar.get('detalle')?.setValue(indicador.Detalle);
     this.editar.get('orden')?.setValue(indicador.Orden);
     this.editar.get('tipoeditar')?.setValue(indicador.IdTipoEvaluacion);
+    this.editar.get('periodoEvaluacion')?.setValue(indicador.PeriodoEvaluacion);
   }
 
   //agregar
@@ -216,6 +218,7 @@ export class IndicadoresComponent implements OnInit{
       Orden: this.editar.value.orden,
       Detalle: this.editar.value.detalle,
       Estandar: this.editar.value.estandar,
+      PeriodoEvaluacion: this.editar.value.periodoEvaluacion,
       Activo: '1',
     }
     
