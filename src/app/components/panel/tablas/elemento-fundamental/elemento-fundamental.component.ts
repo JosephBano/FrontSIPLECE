@@ -34,6 +34,8 @@ Elementos: ElementoFundamental[] = [];
   agregar!: FormGroup;
   editar!: FormGroup;
 
+  mostrarElementos: boolean = true;
+  IdTipoEvaluacion: any;
   constructor(
     private fb: FormBuilder,
     private fd: FilterSidebar,
@@ -89,6 +91,18 @@ Elementos: ElementoFundamental[] = [];
     this.agregar.get('indicador')?.setValue(this.valueFilter);
     if(this.valueFilter != '0') this.agregar.get('indicador')?.disable();
     else this.agregar.get('indicador')?.enable();
+    this.indicadorService.getIndicadorById(this.valueFilter).subscribe(data => {
+      if (data && data.length > 0) {
+        const selectedIndicador = data[0];
+        this.IdTipoEvaluacion = selectedIndicador.IdTipoEvaluacion;
+          if (data[0].IdTipoEvaluacion == '1') {
+              this.mostrarElementos = false;
+          } else {
+              this.mostrarElementos = true;
+          }
+      } else {
+      }
+  });
   }
 
   navegarFiltro(id: string | undefined) {
@@ -147,36 +161,48 @@ Elementos: ElementoFundamental[] = [];
   }
 
   //agregar
-  agregarElemento(){
-    this.agregar.get('indicador')?.enable();
-    const elemento: ElementoFundamental = {
-      CodigoElementoFundamental: `EF-${this.agregar.value.detalle.toLowerCase().replace(" ", "").slice(0, 5)}`,
-      IdIndicador: this.agregar.value.indicador,
-      IdPonderacion: this.agregar.value.ponderacionAdd,
-      Detalle: this.agregar.value.detalle,
-      Orden: this.agregar.value.orden,
+  agregarElemento() {
+    const indicadorId = this.agregar.get('indicador')?.value;
+    const selectedIndicador = this.Indicadores.find(indicador => indicador.IdIndicador == indicadorId);
+    let elemento: ElementoFundamental;
+  
+    if (selectedIndicador && selectedIndicador.IdTipoEvaluacion == '1') {
+      elemento = {
+        CodigoElementoFundamental: `EF-${this.agregar.value.detalle.toLowerCase().replace(" ", "").slice(0, 5)}`,
+        IdIndicador: indicadorId,
+        IdPonderacion: '1',
+        Detalle: '      ',
+        Orden: '1',
+      };
+    } else {
+      elemento = {
+        CodigoElementoFundamental: `EF-${this.agregar.value.detalle.toLowerCase().replace(" ", "").slice(0, 5)}`,
+        IdIndicador: this.agregar.value.indicador,
+        IdPonderacion: this.agregar.value.ponderacionAdd,
+        Detalle: this.agregar.value.detalle,
+        Orden: this.agregar.value.orden,
+      };
     }
-    console.log(elemento);
-    
+  
     this.elementoService.postElementoFundamental(elemento).subscribe(
       (data) => {
         this.toastr.success('El Elemento Fundamental ha sido agregado correctamente!');
         this.loadElementosFundamentales();
-        console.log(data);
+        this.agregar.reset(); // Si decides resetear, asegúrate de que los campos tengan valores válidos
+        this.agregar.updateValueAndValidity(); // Asegúrate de que la validez se actualice después de resetear
+  
+        if (this.cerrarAgregarModal) {
+          this.cerrarAgregarModal.nativeElement.click();
+        }
       },
       (error) => {
         this.toastr.error('Error!, no se ha podido realizar los cambios');
         console.log(error);
       }
-    )
-
-    this.agregar.reset();
-
-    if(this.cerrarAgregarModal) {
-      this.cerrarAgregarModal.nativeElement.click();
-    }
+    );
   }
 
+  
   //editar
   editarElemento(){
     this.editar.get('indicador')?.enable();
@@ -209,5 +235,23 @@ Elementos: ElementoFundamental[] = [];
     if (this.cerrarEditarModal) {
       this.cerrarEditarModal.nativeElement.click();
     }
+  }
+  onIndicadorChange(event: any): void {
+    const selectedIndicadorId = event.target.value;
+    const selectedIndicador = this.Indicadores.find(indicador => indicador.IdIndicador == selectedIndicadorId);
+    this.IdTipoEvaluacion = selectedIndicador ? selectedIndicador.IdTipoEvaluacion : null;
+    if (selectedIndicador && selectedIndicador.IdTipoEvaluacion == '1') {
+      this.mostrarElementos = false;
+    } else {
+      this.mostrarElementos = true;
+    }
+  }
+
+  // Método para verificar si el botón debe estar habilitado
+  isButtonDisabled(): boolean {
+    return this.agregar.invalid && this.IdTipoEvaluacion !== 1;
+  }
+  verificarDetalle(detalle: any): string {
+    return detalle.trim().length === 0 && detalle.length === 5 ? 'Indicador cuantitativo no cuenta con elemento fundamental' : detalle;
   }
 }

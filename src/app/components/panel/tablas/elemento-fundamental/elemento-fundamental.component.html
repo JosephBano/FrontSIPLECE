@@ -52,7 +52,7 @@
                 <ng-container *ngFor="let elemento of Elementos | elemento:filter">
                     <ng-container *ngIf="valueFilter == '0'|| elemento.IdIndicador == valueFilter">
                         <tr *ngIf="(elemento.Activo == '1' && !checkboxDeshabilitarValue) || (elemento.Activo == '0' && checkboxDeshabilitarValue)" [class.table-danger]="elemento.Activo == '0'">
-                            <td>{{elemento.Detalle}}</td>
+                            <td>{{ verificarDetalle(elemento.Detalle) }}</td>
                             <td>{{getDetalleIndicador(elemento.IdIndicador)}}</td>
                             <td class="text-center">{{getDetallePonderacion(elemento.IdPonderacion)}}</td>
                             <td>{{elemento.Orden}}</td>
@@ -95,22 +95,22 @@
                     <form [formGroup]="agregar">
                         <div class="mb-3">
                             <label class="form-label">Indicador</label>
-                            <select formControlName="indicador" class="form-control" >
-                                <option value="0" selected disabled >Indicadores...</option>
+                            <select formControlName="indicador" class="form-control" (change)="onIndicadorChange($event)">
+                                <option value="0" selected disabled>Indicadores...</option>
                                 <ng-container *ngFor="let indicador of Indicadores">
                                     <option *ngIf="indicador.Activo == '1'" [value]="indicador.IdIndicador">{{indicador.Detalle}}</option>
                                 </ng-container>
                             </select>
                             <span class="text-danger ml-5 mt-2" *ngIf="agregar.get('indicador')?.errors?.['pattern'] && agregar.get('indicador')?.touched">El indicador es <strong>requerido</strong></span>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3" *ngIf="mostrarElementos">
                             <label for="DetalleAgregar" class="form-label">Elemento Fundamental</label>
                             <textarea type="" class="form-control" id="DetalleAgregar" cols="25" rows="5" formControlName="detalle" placeholder="Detalle del Elemento Fundamental..."></textarea>
                             <span class="text-danger ml-5 mt-2" *ngIf="agregar.get('detalle')?.errors?.['required'] && agregar.get('detalle')?.touched">El detalle es <strong>requerido</strong></span>
                             <span class="text-danger ml-5 mt-2" *ngIf="agregar.get('detalle')?.errors?.['minlength'] && agregar.get('detalle')?.touched">El detalle debe tener minimo<strong> 5 caracteres</strong></span>
                             <span class="text-danger ml-5 mt-2" *ngIf="agregar.get('detalle')?.errors?.['maxlength'] && agregar.get('detalle')?.touched">El detalle debe tener un máximo de<strong> 300 caracteres</strong></span>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3" *ngIf="mostrarElementos">
                             <label for="" class="form-label">Ponderación</label>
                             <ng-container *ngFor="let tipo of Ponderaciones">
                                 <div class="d-flex mx-4">
@@ -122,7 +122,7 @@
                             </ng-container>
                             <span class="text-danger ml-5 mt-2" *ngIf="agregar.get('ponderacionAdd')?.errors?.['required'] && agregar.get('ponderacionAdd')?.touched">El la ponderacion es <strong>requerido</strong></span>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3" *ngIf="mostrarElementos">
                             <label for="" class="form-label">Orden</label>
                             <input type="number" class="form-control" formControlName="orden" placeholder="1, 2, 3...">
                             <span class="text-danger ml-5 mt-2" *ngIf="agregar.get('orden')?.errors?.['required'] && agregar.get('orden')?.touched">El orden del criterio es <strong>requerido</strong></span>
@@ -133,12 +133,13 @@
                 <!--Fin Contenido Modal-->
             </div>
             <!--Botones modal-->
-            <div class="modal-footer">
-                <button #cerrarAgregarModal type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <div class="btn-custom">
-                    <button type="button" class="btn" (click)="agregarElemento()" [disabled]="agregar.invalid">Agregar</button>
+            <!--Botones modal-->
+                <div class="modal-footer">
+                    <button #cerrarAgregarModal type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <div class="btn-custom">
+                        <button type="button" class="btn" (click)="agregarElemento()" [disabled]="isButtonDisabled()">Agregar</button>
+                    </div>
                 </div>
-            </div>
         </div>
     </div>
 </div>

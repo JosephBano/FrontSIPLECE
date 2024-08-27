@@ -36,7 +36,8 @@ export class EvidenciaFileContenedorComponent implements OnInit{
   @Input() rolviewradios: any;
   idArchivoSeleccionado: any;
   showContainer = false;
-
+  evideEstado2: any;
+  @Output() EvideEstado2 = new EventEmitter<string>();
   constructor(
     private archivoService: ArchivoEvidenciaService,
     private observacionDataService: ObservacionDataService,
@@ -89,11 +90,16 @@ export class EvidenciaFileContenedorComponent implements OnInit{
         this.formDisabled = new Array(this.Archivos.length).fill(false);
         this.formStatus = new Array(this.Archivos.length).fill('btnWait');
         if (this.Archivos.length > 0) {
+          if (this.Archivos[0].Estado == '2') {
+            this.evideEstado2 = this.Archivos[0].IdEvidencia;
+            this.EvideEstado2.emit(this.evideEstado2);
+        }
           this.Archivos.forEach((archivo, index) => {
             this.idArchivoSeleccionado = archivo.IdArchivoEvidencia;
             this.getObservacionByIdArchivoEvidencia(this.idArchivoSeleccionado);
             this.idArchivoSeleccionadoEmitido.emit(this.idArchivoSeleccionado);
             this.idArchivoSeleccionado = archivo.IdArchivoEvidencia;
+            
             this.notificacionesService.deleteNotificacion(archivo.IdEvidencia,archivo.UsuarioRegistra).subscribe(data=>{
             });
             this.notificacionesService.notifyDataChanged();

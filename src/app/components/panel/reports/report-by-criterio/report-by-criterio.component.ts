@@ -6,6 +6,7 @@ import { SubCriteriosService } from 'src/app/services/modeloServicios/sub-criter
 import { Sidebar } from 'src/app/services/sidebar.service';
 import Chart, { ChartType } from 'chart.js/auto';
 import { ReportXcriterioService } from 'src/app/services/modeloServicios/reportXcriterio.service';
+import { ReporteIndicadorService } from 'src/app/services/modeloServicios/reporte-indicador.service';
 @Component({
   selector: 'app-report-by-criterio',
   templateUrl: './report-by-criterio.component.html',
@@ -21,14 +22,19 @@ export class ReportByCriterioComponent implements OnInit {
   subCriterioSeleccionado: any = null;
   archivosEvidencias: any[] = [];
   indicadorSeleccionado: number | null = null;
+  graficaMostrada: boolean = false;
   @ViewChild('chart') chartElement!: ElementRef;
   public chart!: Chart;
-
+  Variables: any[] = [];
+  mostrarValoracion: boolean = false;
+firstIndicator: any;
+  selectedIndicadorId: any;
   constructor(private route: ActivatedRoute,
     private ds: Sidebar,
     private subCriterioService: SubCriteriosService,
     private indicadorService: IndicadorService,
-    private reportxcriterioservice: ReportXcriterioService) {}
+    private reportxcriterioservice: ReportXcriterioService,
+    private reporteIndicadorService: ReporteIndicadorService) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -106,37 +112,83 @@ export class ReportByCriterioComponent implements OnInit {
               }
             }
           });
+          this.graficaMostrada = true;
         }
   });
   }
   generatePdf(detalle: any, estado: string): void {
     if (!this.chart) {
-        console.error('No chart available to download.');
-        return;
+      console.error('No chart available to download.');
+      return;
     }
+  
     const base64Image = this.chart.toBase64Image().replace(/^data:image\/(png|jpg);base64,/, '');
+    
+    // Obtener las evaluaciones cualitativa y cuantitativa del indicador seleccionado
+    let evaluacionTexto = '';
+    let evaluacionCuantitativa = '';
+  
+    const indicador = this.indicadores.find(i => i.IdIndicador === this.selectedIndicadorId);
+  
+    if (indicador) {
+      // Evaluación cualitativa
+      if (indicador.IdTipoEvaluacion == '2') {
+        evaluacionTexto = this.getValoracionTexto(indicador.Valoracion);
+      }
+      
+      // Evaluación cuantitativa
+      if (indicador.IdTipoEvaluacion == '1' && this.Variables.length > 0) {
+        evaluacionCuantitativa = `${this.Variables[0]?.Detalle} = ${this.Variables[0]?.Valor}`;
+      }
+    }
+  
+    // Crear objeto con la información para el PDF
     const imageRequest = {
-        Image: base64Image,
-        Detalle: detalle,
-        Estado: estado,
-        CriterioDetalle: this.criterioDetalle, 
-        SubCriterioDetalle: this.subCriterioSeleccionado?.Detalle 
+      Image: base64Image,
+      Detalle: detalle,
+      Estado: estado,
+      CriterioDetalle: this.criterioDetalle,
+      SubCriterioDetalle: this.subCriterioSeleccionado?.Detalle,
+      EvaluacionTexto: evaluacionTexto,  
+      EvaluacionCuantitativa: evaluacionCuantitativa  
     };
+  
     this.reportxcriterioservice.generatePdf(imageRequest).subscribe(blob => {
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'ReporteIndicador.pdf';
-        link.click();
-        window.URL.revokeObjectURL(url);
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'ReporteIndicador.pdf';
+      link.click();
+      window.URL.revokeObjectURL(url);
     }, error => {
-        console.error('Error downloading PDF:', error);
+      console.error('Error downloading PDF:', error);
     });
-}
+  }
+  
 
   // Método para verificar si el indicador actual es el seleccionado
   isIndicadorSeleccionado(indicadorId: any): boolean {
     return this.indicadorSeleccionado === indicadorId;
   }
-  
+  getValoracionTexto(valoracion: any): string {
+    switch (valoracion) {
+      case 1:
+        return 'Satisfactorio';
+      case 2:
+        return 'Cuasi-satisfactorio';
+      case 3:
+        return 'Poco satisfactorio';
+      case 4:
+        return 'Deficiente';
+      default:
+        return 'Desconocido';
+    }
+  }
+
+  getVariables(index: any) {
+    this.reporteIndicadorService.getVarIndicador(index).subscribe(data => {
+      this.Variables = data;
+    });
+    this.selectedIndicadorId = index;
+  }
 }

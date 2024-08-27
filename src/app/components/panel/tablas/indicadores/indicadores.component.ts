@@ -59,7 +59,6 @@ export class IndicadoresComponent implements OnInit{
     this.editar = this.fb.group({
       id: ['', Validators.required],
       subcriterio: ['0', [Validators.required, Validators.pattern(/^[-?]?[1-9]+$/)]],
-      valoracion: ['', Validators.required],
       tipoeditar: ['', Validators.required],
       detalle: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(300)]],
       estandar: ['', [Validators.required, Validators.minLength(5)]],
@@ -157,7 +156,7 @@ export class IndicadoresComponent implements OnInit{
 
   getDetalleValoracion(id: any){
     const valoracion = this.Valoraciones.find(e => e.IdValoracion === id)
-    return valoracion?.Detalle;
+    return valoracion?.Detalle ?? 'Indicador cuantitativo no cuenta con valoración';
   }
 
   //otrasFunciones  
@@ -214,7 +213,6 @@ export class IndicadoresComponent implements OnInit{
       CodigoIndicador: codigo[0].CodigoIndicador,
       IdSubCriterio: this.editar.value.subcriterio,
       IdTipoEvaluacion: this.editar.value.tipoeditar,
-      Valoracion: this.editar.value.valoracion,
       Orden: this.editar.value.orden,
       Detalle: this.editar.value.detalle,
       Estandar: this.editar.value.estandar,

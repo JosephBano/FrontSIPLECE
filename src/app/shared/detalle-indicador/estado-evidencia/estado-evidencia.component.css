@@ -24,3 +24,25 @@ p {
 .contenedor-info {
     display: flex;
 }
+.contenedor-evidencia .d-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .contenedor-evidencia p {
+    display: flex;
+    align-items: center;
+  }
+  
+  .contenedor-evidencia .material-symbols-outlined {
+    margin-left: 8px; /* Espacio entre los iconos */
+  }
+  
+  .icon-size {
+    font-size: 24px; /* Ajusta el tamaño del icono según sea necesario */
+  }
+  
+  .informacion {
+    cursor: pointer;
+  }

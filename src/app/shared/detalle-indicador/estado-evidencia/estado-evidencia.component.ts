@@ -24,7 +24,9 @@ export class EstadoEvidenciaComponent implements OnInit {
   evidencias: Evidencia[] = [];
   permisoParams?: PermisoPeticion;
   filterBoolean = false;  
-
+  evideEstado2!: string;
+  storedEvideEstado2?: string;
+  evideEstado2Array: string[] = []; 
   //ActiveRols= '1';
   ActiveRols= '2';
   //subRolActivo = '1';
@@ -60,6 +62,7 @@ export class EstadoEvidenciaComponent implements OnInit {
    }
     this.loadTitle();
     this.InitRoles();
+   this.handleEvideEstado2(this.evideEstado2);
   }
 
   selectEvidenciaId(id: any) {
@@ -132,4 +135,16 @@ export class EstadoEvidenciaComponent implements OnInit {
       return cadenaFin.trim() + '...';
     }
   }
+
+  handleEvideEstado2(evideEstado2: string) {
+    this.storedEvideEstado2 = evideEstado2;
+    this.evideEstado2Array.push(this.storedEvideEstado2);
+  }
+  isEvidenciaNotInArray(evidenciaId: string | undefined): boolean {
+    if (!evidenciaId) {
+      return false;  // O true, dependiendo de lo que tenga sentido en tu lógica
+    }
+    return !this.evideEstado2Array.includes(evidenciaId);
+  }
+  
 }
