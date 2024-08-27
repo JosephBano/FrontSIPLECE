@@ -11,15 +11,23 @@
   </div>
 </div>
 
-
-<h2 *ngIf="subCriterioSeleccionado">INDICADORES DE <strong>{{ subCriterioSeleccionado.Detalle }}</strong> </h2>
+<h2 *ngIf="subCriterioSeleccionado">INDICADORES DE <strong>{{ subCriterioSeleccionado.Detalle }}</strong></h2>
 <div *ngIf="indicadores.length > 0">
   <div *ngFor="let indicador of indicadores" class="indicador-item">
-    <p> <strong>{{ indicador.Detalle }}</strong></p>
+    <p><strong>{{ indicador.Detalle }}</strong></p>
     <p class="estado" [ngClass]="{'evaluado': indicador.Validado, 'no-evaluado': !indicador.Validado}">
       Estado: {{ indicador.Validado ? 'Indicador evaluado' : 'Indicador no evaluado' }}
     </p>
-    
+
+    <!-- Evaluación cualitativa -->
+    <p class="valoracion" *ngIf="indicador.IdTipoEvaluacion == '2' && indicador.IdIndicador === selectedIndicadorId">
+      Resultado de evaluación: {{ getValoracionTexto(indicador.Valoracion) }}
+    </p>
+
+    <!-- Evaluación cuantitativa: solo se muestra para el indicador seleccionado -->
+    <p class="valoracion" *ngIf="indicador.IdTipoEvaluacion == '1' && indicador.IdIndicador === selectedIndicadorId">
+      Resultado de evaluación: {{Variables[0]?.Detalle}} = {{Variables[0]?.Valor}}
+    </p>
 
     <!-- Solo muestra los archivos de evidencias si el indicador es el seleccionado -->
     <div *ngIf="isIndicadorSeleccionado(indicador.IdIndicador)">
@@ -29,10 +37,10 @@
     </div>
 
     <div class="button-container">
-      <button class="show-data-btn" (click)="getArchivosEvidencias(indicador.IdIndicador)">Mostrar grafica del indicador</button>
-      <button class="Download-pdf" (click)="generatePdf(indicador.Detalle, indicador.Validado ? 'Indicador evaluado' : 'Indicador no evaluado')" *ngIf="graficaMostrada && isIndicadorSeleccionado(indicador.IdIndicador)"  >
+      <button class="show-data-btn" (click)="getArchivosEvidencias(indicador.IdIndicador); getVariables(indicador.IdIndicador)">Mostrar gráfica del indicador</button>
+      <button class="Download-pdf" (click)="generatePdf(indicador.Detalle, indicador.Validado ? 'Indicador evaluado' : 'Indicador no evaluado')" *ngIf="graficaMostrada && isIndicadorSeleccionado(indicador.IdIndicador)">
         Descargar PDF
-    </button>
+      </button>
     </div>
   </div>
 </div>
@@ -40,4 +48,3 @@
 <div *ngIf="indicadores.length === 0" class="no-indicadores">
   <p>No se encontraron indicadores.</p>
 </div>
-

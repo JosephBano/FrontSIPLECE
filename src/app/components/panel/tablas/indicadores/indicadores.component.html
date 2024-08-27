@@ -217,18 +217,7 @@
                             </ng-container>
                             <span class="text-danger ml-5 mt-2" *ngIf="editar.get('tipoeditar')?.errors?.['required'] && editar.get('tipoeditar')?.touched">El tipo de evaluacion es <strong>requerido</strong></span>
                         </div>        
-                        <div class="mb-3">
-                            <label for="" class="form-label">Valoracion</label>
-                            <ng-container *ngFor="let valor of Valoraciones">
-                                <div class="d-flex mx-4">
-                                    <div class="form-check">
-                                        <input type="radio" class="form-check-input" name="valoracion" formControlName="valoracion" [value]="valor.IdValoracion">
-                                        <label for="" class="form-check-label">{{valor.Detalle}} </label>
-                                    </div>
-                                </div>
-                            </ng-container>
-                            <span class="text-danger ml-5 mt-2" *ngIf="editar.get('valoracion')?.errors?.['required'] && editar.get('valoracion')?.touched">El tipo de evaluacion es <strong>requerido</strong></span>
-                        </div>
+                        
                     </form>
                 </div>
                 <!--Fin Contenido Modal-->

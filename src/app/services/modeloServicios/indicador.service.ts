@@ -31,7 +31,7 @@ export class IndicadorService {
     return this.http.get<Indicador[]>(this.API_URL + `/GetByModelo/${id}`)
   }
 
-  getIndicadorById(id: string): Observable<Indicador[]> {
+  getIndicadorById(id: any): Observable<Indicador[]> {
     return this.http.get<Indicador[]>(`${this.API_URL}/FindOne/${id}`)
   }
 

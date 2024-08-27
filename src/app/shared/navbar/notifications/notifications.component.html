@@ -2,6 +2,10 @@
 <div *ngIf="notificaciones.length > 0; else noNotifications">
   <div *ngFor="let notification of notificaciones" class="notification-container">
     <p>{{ notification.Detalle }}</p>
+    <div *ngIf="evidenciaDetails[notification.IdEvidencia]" class="detalle-container">
+      <p><strong>Evidencia:</strong></p>
+      <p>{{ evidenciaDetails[notification.IdEvidencia]?.Detalle }}</p>
+    </div>
   </div>
 </div>
 

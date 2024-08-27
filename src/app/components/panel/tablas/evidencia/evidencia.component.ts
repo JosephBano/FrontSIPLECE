@@ -108,9 +108,10 @@ export class EvidenciaComponent implements OnInit{
   }
 
   // Get objects  
-  getDetalleElemento(id: any){
+  getDetalleElemento(id: any): string {
     const obj = this.Elementos.find(e => e.IdElemento === id);
-    return obj?.Detalle;
+    const detalle = obj?.Detalle;
+    return detalle && detalle.trim().length === 0 && detalle.length === 5 ? 'Indicador cuantitativo no cuenta con elemento fundamental' : (detalle ?? '');
   }
   
   setPreEditar(evidencia: Evidencia){
