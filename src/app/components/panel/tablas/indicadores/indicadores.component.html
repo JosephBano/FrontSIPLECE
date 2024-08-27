@@ -119,7 +119,7 @@
                         <!--Estandard-->
                         <div class="mb-3">
                             <label for="DetalleAgregar" class="form-label">Estandar</label>
-                            <textarea formControlName="estandar" class="form-control" placeholder="Escriba el estandar del modelo" id="" cols="30" rows="10"></textarea>
+                            <textarea formControlName="estandar" class="form-control" placeholder="Escriba el estandar del modelo" id="" cols="30" rows="2"></textarea>
                             <span class="text-danger ml-5 mt-2" *ngIf="agregar.get('estandar')?.errors?.['required'] && agregar.get('estandar')?.touched">El estandar es <strong>requerido</strong></span>
                             <span class="text-danger ml-5 mt-2" *ngIf="agregar.get('estandar')?.errors?.['minlength'] && agregar.get('estandar')?.touched">El estandar debe tener minimo <strong>5 caracteres</strong></span>
                         </div>
@@ -142,6 +142,13 @@
                                 </div>
                             </ng-container>
                             <span class="text-danger ml-5 mt-2" *ngIf="agregar.get('tipoagregar')?.errors?.['required'] && agregar.get('tipoagregar')?.touched">El tipo de evaluacion es <strong>requerido</strong></span>
+                        </div>
+                        <!--Periodo de Evaluacion-->
+                        <div class="mb-3">
+                            <label for="PeriodoEvaluacionAgregar" class="form-label">Periodo de Evaluacion</label>
+                            <input type="text" class="form-control" id="PeriodoEvaluacionAgregar" formControlName="periodoEvaluacion" placeholder="Periodo de evaluación del indicador">
+                            <span class="text-danger ml-5 mt-2" *ngIf="agregar.get('periodoEvaluacion')?.errors?.['required'] && agregar.get('periodoEvaluacion')?.touched">El periodo de evaluación es <strong>requerido</strong></span>
+                            <span class="text-danger ml-5 mt-2" *ngIf="agregar.get('periodoEvaluacion')?.errors?.['maxlength'] && agregar.get('periodoEvaluacion')?.touched">El periodo de evaluación debe tener un máximo de<strong> 300 caracteres</strong></span>
                         </div>
                     </form>
                 </div>
@@ -193,7 +200,7 @@
                         <!--Estandard-->
                         <div class="mb-3">
                             <label for="DetalleAgregar" class="form-label">Estandar</label>
-                            <textarea formControlName="estandar" class="form-control" placeholder="Escriba el estandar del modelo" id="" cols="30" rows="10"></textarea>
+                            <textarea formControlName="estandar" class="form-control" placeholder="Escriba el estandar del modelo" id="" cols="30" rows="1"></textarea>
                             <span class="text-danger ml-5 mt-2" *ngIf="editar.get('estandar')?.errors?.['required'] && editar.get('estandar')?.touched">El estandar es <strong>requerido</strong></span>
                             <span class="text-danger ml-5 mt-2" *ngIf="editar.get('estandar')?.errors?.['minlength'] && editar.get('estandar')?.touched">El estandar debe tener minimo <strong>5 caracteres</strong></span>
                         </div>
@@ -201,7 +208,6 @@
                         <div class="mb-3">
                             <label for="" class="form-label">Orden</label>
                             <input type="text" class="form-control" formControlName="orden" placeholder="1, 2, 3, ...">
-                            <span class="text-danger ml-5 mt-2" *ngIf="editar.get('orden')?.errors?.['required'] && editar.get('orden')?.touched">El orden del criterio es <strong>requerido</strong></span>
                             <span class="text-danger ml-5 mt-2" *ngIf="editar.get('orden')?.errors?.['pattern'] && editar.get('orden')?.touched">El orden solo puede contener <strong>números enteros</strong></span>
                         </div> 
                         <!--Tipo de Evaluacion-->
@@ -217,7 +223,6 @@
                             </ng-container>
                             <span class="text-danger ml-5 mt-2" *ngIf="editar.get('tipoeditar')?.errors?.['required'] && editar.get('tipoeditar')?.touched">El tipo de evaluacion es <strong>requerido</strong></span>
                         </div>        
-                        
                     </form>
                 </div>
                 <!--Fin Contenido Modal-->
