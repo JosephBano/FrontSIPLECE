@@ -13,6 +13,7 @@ import { ObservacionDataService } from 'src/app/services/modeloServicios/observa
 import { archivoEvidencia } from 'src/app/models/modelos-generales/archivo-evidencia.model';
 import { Notificacion } from 'src/app/models/modelos-generales/notificacion';
 import { NotificacionesService } from 'src/app/services/modeloServicios/notificaciones.service';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-modal-evidencias',
@@ -34,9 +35,9 @@ export class ModalEvidenciasComponent implements OnInit{
     private toastr: ToastrService,
     private location: Location,
     private router: Router,
-    private observacionDataService: ObservacionDataService,
     private notificacionesService: NotificacionesService,
-    private archivoService: ArchivoEvidenciaService
+    private archivoService: ArchivoEvidenciaService,
+    private sharedService: SharedService
   ) { }
 
   ngOnInit(): void {
@@ -74,6 +75,7 @@ export class ModalEvidenciasComponent implements OnInit{
       this.getToken(this.files[0].name, fileData, this.files[0].name)
       this.router.navigate([`${this.location.path()}`]);
       this.files = []
+      this.sharedService.triggerMyMethod();
     } catch (error) {
       this.toastr.error(`Error base 64: {error}`)
     }

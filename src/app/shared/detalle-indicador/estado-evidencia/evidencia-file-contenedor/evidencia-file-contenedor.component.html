@@ -6,64 +6,65 @@
         <li class="list-group-item"></li>
         <ng-container *ngFor="let archivo of Archivos; let i = index">           
             <li class="list-group-item">
-                <div class="contenedor-opciones container">
-                    <div class="row">
-                        <div class="d-flex col-2">
-                          <ng-container *ngFor="let observacion of Observaciones">
+              <div class="contenedor-opciones container">
+                <div class="row align-items-center">
+                    <div class="col-2 d-flex flex-column">
+                        <ng-container *ngFor="let observacion of Observaciones">
                             <p class="observacion" *ngIf="observacion.IdArchivoEvidencia === archivo.IdArchivoEvidencia">
-                              {{ observacion.Detalle }}
+                                {{ observacion.Detalle }}
                             </p>
-                          </ng-container>
-                        </div>
-                        <div class="d-flex col-1">
-                          <div class="statusColor" *ngIf="archivo.Estado=='2' && archivo.PathUrl!==null" [ngStyle]="{'background-color': '#9FFFA4'}"></div>
-                          <div class="statusColor" *ngIf="archivo.Estado=='1' && archivo.PathUrl!==null" [ngStyle]="{'background-color': '#FFA785'}"></div>
-                          <div class="statusColor" *ngIf="archivo.Estado=='0' || archivo.PathUrl===null" [ngStyle]="{'background-color': '#FFDD91'}"></div>
-                        </div>
-                        <div class="d-flex col-2">
-                          <div *ngIf="archivo.Estado=='2'"><a>Aprobado</a></div>
-                          <div *ngIf="archivo.Estado=='0'"><a>No evaluado</a></div>
-                          <div *ngIf="archivo.Estado=='1'"><a>Erroneo</a></div>
-                        </div>
-                        <div class="d-flex col-2">
-                          {{archivo.Detalle}}
-                        </div>
-                        <div class="d-flex col-2">
-                          {{archivo.UsuarioRegistra}}
-                        </div>
-                        <div class="d-flex col-2" *ngIf="archivo.PathUrl!==null">
-                          <span class="material-symbols-outlined">navigate_next</span>
-                          <a href="{{archivo.PathUrl}}" target="_blank" class="evidencia">
+                        </ng-container>
+                    </div>
+                    <div class="col-1 d-flex justify-content-center">
+                        <div class="statusColor" *ngIf="archivo.Estado=='2' && archivo.PathUrl!==null" [ngStyle]="{'background-color': '#9FFFA4'}"></div>
+                        <div class="statusColor" *ngIf="archivo.Estado=='1' && archivo.PathUrl!==null" [ngStyle]="{'background-color': '#FFA785'}"></div>
+                        <div class="statusColor" *ngIf="archivo.Estado=='0' || archivo.PathUrl===null" [ngStyle]="{'background-color': '#FFDD91'}"></div>
+                    </div>
+                    <div class="col-2 d-flex flex-column">
+                        <div *ngIf="archivo.Estado=='2'"><a>Aprobado</a></div>
+                        <div *ngIf="archivo.Estado=='0'"><a>No evaluado</a></div>
+                        <div *ngIf="archivo.Estado=='1'"><a>Erroneo</a></div>
+                    </div>
+                    <div class="col-2 d-flex flex-column">
+                        {{archivo.Detalle}}
+                    </div>
+                    <div class="col-2 d-flex flex-column">
+                        {{archivo.UsuarioRegistra}}
+                    </div>
+                    <div class="col-2 d-flex flex-column" *ngIf="archivo.PathUrl!==null">
+                        <span class="material-symbols-outlined">navigate_next</span>
+                        <a href="{{archivo.PathUrl}}" target="_blank" class="evidencia">
                             {{archivo.Detalle}}
-                          </a>
-                        </div>
-                      </div>
-                    <ng-container *ngIf="rolviewradios == '1' && archivo.Estado != '2' && archivo.Estado != '1'">
-                        <form [formGroup]="radiobuton" (ngSubmit)="sendValidated(i, archivo)">
-                            <div class="d-flex">
-                                <div class="d-flex mb-2">
-                                    <div class="contenedor-radio d-flex" *ngIf="!formDisabled[i]">
-                                        <div class="radio-cont">
-                                            <span class="material-symbols-outlined icon-radio">check_small</span>
-                                            <input type="radio" value=2 formControlName="estado" class="radioinput">
-                                        </div>
-                                        <div class="radio-cont">
-                                            <span class="material-symbols-outlined icon-radio">horizontal_rule</span>
-                                            <input type="radio" value=0 formControlName="estado" class="radioinput">
-                                        </div>
-                                        <div class="radio-cont">
-                                            <span class="material-symbols-outlined icon-radio">close</span>
-                                            <input type="radio" value=1 formControlName="estado" class="radioinput">
-                                        </div>
+                        </a>
+                    </div>
+                </div>
+            
+                <ng-container *ngIf="rolviewradios == '1' && archivo.Estado != '2' && archivo.Estado != '1'">
+                    <form [formGroup]="radiobuton" (ngSubmit)="sendValidated(i, archivo)">
+                        <div class="row align-items-center">
+                            <div class="col-8 d-flex mb-2">
+                                <div class="contenedor-radio d-flex justify-content-between" *ngIf="!formDisabled[i]">
+                                    <div class="radio-cont d-flex flex-column align-items-center">
+                                        <span class="material-symbols-outlined icon-radio">check_small</span>
+                                        <input type="radio" value=2 formControlName="estado" class="radioinput">
+                                    </div>
+                                    <div class="radio-cont d-flex flex-column align-items-center">
+                                        <span class="material-symbols-outlined icon-radio">horizontal_rule</span>
+                                        <input type="radio" value=0 formControlName="estado" class="radioinput">
+                                    </div>
+                                    <div class="radio-cont d-flex flex-column align-items-center">
+                                        <span class="material-symbols-outlined icon-radio">close</span>
+                                        <input type="radio" value=1 formControlName="estado" class="radioinput">
                                     </div>
                                 </div>
-                                <div class="contenedor-btn d-flex align-center" >
-                                  <button [ngClass]="formStatus[i]" [disabled]="formDisabled[i]" (click)="openModal(template)">Aplicar</button>
-                                </div>                                
-                            </div>                           
-                        </form>
-                    </ng-container>
-                </div>
+                            </div>
+                            <div class="col-4 d-flex align-items-center justify-content-center">
+                                <button [ngClass]="formStatus[i]" [disabled]="formDisabled[i]" (click)="openModal(template)">Aplicar</button>
+                            </div>
+                        </div>
+                    </form>
+                </ng-container>
+            </div>
             </li>
             <div class="d-flex justify-content-end">
               <i class="material-icons" (click)="toggleContainer(i, archivo.UsuarioRegistra, archivo.IdEvidencia)">arrow_drop_down</i>
