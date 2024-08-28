@@ -78,10 +78,23 @@ export class UsuariosListComponent {
      );
   }
 
+  deleteUserStatus(id:any){
+    this.usuarioService.deleteUsuario(id).subscribe(
+      response => {
+        console.log(response);
+        window.location.reload()
+      },
+      error => {
+        console.error('Error al actualizar el estado del usuario', error);
+      }
+    );
+  }
+
   updateUserStatus(id: any) {
     this.usuarioService.updateActiveStatus(id).subscribe(
       response => {
         console.log(response);
+        window.location.reload()
       },
       error => {
         console.error('Error al actualizar el estado del usuario', error);

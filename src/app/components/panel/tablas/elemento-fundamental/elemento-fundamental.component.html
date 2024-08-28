@@ -52,7 +52,9 @@
                 <ng-container *ngFor="let elemento of Elementos | elemento:filter">
                     <ng-container *ngIf="valueFilter == '0'|| elemento.IdIndicador == valueFilter">
                         <tr *ngIf="(elemento.Activo == '1' && !checkboxDeshabilitarValue) || (elemento.Activo == '0' && checkboxDeshabilitarValue)" [class.table-danger]="elemento.Activo == '0'">
-                            <td>{{ verificarDetalle(elemento.Detalle) }}</td>
+                            <td [ngClass]="{'DetalleNull': verificarDetalle(elemento.Detalle) === 'Indicador cuantitativo no cuenta con elemento fundamental'}">
+                                {{ verificarDetalle(elemento.Detalle) }}
+                              </td>
                             <td>{{getDetalleIndicador(elemento.IdIndicador)}}</td>
                             <td class="text-center">{{getDetallePonderacion(elemento.IdPonderacion)}}</td>
                             <td>{{elemento.Orden}}</td>

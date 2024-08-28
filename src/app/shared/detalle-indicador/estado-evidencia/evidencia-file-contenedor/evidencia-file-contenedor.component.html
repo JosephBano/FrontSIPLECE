@@ -58,7 +58,7 @@
                                     </div>
                                 </div>
                                 <div class="contenedor-btn d-flex align-center" >
-                                  <button [ngClass]="formStatus[i]" [disabled]="formDisabled[i]" (click)="openModal(template)">Aplicar</button>
+                                  <button [ngClass]="formStatus[i]" [disabled]="formDisabled[i]" (click)="handleButtonClick(template, archivo.UsuarioRegistra)">Aplicar</button>
                                 </div>                                
                             </div>                           
                         </form>

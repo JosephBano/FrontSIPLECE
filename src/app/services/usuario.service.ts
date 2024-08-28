@@ -35,12 +35,23 @@ export class UsuarioService {
     })
     return this.http.get<Usuario[]>(`${this.API_URL}/eliminados`, {headers});
   }
+
+  deleteUsuario(id: any): Observable<any> {
+    const token = this.loginService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    return this.http.delete(`${this.API_URL}/${id}`, {headers});
+  }
+
   updateActiveStatus(id: any): Observable<any> {
     const token = this.loginService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     })
-    return this.http.put(`${this.API_URL}/${id}`, {headers});
+    console.log(id);
+    
+    return this.http.put(`${this.API_URL}/SetActive/${id}`, {headers});
 }
 
   crearUsuario(usuario: Usuario): Observable<Usuario> {
@@ -50,5 +61,21 @@ export class UsuarioService {
 
   getRol(userRol: UsuarioRolPeticion): Observable<UsuarioRolRespuesta[]> {
     return this.http.get<UsuarioRolRespuesta[]>(`${this.API_URL}/rol?CodigoUsuario=${userRol.codigoUsuario}&CodigoSistema=${userRol.codigoSistema}&CodigoInstitucion=${userRol.codigoInstitucion}`)
+  }
+
+  getEmailByPerfil(perfil: string): Observable<any> {
+    const token = this.loginService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    return this.http.get<any>(`${this.API_URL}/GetEmailByPerfil/${perfil}`, {headers});
+    
+  }
+  getByCodeAd(code: string): Observable<any> {
+    const token = this.loginService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<any>(`${this.API_URL}/GetByCodeAd/${code}`, { headers });
   }
 }

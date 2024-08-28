@@ -4,7 +4,7 @@
             <div class="row">
                 <label class="form-label">Usuario registra</label>
                 <div class="col-11">
-                    <select class="form-control select-filter" formControlName="filterEncargado" (change)="OnChangeEncargadoFilter()">
+                    <select class="form-control select-filter" formControlName="filterEncargado" (change)="OnChangeEncargadoFilter()" [(ngModel)]="selectedValue">
                         <option value="" selected disabled>Seleccionar usuario</option>
                         <option value="0">Ningun usuario seleccionado</option>
                         <ng-container *ngFor="let filtro of Usuarios">

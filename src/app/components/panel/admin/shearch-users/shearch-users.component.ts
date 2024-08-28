@@ -6,6 +6,7 @@ import { Usuario, UsuarioRolPeticion, UsuarioRolRespuesta } from 'src/app/models
 import { DataService } from 'src/app/services/data.service';
 import { LoginService } from 'src/app/services/login.service';
 import { PerfilService } from 'src/app/services/serviciosSeguridad/perfil.service';
+import { SharedService } from 'src/app/services/serviciosSeguridad/shared.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { environment } from 'src/environments/environment.development';
 
@@ -37,24 +38,48 @@ export class ShearchUsersComponent {
   selects: FormGroup;
   disabledButton = true;
   displayPermissions = false;
-
+  selectedValue: number | null = null;
   constructor(
     private usuarios: UsuarioService,
     private loginService: LoginService,
     private fb: FormBuilder,
     private perfilService: PerfilService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private sharedService: SharedService
   ) { 
     this.selects = this.fb.group({
       filterEncargado: new FormControl({value: '0', disabled: false}),
       filterPerfil: new FormControl({value: '0', disabled: true})
     })
+    
   }
 
   ngOnInit(): void {
     this.loadData();
-    console.log(this.loadRolData);
-    
+    this.sharedService.currentValue.subscribe(value => {
+      if (value !== null) {
+        this.selectedValue = value;
+      }
+    });
+    this.sharedService.reload$.subscribe(reload => {
+      if (reload) {
+        this.reloadPermissions();
+      }
+    });
+  }
+  reloadPermissions() {
+    this.displayPermissions = false;
+    this.valueEncargadoFilter = this.selects.get('filterEncargado')?.value;
+    this.valuePerfilFilter = this.selects.get('filterPerfil')?.value;
+
+    if (this.valueEncargadoFilter && this.valueEncargadoFilter !== '0') {
+      this.loadRolData(this.valueEncargadoFilter);
+      this.OnChangePerfilFilter();
+    } else {
+      this.Perfiles = [];
+      this.selects.get('filterPerfil')?.disable();
+      this.disabledButton = true;
+    }
   }
 
   loadData(): void {

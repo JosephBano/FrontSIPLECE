@@ -47,7 +47,7 @@
                         <td [ngClass]="{'bordern': selectedEsenciales === i}" scope="row" colspan="2" class="wide-column">{{elemento.Detalle}}</td>
                         <td [ngClass]="{'bordern': selectedEsenciales === i}" class="text-center">
                           <div class="contenedor-botones">
-                            <span class="material-symbols-outlined icon-size" (click)="selectedEsenciales = (selectedEsenciales === i ? null : i)">{{ selectedEsenciales === i ? 'expand_less' : 'expand_more' }}</span>
+                            <span class="material-symbols-outlined icon-size" (click)="toggle(i)">{{ selectedEsenciales === i ? 'expand_less' : 'expand_more' }}</span>
                           </div>
                         </td>
                       </tr>

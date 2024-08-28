@@ -16,6 +16,11 @@ import { ElementoFundamentalService } from 'src/app/services/modeloServicios/ele
 import { EvidenciaService } from 'src/app/services/modeloServicios/evidencia.service';
 import { ToastrService } from 'ngx-toastr';
 import { ListaPermisoPeticion, PermisosPeticion } from 'src/app/models/modelosSeguridad/permission.model';
+import { EmailService } from 'src/app/services/email.service';
+import { email } from 'src/app/models/email.model';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { Usuario } from 'src/app/models/usuario.model';
+import { SharedService } from 'src/app/services/serviciosSeguridad/shared.service';
 @Component({
   selector: 'app-permission-table',
   templateUrl: './permission-table.component.html',
@@ -38,6 +43,7 @@ export class PermissionTableComponent {
   permisosPeticion: PermisosPeticion[]= [];
   ListCodigoOpciones: string[] = [];  
   padresData: { [key: string]: any } = {};
+  usuarios: Usuario[] = [];
   // Remove the duplicate declaration of 'EliminarPermisos'
   // EliminarPermisos: DeletePermiso[] = [];
 
@@ -52,7 +58,10 @@ export class PermissionTableComponent {
     private perfilService: PerfilService,
     private modeloService: ModeloService,
     private toastr: ToastrService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private emailService: EmailService,
+    private usuarioService: UsuarioService,
+    private sharedService: SharedService
   ) {
     this.permissionForm = this.fb.group({
       selectedRolOption: 'ENCARGADO',
@@ -341,6 +350,21 @@ export class PermissionTableComponent {
           this.toastr.error("Error al asignar permisos al usuario");
         }
     });
+
+    this.usuarioService.getUsuarios().subscribe(data=>{
+      this.usuarios=data;
+      const user = this.usuarios.find(u=>u.codigoAd===this.IdUser);
+      const email : email  = {
+        to : user?.correo,
+        recipent: `${user?.nombre} ${user?.apellido}`,
+        subject : `Asignación de permisos SIPLECE`,
+        body : `Se le ha asignado los permisos respectivos al usuario ${user?.nombre} ${user?.apellido} en el sistema administrativo SIPLECE.`
+      }
+      this.emailService.sendEmail(email).subscribe(data=>{
+      });
+    });
+    this.sharedService.changeValue(0);
+    this.sharedService.triggerReload();
   }
   onUpdate() { 
     this.loadUserData();
@@ -361,6 +385,20 @@ export class PermissionTableComponent {
     }catch(error){
       this.toastr.error("Error al actualizar permisos del usuario");
     }
+    this.usuarioService.getUsuarios().subscribe(data=>{
+      this.usuarios=data;
+      const user = this.usuarios.find(u=>u.codigoAd===this.IdUser);
+      const email : email  = {
+        to : user?.correo,
+        recipent: `${user?.nombre} ${user?.apellido}`,
+        subject : `Actualización de permisos SIPLECE`,
+        body : `Se han actualizado los permisos respectivos al usuario ${user?.nombre} ${user?.apellido} en el sistema administrativo SIPLECE.`
+      }
+      this.emailService.sendEmail(email).subscribe(data=>{
+      });
+    });
+    this.sharedService.changeValue(0);
+    this.sharedService.triggerReload();
   }
 
   combinarCadenas(cadena1: string, cadena2: string): string {  

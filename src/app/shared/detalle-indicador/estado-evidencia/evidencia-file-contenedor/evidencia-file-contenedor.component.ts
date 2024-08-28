@@ -10,6 +10,9 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable, of, tap } from 'rxjs';
 import { NotificacionesService } from 'src/app/services/modeloServicios/notificaciones.service';
 import { Notificacion } from 'src/app/models/modelos-generales/notificacion';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { email } from 'src/app/models/email.model';
+import { EmailService } from 'src/app/services/email.service';
 
 @Component({
   selector: 'app-evidencia-file-contenedor',
@@ -18,6 +21,7 @@ import { Notificacion } from 'src/app/models/modelos-generales/notificacion';
 })
 export class EvidenciaFileContenedorComponent implements OnInit{
   @Output() idArchivoSeleccionadoEmitido = new EventEmitter<number>();
+  @Output() reloadParent: EventEmitter<void> = new EventEmitter<void>();
   observaciones$?: Observable<ObservacionArchivo[]>;
   @Input() IdEvidencia: any;
   modalRef?: BsModalRef;
@@ -46,7 +50,9 @@ export class EvidenciaFileContenedorComponent implements OnInit{
     private toastr: ToastrService,
     private login: LoginService,
     private modalService: BsModalService,
-    private notificacionesService: NotificacionesService
+    private notificacionesService: NotificacionesService,
+    private usuarioService: UsuarioService,
+    private emailService: EmailService
     
   ) {
     this.radiobuton = this.fb.group({
@@ -219,6 +225,7 @@ deleteObservacion(index:number){
 
       this.observacionDataService.postObservacion(nuevaObservacion).subscribe(response => {
         this.mostrarMensaje('Observacion agregada con exito', 'mensaje-exito');
+        this.modalRef?.hide(); 
       },
       (error) => {
         this.mostrarMensaje('¡Hubo un error al subir la observacion!', 'mensaje-error');
@@ -230,6 +237,7 @@ deleteObservacion(index:number){
   }
 
   openModal(template: TemplateRef<any>) {
+      
     if(this.radiobuton.value.estado === '1'){
       this.modalRef = this.modalService.show(template);
     }
@@ -257,5 +265,29 @@ deleteObservacion(index:number){
       this.ArchivosInactivos = data;
       this.Archivos[i].showContainer = !this.Archivos[i].showContainer;
     });
+  }
+
+  getByCodeAd(code: string): void {
+    this.usuarioService.getByCodeAd(code).subscribe(
+      data => {
+        const email : email  = {
+          to : data.correo,
+          recipent: `${data.nombre} ${data.apellido}`,
+          subject : `Evidencia evaluada SIPLECE`,
+          body : `La evidencia subida por el usuario ${data.nombre} ${data.apellido} ha sido evaluada por un supervisor`
+        }
+        this.emailService.sendEmail(email).subscribe(data=>{
+          console.log(data);
+        });
+      },
+      error => {
+        console.error(error);
+      }
+    );
+  }
+  handleButtonClick(template: any, usuarioRegistra: string): void {
+    this.openModal(template);
+    this.getByCodeAd(usuarioRegistra);
+    this.reloadParent.emit(); 
   }
 }

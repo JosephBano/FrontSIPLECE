@@ -52,7 +52,9 @@
                     <ng-container *ngIf="valueFilter == '0'|| evidencia.IdElemento == valueFilter">
                         <tr *ngIf="(evidencia.Activo == '1' && !checkboxDeshabilitarValue) || (evidencia.Activo == '0' && checkboxDeshabilitarValue)" [class.table-danger]="evidencia.Activo == '0'">
                             <td>{{evidencia.Detalle}}</td>
-                                <td>{{getDetalleElemento(evidencia.IdElemento)}}</td>
+                            <td [ngClass]="{'DetalleNull': getDetalleElemento(evidencia.IdElemento) === 'Indicador cuantitativo no cuenta con elemento fundamental'}">
+                                {{ getDetalleElemento(evidencia.IdElemento) }}
+                              </td>
                                 <td class="text-center">{{evidencia.Orden}}</td>
                                 <td>
                                     <div class="d-flex justify-content-evenly">

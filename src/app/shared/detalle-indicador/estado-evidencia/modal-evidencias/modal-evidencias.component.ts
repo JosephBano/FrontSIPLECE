@@ -13,6 +13,10 @@ import { ObservacionDataService } from 'src/app/services/modeloServicios/observa
 import { archivoEvidencia } from 'src/app/models/modelos-generales/archivo-evidencia.model';
 import { Notificacion } from 'src/app/models/modelos-generales/notificacion';
 import { NotificacionesService } from 'src/app/services/modeloServicios/notificaciones.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { EmailService } from 'src/app/services/email.service';
+import { email } from 'src/app/models/email.model';
+import { SharedService } from 'src/app/services/serviciosSeguridad/shared.service';
 
 @Component({
   selector: 'app-modal-evidencias',
@@ -26,6 +30,8 @@ export class ModalEvidenciasComponent implements OnInit{
   @Input() elemento: any;
   Evidencias: Evidencia[] = [];
   usuarioRegister: string="";
+  nombre: any;
+  apellido: any;
 
   constructor(
     private loginService: LoginService,
@@ -34,9 +40,11 @@ export class ModalEvidenciasComponent implements OnInit{
     private toastr: ToastrService,
     private location: Location,
     private router: Router,
-    private observacionDataService: ObservacionDataService,
     private notificacionesService: NotificacionesService,
-    private archivoService: ArchivoEvidenciaService
+    private archivoService: ArchivoEvidenciaService,
+    private usuarioService: UsuarioService,
+    private emailService: EmailService,
+    private sharedService: SharedService
   ) { }
 
   ngOnInit(): void {
@@ -74,6 +82,7 @@ export class ModalEvidenciasComponent implements OnInit{
       this.getToken(this.files[0].name, fileData, this.files[0].name)
       this.router.navigate([`${this.location.path()}`]);
       this.files = []
+      this.sharedService.triggerMethod();
     } catch (error) {
       this.toastr.error(`Error base 64: {error}`)
     }
@@ -132,9 +141,33 @@ export class ModalEvidenciasComponent implements OnInit{
           Detalle: 'Tienes una evidencia que no ha sido evaluada',
           IdEvidencia: this.IdEvidenciaSelected,
         };
+        console.log(notificacion);
+        
         this.notificacionesService.addNotificacion(notificacion).subscribe(response => {
+          console.log('Notificación creada', response);
+          
         }, error => {
           console.error('Error creating notification', error);
+        });
+        this.nombre = this.loginService.getTokenDecoded().nombre
+        this.usuarioService.getEmailByPerfil('SUPERVISOR').subscribe(data => {
+          console.log(data);
+          
+          const correos = data.map((usuario: any) => usuario.correo);
+        
+          data.forEach((usuario: any) => {
+            const email = {
+              to: usuario.correo,
+              recipent: `${usuario.nombre} ${usuario.apellido}`,
+              subject: 'Evidencia subida SIPLECE',
+              body: `El usuario ${this.nombre} ha subido una evidencia para su evaluación.`
+            };
+            console.log(email);
+            
+             this.emailService.sendEmail(email).subscribe(response => {
+               console.log(`Correo enviado a: ${usuario.correo}`, response);
+             });
+          });
         });
       });
   }

@@ -13,6 +13,7 @@ import { Sidebar } from 'src/app/services/sidebar.service';
 import { EvidenciaService } from 'src/app/services/modeloServicios/evidencia.service';
 import { CriteriosService } from 'src/app/services/modeloServicios/criterios.service';
 import { SubCriteriosService } from 'src/app/services/modeloServicios/sub-criterios.service';
+import { SharedService } from 'src/app/services/serviciosSeguridad/shared.service';
 
 @Component({
   selector: 'app-detalle-indicador',
@@ -34,6 +35,7 @@ export class DetalleIndicadorComponent implements OnInit {
 
   selectedEsenciales: number | null = null;
   selectedComplementarios: number | null = null;
+  index_temp = 0;
   
   constructor(
     private route: ActivatedRoute,
@@ -47,6 +49,7 @@ export class DetalleIndicadorComponent implements OnInit {
     private elementoFundamentalService: ElementoFundamentalService,
     private criterioService: CriteriosService,
     private subcriterioService: SubCriteriosService,
+    private sharedService: SharedService
     //private router: Router
   ) { }
    
@@ -64,8 +67,15 @@ export class DetalleIndicadorComponent implements OnInit {
       this.loadElementosById(indicadorID);
     });
     this.InitRoles();
+    this.sharedService.myMethod$.subscribe(() => {
+      this.toggle(this.index_temp);
+    });
   }
 
+  toggle(index:number): void  {
+    this.index_temp = index;
+    this.selectedEsenciales = (this.selectedEsenciales === index ? null : index)
+  }
   InitRoles() {
     if(this.routeUrl.url.includes('asignar-usuarios')) this.ds.actualizarActiveLiOrder1('encargado');
     if(this.routeUrl.url.includes('indicador-evidencia')) this.ds.actualizarActiveLiOrder1('evidencias');
