@@ -60,35 +60,44 @@ export class IndicadorTableComponent implements OnInit{
     
   }
 
-  getDataUser(permisoParams: PermisoPeticion){
-    const permission$ = this.perfilService.getPermisos(permisoParams).pipe(data => data)
-    const indicator$ = this.indicadorService.getIndicador().pipe(data =>  data)//Cambiar a get by id subcriterio
-    forkJoin([permission$, indicator$]).subscribe(([permissionsData, indicatorsData]) => {  
+  getDataUser(permisoParams: PermisoPeticion) {
+    const permission$ = this.perfilService.getPermisos(permisoParams).pipe(data => data);
+    const indicator$ = this.indicadorService.getIndicador().pipe(data => data); // Cambiar a get by id subcriterio
+  
+    forkJoin([permission$, indicator$]).subscribe(([permissionsData, indicatorsData]) => {
       let allPadres: string[] = [];
-        permissionsData.forEach((permiso)=>{
-          this.getPadres(permiso.codigoPermiso).subscribe((data)=>{
-            if(permiso.codigoPermiso.startsWith('C-')){
-              this.indicadores = indicatorsData
-            }else if(permiso.codigoPermiso.startsWith('SC-')){
-              this.indicadores = indicatorsData
-            }else if(permiso.codigoPermiso.startsWith('I-')){
-              this.indicadores = indicatorsData.filter(i=>permissionsData.some(permiso=>permiso.codigoPermiso===i.CodigoIndicador));
-            }else if(permiso.codigoPermiso.startsWith('EF-')){
-              const padres: string[] = data[1][0].listP.split(',');
-              allPadres.push(...padres);
-              this.indicadores = indicatorsData.filter(ef=>allPadres.includes(ef.CodigoIndicador));
-              
-            }else if(permiso.codigoPermiso.startsWith('E-')){
-              const padres: string[] = data[0].listP.split(',');
-              allPadres.push(...padres);
-              this.indicadores = indicatorsData.filter(e=>allPadres.includes(e.CodigoIndicador));
-            }
-            
-          });
-       });
+      let acumulados: any[] = []; 
+  
+      permissionsData.forEach((permiso) => {
+        this.getPadres(permiso.codigoPermiso).subscribe((data) => {
+          if (permiso.codigoPermiso.startsWith('C-')) {
+            const padres: string[] = data[0].listP.split(',');
+            const filteredIndicators = indicatorsData.filter(indicator => padres.includes(indicator.CodigoIndicador));
+            acumulados = acumulados.concat(filteredIndicators);
+          } else if (permiso.codigoPermiso.startsWith('SC-')) {
+            const padres: string[] = data[0][0].listP.split(',');
+            const filteredIndicators = indicatorsData.filter(indicator => padres.includes(indicator.CodigoIndicador));
+            acumulados = acumulados.concat(filteredIndicators);
+          } else if (permiso.codigoPermiso.startsWith('I-')) {
+            const filteredIndicators = indicatorsData.filter(i => permissionsData.some(permiso => permiso.codigoPermiso === i.CodigoIndicador));
+            acumulados = acumulados.concat(filteredIndicators);
+          } else if (permiso.codigoPermiso.startsWith('EF-')) {
+            const padres: string[] = data[1][0].listP.split(',');
+            allPadres.push(...padres);
+            const filteredIndicators = indicatorsData.filter(ef => allPadres.includes(ef.CodigoIndicador));
+            acumulados = acumulados.concat(filteredIndicators);
+          } else if (permiso.codigoPermiso.startsWith('E-')) {
+            const padres: string[] = data[0].listP.split(',');
+            allPadres.push(...padres);
+            const filteredIndicators = indicatorsData.filter(e => allPadres.includes(e.CodigoIndicador));
+            acumulados = acumulados.concat(filteredIndicators);
+          }
+          this.indicadores = acumulados;
+        });
+      });
     });
   }
-
+  
   getPadres(dato: string): Observable<any> {
     switch(true){
       case dato.includes('C-',0) && !dato.includes('C-',1):        

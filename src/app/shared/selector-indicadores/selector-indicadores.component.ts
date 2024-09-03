@@ -97,9 +97,9 @@ export class SelectorIndicadoresComponent {
     }
   }
   //Obtener datos segun permisos del Usuario
-  getDataUser(permisoParams: PermisoPeticion){
-    const permission$ = this.perfilService.getPermisos(permisoParams).pipe(data => data)
-     
+  getDataUser(permisoParams: PermisoPeticion) {
+    const permission$ = this.perfilService.getPermisos(permisoParams).pipe(data => data);
+    
     const data$ = this.modeloService.getModeloByCode(this.loginService.getTokenDecoded().modelo).pipe(
       switchMap((data) => {
         this.modeloId = data.idModelo!;
@@ -107,49 +107,59 @@ export class SelectorIndicadoresComponent {
         const subCriterio$ = this.subcriterioService.getSubCriterio();
         return forkJoin([criterio$, subCriterio$]);
       })
-      );
-     
-      forkJoin([permission$, data$]).subscribe(([permissionsData, [criteriosData, subCriteriosData]]) => {
-        this.subCriterios = [];
-        this.criterios = [];
-        this.allSubCriterios = [];
-        let allPadres: string[] = []; // Declarar el array fuera del contexto donde se define padres
+    );
     
-        permissionsData.forEach((permiso)=>{
-            this.getPadres(permiso.codigoPermiso).subscribe((data)=>{
-                if(permiso.codigoPermiso.startsWith('C-')){
-                    //manejo datos permiso Criterio
-                    this.criterios = criteriosData.filter(c => permissionsData.some(permiso => permiso.codigoPermiso === c.CodigoCriterio));
-                    this.allSubCriterios = subCriteriosData;
-                } else if(permiso.codigoPermiso.startsWith('SC-')){
-                    //manejo datos permiso Subcritero
-                    const padres: string[] = data[1][0].listP.split(',');
-                    allPadres.push(...padres); 
-                    this.criterios = criteriosData.filter(c => allPadres.includes(c.CodigoCriterio));
-                    this.allSubCriterios = subCriteriosData.filter(sc => permissionsData.some(permiso => permiso.codigoPermiso === sc.CodigoSubCriterio));
-                } else if((permiso.codigoPermiso.startsWith('I-'))){
-                    //manejo datos permiso Indicador
-                    const padres: string[] = data[1][0].listP.split(',');
-                    allPadres.push(...padres); 
-                    this.criterios = criteriosData.filter(c => allPadres.includes(c.CodigoCriterio));
-                    this.allSubCriterios = subCriteriosData.filter(sc=>allPadres.includes(sc.CodigoSubCriterio));
-                } else if(permiso.codigoPermiso.startsWith('EF-')){
-                  //manejo datos permiso Elemento fundamental
-                  const padres: string[] = data[1][0].listP.split(',');
-                  allPadres.push(...padres); 
-                  this.criterios = criteriosData.filter(c => allPadres.includes(c.CodigoCriterio));
-                  this.allSubCriterios = subCriteriosData.filter(sc=>allPadres.includes(sc.CodigoSubCriterio));
-              } else if(permiso.codigoPermiso.startsWith('E-')){
-                    //manejo datos permiso Evidencia
-                    const padres: string[] = data[0].listP.split(',');
-                    allPadres.push(...padres); 
-                    this.criterios = criteriosData.filter(c => allPadres.includes(c.CodigoCriterio));
-                    this.allSubCriterios = subCriteriosData.filter(sc=>allPadres.includes(sc.CodigoSubCriterio));
-                }
-            });
-        });
-    });
+    forkJoin([permission$, data$]).subscribe(([permissionsData, [criteriosData, subCriteriosData]]) => {
+      this.criterios = [];  // Inicializa la lista de criterios
+      this.allSubCriterios = [];  // Inicializa la lista de subcriterios
       
+      let allPadres: string[] = [];  // Declarar el array fuera del contexto donde se define padres
+      
+      permissionsData.forEach((permiso) => {
+        this.getPadres(permiso.codigoPermiso).subscribe((data) => {
+          if (permiso.codigoPermiso.startsWith('C-')) {
+            // manejo datos permiso Criterio
+            const padres: string[] = data[0].listP.split(',');
+            const criteriosPermitidos = criteriosData.filter(c => permiso.codigoPermiso === c.CodigoCriterio);
+            const subCriteriosPermitidos = subCriteriosData.filter(sc => padres.includes(sc.CodigoSubCriterio));
+            this.criterios.push(...criteriosPermitidos);
+            this.allSubCriterios.push(...subCriteriosPermitidos);
+          } else if (permiso.codigoPermiso.startsWith('SC-')) {
+            // manejo datos permiso Subcriterio
+            const padres: string[] = data[1][0].listP.split(',');
+            allPadres.push(...padres);
+            const criteriosPermitidos = criteriosData.filter(c => padres.includes(c.CodigoCriterio));
+            this.criterios.push(...criteriosPermitidos);
+            const subCriteriosPermitidos = subCriteriosData.filter(sc => permiso.codigoPermiso === sc.CodigoSubCriterio);
+            this.allSubCriterios.push(...subCriteriosPermitidos);
+          } else if (permiso.codigoPermiso.startsWith('I-')) {
+            // manejo datos permiso Indicador
+            const padres: string[] = data[1][0].listP.split(',');
+            allPadres.push(...padres);
+            const criteriosPermitidos = criteriosData.filter(c => padres.includes(c.CodigoCriterio));
+            this.criterios.push(...criteriosPermitidos);
+            const subCriteriosPermitidos = subCriteriosData.filter(sc => padres.includes(sc.CodigoSubCriterio));
+            this.allSubCriterios.push(...subCriteriosPermitidos);
+          } else if (permiso.codigoPermiso.startsWith('EF-')) {
+            // manejo datos permiso Elemento fundamental
+            const padres: string[] = data[1][0].listP.split(',');
+            allPadres.push(...padres);
+            const criteriosPermitidos = criteriosData.filter(c => padres.includes(c.CodigoCriterio));
+            this.criterios.push(...criteriosPermitidos);
+            const subCriteriosPermitidos = subCriteriosData.filter(sc => padres.includes(sc.CodigoSubCriterio));
+            this.allSubCriterios.push(...subCriteriosPermitidos);
+          } else if (permiso.codigoPermiso.startsWith('E-')) {
+            // manejo datos permiso Evidencia
+            const padres: string[] = data[0].listP.split(',');
+            allPadres.push(...padres);
+            const criteriosPermitidos = criteriosData.filter(c => padres.includes(c.CodigoCriterio));
+            this.criterios.push(...criteriosPermitidos);
+            const subCriteriosPermitidos = subCriteriosData.filter(sc => padres.includes(sc.CodigoSubCriterio));
+            this.allSubCriterios.push(...subCriteriosPermitidos);
+          }
+        });
+      });
+    });
   }
 
   criterioChange(){  

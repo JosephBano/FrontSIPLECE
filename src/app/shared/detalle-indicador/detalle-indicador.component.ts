@@ -107,7 +107,6 @@ export class DetalleIndicadorComponent implements OnInit {
                   } else if(permiso.codigoPermiso.startsWith('EF-')){
                   //manejo datos permiso Elemento fundamental
                   this.elementos = elementsData.filter(e=>permissionsData.some(p=>p.codigoPermiso===e.CodigoElementoFundamental) && e.IdIndicador==id)
-                  console.log(this.elementos);
               } else if(permiso.codigoPermiso.startsWith('E-')){
                     //manejo datos permiso Evidencia
                     const padres: string[] = data[0].listP.split(',');

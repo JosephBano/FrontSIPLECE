@@ -1,7 +1,7 @@
 export interface ReportIndicador {
     _periodoEvaluacion: string;
     idVariable : number;
-    idReportIndicador: number;
+    idIndicador: number;
     Detalle: string;
     NombreVariable: string;
     Valor: number;

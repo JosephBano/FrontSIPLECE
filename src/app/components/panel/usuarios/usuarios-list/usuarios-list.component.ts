@@ -69,8 +69,6 @@ export class UsuariosListComponent {
       .subscribe(
         (data: Usuario[]) => {
           this.usuariosInactivos = data;
-          console.log(this.usuariosInactivos);
-          
         },
         (error) => {
           console.error('Error al mostar usuarios inactivos', error);

@@ -177,6 +177,10 @@ calculatePuestosTrabajo(index: number){
     this.results[index] = var2.Valor / (var3.Valor + 0.5 * var4.Valor);
     // Actualiza la primera variable con el resultado de la fórmula
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
+    if (this.results[index] !== null && this.results[index] !== 0) {
+      // Llamar a evaluarIndicador
+      this.evaluarIndicador(this.Variables[0].idIndicador);
+    }
   });
 };
 
@@ -199,6 +203,10 @@ calculateAnchoBanda(index: number){
     this.results[index] = var6.Valor /(0.5 * var7.Valor + 0.8 * var8.Valor + 0.4 * var9.Valor + 0.10 * var10.Valor + 0.15 * var11.Valor);
     // Actualiza la primera variable con el resultado de la fórmula
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
+    if (this.results[index] !== null && this.results[index] !== 0) {
+      // Llamar a evaluarIndicador
+      this.evaluarIndicador(this.Variables[0].idIndicador);
+    }
   });
 };
 
@@ -219,6 +227,10 @@ calculatePostgrado(index: number){
     this.results[index] = (var13.Valor /var14.Valor)*100;
     // Actualiza la primera variable con el resultado de la fórmula
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
+    if (this.results[index] !== null && this.results[index] !== 0) {
+      // Llamar a evaluarIndicador
+      this.evaluarIndicador(this.Variables[0].idIndicador);
+    }
   });
 };
 calculateExpProf(index: number){
@@ -238,6 +250,10 @@ calculateExpProf(index: number){
     this.results[index] = (var16.Valor /var17.Valor)*100;
     // Actualiza la primera variable con el resultado de la fórmula
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
+    if (this.results[index] !== null && this.results[index] !== 0) {
+      // Llamar a evaluarIndicador
+      this.evaluarIndicador(this.Variables[0].idIndicador);
+    }
   });
 };
 
@@ -259,6 +275,10 @@ calculateEjerProf(index: number){
     this.results[index] = (var19.Valor /var20.Valor+var21.Valor)*100;
     // Actualiza la primera variable con el resultado de la fórmula
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
+    if (this.results[index] !== null && this.results[index] !== 0) {
+      // Llamar a evaluarIndicador
+      this.evaluarIndicador(this.Variables[0].idIndicador);
+    }
   });
 };
 
@@ -280,6 +300,10 @@ calculateTitularidad(index: number){
     this.results[index] = (var23.Valor /(var24.Valor+var25.Valor))*100;
     // Actualiza la primera variable con el resultado de la fórmula
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
+    if (this.results[index] !== null && this.results[index] !== 0) {
+      // Llamar a evaluarIndicador
+      this.evaluarIndicador(this.Variables[0].idIndicador);
+    }
   });
 };
 
@@ -301,6 +325,10 @@ calculateCarga(index: number){
     this.results[index] = var27.Valor /(32* var28.Valor+1/2*var29.Valor);
     // Actualiza la primera variable con el resultado de la fórmula
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
+    if (this.results[index] !== null && this.results[index] !== 0) {
+      // Llamar a evaluarIndicador
+      this.evaluarIndicador(this.Variables[0].idIndicador);
+    }
   });
 };
 
@@ -322,6 +350,10 @@ calculateRemuneracion(index: number){
     this.results[index] = ((1/12)*var31.Valor) /(var32.Valor+(1/2*var33.Valor));
     // Actualiza la primera variable con el resultado de la fórmula
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
+    if (this.results[index] !== null && this.results[index] !== 0) {
+      // Llamar a evaluarIndicador
+      this.evaluarIndicador(this.Variables[0].idIndicador);
+    }
   });
 };
 
@@ -341,6 +373,10 @@ calculateRemuneracionXhora(index: number){
     this.results[index] = var35.Valor/var36.Valor;
     // Actualiza la primera variable con el resultado de la fórmula
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
+    if (this.results[index] !== null && this.results[index] !== 0) {
+      // Llamar a evaluarIndicador
+      this.evaluarIndicador(this.Variables[0].idIndicador);
+    }
   });
 };
 
@@ -360,6 +396,10 @@ calculateProgramas(index: number){
     this.results[index] = (var38.Valor/var39.Valor)*100;
     // Actualiza la primera variable con el resultado de la fórmula
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
+    if (this.results[index] !== null && this.results[index] !== 0) {
+      // Llamar a evaluarIndicador
+      this.evaluarIndicador(this.Variables[0].idIndicador);
+    }
   });
 };
 
@@ -379,6 +419,10 @@ calculateAfinidad(index: number){
     this.results[index] = (var41.Valor/var42.Valor)*100;
     // Actualiza la primera variable con el resultado de la fórmula
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
+    if (this.results[index] !== null && this.results[index] !== 0) {
+      // Llamar a evaluarIndicador
+      this.evaluarIndicador(this.Variables[0].idIndicador);
+    }
   });
 };
 
@@ -398,6 +442,10 @@ calculateAsignaturas(index: number){
     this.results[index] = (var44.Valor/var45.Valor)*100;
     // Actualiza la primera variable con el resultado de la fórmula
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
+    if (this.results[index] !== null && this.results[index] !== 0) {
+      // Llamar a evaluarIndicador
+      this.evaluarIndicador(this.Variables[0].idIndicador);
+    }
   });
 };
 
@@ -421,6 +469,10 @@ calculatePublicaciones(index: number){
     this.results[index] = ((4*var47.Valor)+(2*var48.Valor)+(1*var49.Valor))/(var50.Valor+(1/2*var51.Valor)+(1/4*var52.Valor));
     // Actualiza la primera variable con el resultado de la fórmula
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
+    if (this.results[index] !== null && this.results[index] !== 0) {
+      // Llamar a evaluarIndicador
+      this.evaluarIndicador(this.Variables[0].idIndicador);
+    }
   });
 };
 
@@ -441,6 +493,10 @@ calculateAulas(index: number){
     this.results[index] = (var54.Valor/var55.Valor)*100;
     // Actualiza la primera variable con el resultado de la fórmula
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
+    if (this.results[index] !== null && this.results[index] !== 0) {
+      // Llamar a evaluarIndicador
+      this.evaluarIndicador(this.Variables[0].idIndicador);
+    }
   });
 };
 
@@ -464,6 +520,10 @@ calculatePubliYeventos(index: number){
     this.results[index] = ((4*var57.Valor)+(2*var58.Valor)+(1*var59.Valor))/(var60.Valor+(1/2*var61.Valor)+(1/4*var62.Valor));
     // Actualiza la primera variable con el resultado de la fórmula
     this.updateVariables(this.results[index], this.Variables[0].idVariable);
+    if (this.results[index] !== null && this.results[index] !== 0) {
+      // Llamar a evaluarIndicador
+      this.evaluarIndicador(this.Variables[0].idIndicador);
+    }
   });
 };
 generarPDF() {
@@ -559,7 +619,6 @@ evaluarIndicador(idIndicador: number) {
 
 evaluarYObtenerFormula(index: number, i:number) {
   this.getFormula(this.indicadores.find(e=>e.IdIndicador==index)!); 
-  this.evaluarIndicador(index);
   this.getIndicador(index);
   this.toggleCuantitativo(-1);
 }
