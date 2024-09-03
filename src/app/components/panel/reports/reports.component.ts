@@ -139,21 +139,21 @@ getIndicador(index: number) {
 }
 
 getFormula(indicador: Indicador) {
-  if(indicador.CodigoIndicador === 'I-indic1') this.calculatePuestosTrabajo(indicador.IdIndicador!);
-  if(indicador.CodigoIndicador === 'I-indic2') this.calculateAnchoBanda(indicador.IdIndicador!);
-  if(indicador.CodigoIndicador === 'I-indic4') this.calculatePostgrado(indicador.IdIndicador!);
-  if(indicador.CodigoIndicador === 'I-indic5') this.calculateExpProf(indicador.IdIndicador!);
-  if(indicador.CodigoIndicador === 'I-indic6') this.calculateEjerProf(indicador.IdIndicador!);
-  if(indicador.CodigoIndicador === 'I-indic7') this.calculateTitularidad(indicador.IdIndicador!);
-  if(indicador.CodigoIndicador === 'I-indic8') this.calculateCarga(indicador.IdIndicador!);
-  if(indicador.CodigoIndicador === 'I-indic9') this.calculateRemuneracion(indicador.IdIndicador!);
-  if(indicador.CodigoIndicador === 'I-indic10') this.calculateRemuneracionXhora(indicador.IdIndicador!);
-  if(indicador.CodigoIndicador === 'I-indic11') this.calculateProgramas(indicador.IdIndicador!);
-  if(indicador.CodigoIndicador === 'I-indic12') this.calculateAfinidad(indicador.IdIndicador!);
-  if(indicador.CodigoIndicador === 'I-indic13') this.calculateAsignaturas(indicador.IdIndicador!);
-  if(indicador.CodigoIndicador === 'I-indic14') this.calculatePublicaciones(indicador.IdIndicador!);
-  if(indicador.CodigoIndicador === 'I-indic15') this.calculateAulas(indicador.IdIndicador!);
-  if(indicador.CodigoIndicador === 'I-indic16') this.calculatePubliYeventos(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic15') this.calculatePuestosTrabajo(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic18') this.calculateAnchoBanda(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic25') this.calculatePostgrado(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic26') this.calculateExpProf(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic27') this.calculateEjerProf(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic28') this.calculateTitularidad(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic29') this.calculateCarga(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic32') this.calculateRemuneracion(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic33') this.calculateRemuneracionXhora(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-progr1') this.calculateProgramas(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-afini1') this.calculateAfinidad(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic11') this.calculateAsignaturas(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-publi1') this.calculatePublicaciones(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-aulas1') this.calculateAulas(indicador.IdIndicador!);
+  if(indicador.CodigoIndicador === 'I-indic2') this.calculatePubliYeventos(indicador.IdIndicador!);
 
 }
 updateVariables(valor: number, idVariable: number) {

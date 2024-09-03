@@ -5,7 +5,8 @@ import { Usuario } from 'src/app/models/usuario.model';
 import { DataService } from 'src/app/services/data.service';
 import { Sidebar } from 'src/app/services/sidebar.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
-
+import { email } from 'src/app/models/email.model';
+import { EmailService } from 'src/app/services/email.service';
 @Component({
   selector: 'app-add-usuario',
   templateUrl: './add-usuario.component.html',
@@ -26,7 +27,8 @@ export class AddUsuarioComponent implements OnInit{
     private fb: FormBuilder,
     private ds: DataService,
     private usuarioService: UsuarioService,
-    private router: Router
+    private router: Router,
+    private emailService: EmailService
   ) { 
  
     this.formUsuario = this.fb.group({
@@ -78,7 +80,18 @@ export class AddUsuarioComponent implements OnInit{
   
       this.usuarioService.crearUsuario(usuario).subscribe(
         response => {
-          console.log('Usuario creado con éxito', response);
+          const Email : email  = {
+            to: email,
+            recipent: `${nombre} ${apellido}`,
+            subject: `Usuario creado en sistema administrativo SIPLECE`,
+            body: `<p> El usuario ${nombre} ${apellido} ha sido creado con éxito.</p>
+                  <p style="margin: 0; font-size: 14px; line-height: 1.5;">Usuario: ${email}</p>
+                  <p style="margin: 0; font-size: 14px; line-height: 1.5;">Contraseña: ${contrasenia}</p>
+                  <p> Para ingresar al sistema, haga clic en el siguiente enlace: https://16.13.9.13 </p>`
+                  
+          }
+          this.emailService.sendEmail(Email).subscribe(data=>{
+          });
         },
         (error) => {
           console.error('Error al crear usuario', error);
