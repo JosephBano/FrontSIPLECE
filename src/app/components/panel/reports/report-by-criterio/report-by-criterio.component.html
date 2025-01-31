@@ -21,12 +21,12 @@
 
     <!-- Evaluación cualitativa -->
     <p class="valoracion" *ngIf="indicador.IdTipoEvaluacion == '2' && indicador.IdIndicador === selectedIndicadorId">
-      Resultado de evaluación: {{ getValoracionTexto(indicador.Valoracion) }}
+      Resultado de evaluación cualitativa: {{ getValoracionTexto(indicador.Valoracion) }}
     </p>
 
     <!-- Evaluación cuantitativa: solo se muestra para el indicador seleccionado -->
     <p class="valoracion" *ngIf="indicador.IdTipoEvaluacion == '1' && indicador.IdIndicador === selectedIndicadorId">
-      Resultado de evaluación: {{Variables[0]?.Detalle}} = {{Variables[0]?.Valor}}
+      Resultado de evaluación cuantitativa: {{Variables[0]?.Detalle}} = {{Variables[0]?.Valor}}
     </p>
 
     <!-- Solo muestra los archivos de evidencias si el indicador es el seleccionado -->

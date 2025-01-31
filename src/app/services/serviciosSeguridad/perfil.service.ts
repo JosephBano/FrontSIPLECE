@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { Perfil } from "src/app/models/modelos-generales/perfil.model";
 import { AddPermiso, PermisoPeticion, PermisoRespuesta, UpdatePermiso } from "src/app/models/modelosSeguridad/perfil.model";
 import { DeletePermiso, PermisosPeticion } from "src/app/models/modelosSeguridad/permission.model";
 import { environment } from "src/environments/environment.development";

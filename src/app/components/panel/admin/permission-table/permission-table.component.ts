@@ -377,8 +377,7 @@ export class PermissionTableComponent {
     try{
       this.perfilService.updatePermisos(_updatePermiso).subscribe(
         (data) => {
-          
-          if(data[0]===1){
+          if(data[0] !== 0 ){
             this.toastr.success("Permisos actualizados con exito");
           }
       });

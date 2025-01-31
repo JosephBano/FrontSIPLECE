@@ -110,6 +110,8 @@ export class ModalEvidenciasComponent implements OnInit{
             FileBase64: filebase,
             AccessToken: tokenAccess["access_token"]
           }
+          console.log("addFileBody",addFileBody);
+          
           return this.archivoEvService.AddFileSharedPoint(addFileBody)
         })
       ).subscribe(data => {
